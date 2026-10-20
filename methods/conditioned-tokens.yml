@@ -2,16 +2,25 @@ section: nlp
 order: 50
 grade: good
 name: Context-conditioned tokens
-description: >-
-  Prefix each token with its context (the document category, the question it answers), so a linear model
-  can give the same word different weights in different contexts. It is a feature cross for bag-of-words.
+when: >-
+  The same word should mean different things in different contexts (the document category, the question
+  it answers), and the model is linear.
+do: Prefix each token with its context before vectorising.
+why: >-
+  The model can give the same word different weights per context: a feature cross for bag-of-words.
+see_also:
+- categorical-crosses
 code: |
-  tokens = TOKEN_RE.findall(compact_protocol(row.protocol_text))
-  documents.append(" ".join(f"g{guideline_id}_{token}" for token in tokens))
+  # tokens prefixed with their context id
+  tokens = TOKEN_RE.findall(doc_text)
+  documents.append(" ".join(f"ctx{context_id}_{token}" for token in tokens))
 translations:
   ru:
     name: Токены с привязкой к контексту
-    description: >-
-      Добавляйте к каждому токену префикс его контекста (категория документа, вопрос, на который он отвечает),
-      чтобы линейная модель могла давать одному и тому же слову разные веса в разных контекстах. Это пересечение
-      признаков для мешка слов.
+    when: >-
+      Одно и то же слово должно значить разное в разных контекстах (категория документа, вопрос, на который
+      он отвечает), а модель линейная.
+    do: Добавляйте к каждому токену префикс его контекста перед векторизацией.
+    why: >-
+      Модель может давать одному слову разные веса в разных контекстах: пересечение признаков для мешка
+      слов.

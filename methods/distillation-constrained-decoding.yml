@@ -2,21 +2,27 @@ section: nlp
 order: 130
 grade: good
 name: Distil a large LLM into a small one, with constrained decoding
-description: >-
-  Let a large model generate synthetic training examples, fine-tune a small model on them with LoRA, and
-  at inference restrict decoding to a JSON schema whose fields only allow valid values. The small model
-  inherits the behaviour, and its outputs are always valid.
+when: >-
+  A large LLM solves the task but is too slow or too expensive to run, and outputs must follow a schema.
+do: >-
+  Let the large model generate synthetic training examples, fine-tune a small model on them with LoRA,
+  and at inference restrict decoding to a JSON schema whose fields only allow valid values.
+why: The small model inherits the behaviour, and its outputs are always valid.
 code: |
-  ValidHint = Literal[*valid_hints]
-  class Hints(BaseModel):
-      hints_1: List[ValidHint]; hints_2: List[ValidHint]; hints_3: List[ValidHint]; hints_4: List[ValidHint]
-  response = await oai_client.beta.chat.completions.parse(model='openai/gpt-4.1', messages=messages, response_format=Hints)
-  model = FastLanguageModel.get_peft_model(model, r=32, target_modules=[...])   # Qwen3-0.6B
-  SamplingParams(guided_decoding=GuidedDecodingParams(json=Hints.model_json_schema()))
+  # teacher generates data in a schema; LoRA student; schema-guided decoding
+  ValidValue = Literal[*valid_values]
+  class Output(BaseModel):
+      field_1: List[ValidValue]; field_2: List[ValidValue]
+  synthetic = await client.beta.chat.completions.parse(model=TEACHER, messages=messages, response_format=Output)
+  student = FastLanguageModel.get_peft_model(small_model, r=32, target_modules=[...])
+  SamplingParams(guided_decoding=GuidedDecodingParams(json=Output.model_json_schema()))
 translations:
   ru:
     name: Дистилляция большой LLM в маленькую с ограниченным декодированием
-    description: >-
+    when: >-
+      Большая LLM решает задачу, но слишком медленна или дорога, а ответы должны следовать схеме.
+    do: >-
       Пусть большая модель сгенерирует синтетические обучающие примеры, дообучите на них маленькую модель
       с LoRA, а при инференсе ограничьте декодирование JSON-схемой, поля которой допускают только корректные
-      значения. Маленькая модель наследует поведение, а её ответы всегда корректны.
+      значения.
+    why: Маленькая модель наследует поведение, а её ответы всегда корректны.

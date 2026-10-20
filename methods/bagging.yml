@@ -3,29 +3,34 @@ subsection: ensembling
 order: 10
 grade: book
 name: Bagging
-description: >-
+do: >-
   Average the predictions of models that differ only by random seed, CV fold, bootstrap sample or hyperparameters.
-  Their errors are partly independent, so the average has lower variance than any single model; it also
-  makes the score less dependent on a lucky seed.
+why: >-
+  Their errors are partly independent, so the average has lower variance than any single model, and the
+  score depends less on a lucky seed.
+see_also:
+- stacking
+- weighted-blend
 code: |
+  # seed × fold bagging; bootstrap bagging; averaging differently configured models
   for s in range(SEEDS):
       for a, b in StratifiedKFold(FOLDS, shuffle=True, random_state=s).split(X, y):
-          m = lgb.LGBMClassifier(**params, random_state=s).fit(X.iloc[a], y.iloc[a], ...)
+          m = lgb.LGBMClassifier(**params, random_state=s).fit(X.iloc[a], y.iloc[a])
           oof[b] += m.predict_proba(X.iloc[b])[:, 1] / SEEDS
-          pt += m.predict_proba(Xt)[:, 1] / (SEEDS * FOLDS)
+          test_pred += m.predict_proba(X_test)[:, 1] / (SEEDS * FOLDS)
 
   for b in range(25):
-      idx = rng.choice(len(train_f), len(train_f), replace=True)
-      lr.fit(train_f.iloc[idx], y.iloc[idx])
-      test_preds_lr += lr.predict_proba(test_f)[:, 1] / 25
-  cb = CatBoostClassifier(iterations=100, depth=2, l2_leaf_reg=20)
-  final_proba = 0.6 * test_preds_lr + 0.4 * cb.fit(...).predict_proba(...)[:, 1]
+      idx = rng.choice(len(X), len(X), replace=True)
+      lr.fit(X.iloc[idx], y.iloc[idx])
+      test_pred_lr += lr.predict_proba(X_test)[:, 1] / 25
 
-  y_pred_ensemble = (cbc1.predict_proba(X)[:, 1] + cbc2.predict_proba(X)[:, 1] + cbc3.predict_proba(X)[:, 1]) / 3
+  test_pred = np.mean([m.predict_proba(X_test)[:, 1] for m in (model_a, model_b, model_c)], axis=0)
 translations:
   ru:
     name: Бэггинг
-    description: >-
+    do: >-
       Усредняйте предсказания моделей, которые отличаются только сидом, фолдом CV, бутстрэп-выборкой или
-      гиперпараметрами. Их ошибки частично независимы, поэтому среднее имеет меньшую дисперсию, чем любая
-      отдельная модель, и оценка меньше зависит от удачного сида.
+      гиперпараметрами.
+    why: >-
+      Их ошибки частично независимы, поэтому у среднего меньше дисперсия, чем у любой отдельной модели,
+      и оценка меньше зависит от удачного сида.

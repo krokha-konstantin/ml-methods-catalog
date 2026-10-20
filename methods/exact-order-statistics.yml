@@ -1,12 +1,15 @@
-section: planning
+section: puzzles
 subsection: games
 order: 20
 grade: good
 name: Exact expected order statistics instead of simulation
-description: >-
-  When future outcomes depend on how a known pool of values will be grouped at random, compute the expected
-  minimum, median and maximum per group exactly with combinatorics rather than estimating them by simulation.
+when: Future outcomes depend on how a known pool of values will be grouped at random.
+do: Compute the expected minimum, median and maximum per group exactly with combinatorics.
+why: Exact values are free of simulation noise and cost almost nothing.
+see_also:
+- endgame-brute-force
 code: |
+  # expected min / median / max of a random triple from a known pool
   vals = sorted(pool.elements()); N = len(vals); denom = _comb2(N - 1)
   sum_min = sum(vals[k] * _comb2(N - 1 - k) for k in range(N)) / denom
   sum_max = sum(vals[k] * _comb2(k) for k in range(N)) / denom
@@ -15,7 +18,7 @@ code: |
 translations:
   ru:
     name: Точные ожидания порядковых статистик вместо симуляции
-    description: >-
-      Когда будущие исходы зависят от того, как известный набор значений случайно разобьётся на группы,
-      считайте ожидаемые минимум, медиану и максимум по группе точно, комбинаторикой, а не оценивайте
-      симуляцией.
+    when: >-
+      Будущие исходы зависят от того, как известный набор значений случайно разобьётся на группы.
+    do: Считайте ожидаемые минимум, медиану и максимум по группе точно, комбинаторикой.
+    why: Точные значения лишены шума симуляции и почти ничего не стоят.

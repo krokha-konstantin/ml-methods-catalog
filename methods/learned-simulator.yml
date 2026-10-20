@@ -3,20 +3,28 @@ subsection: model-based
 order: 10
 grade: good
 name: Learn a simulator of the environment
-description: >-
-  When the environment is a black box and only logged trajectories are available, fit a dynamics model
-  and outcome classifiers on the logs, and add noise sampled from the empirical residuals (per regime,
-  slightly inflated). Planning can then be done by Monte Carlo inside the learned simulator.
+when: The environment is a black box and only logged trajectories are available.
+do: >-
+  Fit a dynamics model and outcome classifiers on the logs, and add noise sampled from the empirical residuals
+  (per regime, slightly inflated).
+why: Planning can then be done by Monte Carlo inside the learned simulator.
+see_also:
+- bootstrap-model-uncertainty
+- leaderboard-as-likelihood
+- pessimistic-model-and-oracle
+- recover-hard-rules
 code: |
-  dyn = HistGradientBoostingRegressor(max_iter=200, learning_rate=0.05).fit(a[DYN].values, a.dT)
-  r = (a.dT - dyn.predict(a[DYN].values)).values
-  b = np.digitize(a.ds, DS_BINS)                         # bins of sun-altitude change
-  resid = [r[b == i] * 1.15 for i in range(5)]           # sampled as noise in the simulator
-  q[c] = HistGradientBoostingClassifier(max_depth=3, min_samples_leaf=30).fit(o[o.cls == c][QF], o[o.cls == c].result)
+  # dynamics model + residual noise per regime + outcome classifiers
+  dynamics = HistGradientBoostingRegressor(max_iter=200, learning_rate=0.05).fit(logs[STATE_COLS], logs.delta)
+  residuals = logs.delta - dynamics.predict(logs[STATE_COLS])
+  regime = np.digitize(logs.regime_var, REGIME_BINS)
+  noise = [residuals[regime == i] * 1.15 for i in range(len(REGIME_BINS) + 1)]   # sampled in the simulator
+  outcome[kind] = HistGradientBoostingClassifier(max_depth=3, min_samples_leaf=30).fit(X_kind, success_kind)
 translations:
   ru:
     name: Выучите симулятор среды
-    description: >-
-      Когда среда — чёрный ящик и доступны только записанные траектории, обучите на логах модель динамики
-      и классификаторы исходов и добавьте шум, сэмплируемый из эмпирических остатков (по режимам, слегка
-      увеличенный). Тогда планировать можно методом Монте-Карло внутри выученного симулятора.
+    when: Среда — чёрный ящик, и доступны только записанные траектории.
+    do: >-
+      Обучите на логах модель динамики и классификаторы исходов и добавьте шум, сэмплируемый из эмпирических
+      остатков (по режимам, слегка увеличенный).
+    why: Тогда планировать можно методом Монте-Карло внутри выученного симулятора.

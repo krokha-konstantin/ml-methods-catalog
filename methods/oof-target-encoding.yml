@@ -3,26 +3,34 @@ subsection: features
 order: 20
 grade: book
 name: Out-of-fold target encoding
-description: >-
-  Replace a category (or an entity such as a user) by statistics of the target over its other rows: computed
-  on the other folds, or leave-one-out excluding only the row itself, smoothed toward the global mean
-  for rare categories. Computing them on the same rows leaks each row's own target into its feature.
+when: >-
+  A categorical column (or an entity such as a user) has many levels and the target varies between them.
+do: >-
+  Replace the category by target statistics over its other rows: computed on the other folds, or leave-one-out
+  excluding only the row itself, smoothed toward the global mean for rare categories.
+why: Computing them on the same rows leaks each row's own target into its feature.
+see_also:
+- k-fold-oof
+- matrix-completion
 code: |
+  # out-of-fold encoding, and a smoothed leave-one-out variant
   for tr_idx, val_idx in kf.split(train):
-      mapping = train.iloc[tr_idx].groupby('district')['rent_price'].agg(func)
-      train.loc[train.index[val_idx], col] = train.iloc[val_idx]['district'].map(mapping)
-  test[col] = test['district'].map(train.groupby('district')['rent_price'].agg(func))
+      mapping = train.iloc[tr_idx].groupby('category')['target'].agg(func)
+      train.loc[train.index[val_idx], col] = train.iloc[val_idx]['category'].map(mapping)
+  test[col] = test['category'].map(train.groupby('category')['target'].agg(func))
 
-  for title, coordinate in title_index.items():
-      item = observed_pairs.get((row.protocol_text, title))
-      if item is not None and item[0] != int(row.id):      # skip the row itself
-          values[coordinate] = item[1]; mask[coordinate] = 1.0
-  row_mean = (sum(row_labels) + 2 * global_mean) / (len(row_labels) + 2)   # smoothed
+  g = train.groupby('entity')['target']
+  total, count = g.transform('sum'), g.transform('count')
+  train['entity_loo'] = (total - train['target'] + K * global_mean) / (count - 1 + K)   # skip the row itself
 translations:
   ru:
     name: Out-of-fold target encoding
-    description: >-
-      Замените категорию (или сущность, например пользователя) статистиками целевой переменной по другим
-      её строкам: посчитанными на других фолдах или по схеме leave-one-out, исключая только саму строку,
-      со сглаживанием к общему среднему для редких категорий. Если считать их на тех же строках, целевое
-      значение строки протекает в её собственный признак.
+    when: >-
+      Категориальный столбец (или сущность, например пользователь) имеет много значений, и целевая переменная
+      между ними различается.
+    do: >-
+      Замените категорию статистиками целевой переменной по другим её строкам: посчитанными на других
+      фолдах или по схеме leave-one-out, исключая только саму строку, со сглаживанием к общему среднему
+      для редких категорий.
+    why: >-
+      Если считать их на тех же строках, целевое значение строки протекает в её собственный признак.

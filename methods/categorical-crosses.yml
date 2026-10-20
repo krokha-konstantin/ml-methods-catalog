@@ -3,15 +3,16 @@ subsection: features
 order: 50
 grade: book
 name: Categorical crosses
-description: >-
-  Concatenate two categorical columns into a new category, so a model can learn effects that exist only
-  for specific combinations.
+do: Concatenate two categorical columns into a new category.
+why: A model can then learn effects that exist only for specific combinations.
+see_also:
+- conditioned-tokens
 code: |
-  X['material_bed_surface'] = X['material'].astype(str) + '_' + X['bed_surface'].astype(str)
-  X['material_printer_model'] = X['material'].astype(str) + '_' + X['printer_model'].astype(str)
+  # category pairs as new categories
+  X['a_x_b'] = X['cat_a'].astype(str) + '_' + X['cat_b'].astype(str)
+  X['a_x_c'] = X['cat_a'].astype(str) + '_' + X['cat_c'].astype(str)
 translations:
   ru:
     name: Пересечения категорий
-    description: >-
-      Склейте два категориальных столбца в новую категорию, чтобы модель могла выучить эффекты, которые
-      есть только у конкретных сочетаний.
+    do: Склейте два категориальных столбца в новую категорию.
+    why: Тогда модель может выучить эффекты, которые есть только у конкретных сочетаний.

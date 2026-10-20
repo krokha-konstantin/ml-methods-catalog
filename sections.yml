@@ -62,20 +62,22 @@
   title: {en: "Retrieval and ranking in a scientific domain", ru: "Поиск и ранжирование в научной области"}
 
 - id: planning
-  title: {en: "Planning, control, RL and games", ru: "Планирование, управление, RL и игры"}
+  title: {en: "Planning, control and RL", ru: "Планирование, управление и RL"}
   subsections:
     - id: model-based
       title: {en: "Model-based planning with a learned simulator", ru: "Планирование по обученному симулятору"}
     - id: rl
       title: {en: "Reinforcement learning", ru: "Обучение с подкреплением"}
-    - id: games
-      title: {en: "Game strategy", ru: "Игровые стратегии"}
 
 - id: weak-supervision
   title: {en: "Unsupervised and weak supervision", ru: "Обучение без учителя и слабая разметка"}
 
-- id: physics
-  title: {en: "Physics / reverse-engineering the generator", ru: "Физика / восстановление генератора данных"}
-
-- id: theory
-  title: {en: "Math / theory problems", ru: "Математика / теоретические задачи"}
+- id: puzzles
+  title: {en: "Puzzles and one-off problems", ru: "Головоломки и разовые задачи"}
+  subsections:
+    - id: simulation
+      title: {en: "Simulation and reverse-engineering the generator", ru: "Симуляция и восстановление генератора данных"}
+    - id: games
+      title: {en: "Game strategy", ru: "Игровые стратегии"}
+    - id: theory
+      title: {en: "Math and theory", ru: "Математика и теория"}

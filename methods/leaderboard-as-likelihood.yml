@@ -3,11 +3,18 @@ subsection: leaderboard
 order: 10
 grade: good
 name: Leaderboard scores as a likelihood
-description: >-
-  When the target is produced by a hidden stochastic system, simulate it many times and weight each simulated
-  world by how well it reproduces the real leaderboard scores of submissions already made. Optimising
-  the next submission under these weights uses the leaderboard as evidence about the hidden system.
+when: >-
+  The target is produced by a hidden stochastic system, and leaderboard scores of earlier submissions
+  are known.
+do: >-
+  Simulate the system many times and weight each simulated world by how well it reproduces the real leaderboard
+  scores; optimise the next submission under these weights.
+why: The leaderboard becomes evidence about the hidden system instead of just a score.
+see_also:
+- expected-improvement-objective
+- learned-simulator
 code: |
+  # weight simulated scenarios by how well they reproduce past leaderboard scores
   obs = np.array(past_lb_scores, float)            # real LB scores of plans already submitted
   sim = simulated_scores                           # (n_scenarios, n_past_plans), same plans in the simulator
   ll = -((sim - obs) ** 2).sum(1) / (2 * SIG ** 2) # SIG = 25
@@ -17,8 +24,10 @@ code: |
 translations:
   ru:
     name: Результаты лидерборда как правдоподобие
-    description: >-
-      Если целевая величина порождается скрытой стохастической системой, промоделируйте её много раз и
-      взвесьте каждый смоделированный мир по тому, насколько он воспроизводит реальные результаты уже
-      отправленных решений. Оптимизация следующей посылки с этими весами использует лидерборд как свидетельство
-      о скрытой системе.
+    when: >-
+      Целевая величина порождается скрытой стохастической системой, и результаты прошлых посылок на лидерборде
+      известны.
+    do: >-
+      Промоделируйте систему много раз и взвесьте каждый смоделированный мир по тому, насколько он воспроизводит
+      реальные результаты; оптимизируйте следующую посылку с этими весами.
+    why: Лидерборд становится свидетельством о скрытой системе, а не просто оценкой.

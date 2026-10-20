@@ -3,17 +3,22 @@ subsection: models
 order: 30
 grade: book
 name: Univariate AUC filter
-description: >-
-  Drop features whose single-feature ROC-AUC (taken as max(AUC, 1 − AUC)) is close to 0.5. It is a cheap
-  first cut on a large generated feature set.
+when: A large generated feature set needs a cheap first cut.
+do: Drop features whose single-feature ROC-AUC, taken as max(AUC, 1 − AUC), is close to 0.5.
+why: Features with no signal on their own are removed before any model is trained.
+see_also:
+- leave-one-branch-out
 code: |
-  for c in Xtr_mw.columns:
-      a = roc_auc_score(y, Xtr_mw[c].values)
+  # keep features whose own ROC-AUC is away from 0.5
+  for c in X.columns:
+      a = roc_auc_score(y, X[c].values)
       aucs[c] = max(a, 1 - a)
   keep = [c for c, a in aucs.items() if a > 0.52]
 translations:
   ru:
     name: Фильтр по одномерному AUC
-    description: >-
-      Убирайте признаки, у которых ROC-AUC по одному признаку (берётся max(AUC, 1 − AUC)) близок к 0.5.
-      Это дешёвый первый отсев большого сгенерированного набора признаков.
+    when: Большой сгенерированный набор признаков нужно быстро проредить.
+    do: >-
+      Убирайте признаки, у которых ROC-AUC по одному признаку, взятый как max(AUC, 1 − AUC), близок к
+      0.5.
+    why: Признаки без сигнала отсеиваются до обучения какой-либо модели.

@@ -1,11 +1,15 @@
-section: theory
+section: puzzles
+subsection: theory
 order: 50
 grade: book
 name: Feature lifting makes a circle linearly separable
-description: >-
-  Adding x² + y² as a feature turns a circular boundary into a linear one; fit a linear SVM, undo the
-  feature scaling, and read the centre and radius from the weights.
+when: Classes are separated by a circle.
+do: >-
+  Add x² + y² as a feature, fit a linear SVM, undo the feature scaling and read the centre and radius
+  from the weights.
+why: The lifted feature turns a circular boundary into a linear one.
 code: |
+  # circle as a linear boundary in (x² + y², x, y)
   X = np.column_stack([xs * xs + ys * ys, xs, ys])
   clf.fit(scaler.fit_transform(X), y)
   w = clf.coef_[0] / scaler.scale_; b = clf.intercept_[0] - (clf.coef_[0] * scaler.mean_ / scaler.scale_).sum()
@@ -14,6 +18,8 @@ code: |
 translations:
   ru:
     name: Подъём признаков делает окружность линейно разделимой
-    description: >-
-      Добавление x² + y² как признака превращает круговую границу в линейную; обучите линейный SVM, отмените
-      масштабирование признаков и прочитайте центр и радиус по весам.
+    when: Классы разделены окружностью.
+    do: >-
+      Добавьте признак x² + y², обучите линейный SVM, отмените масштабирование признаков и прочитайте
+      центр и радиус по весам.
+    why: Поднятый признак превращает круговую границу в линейную.

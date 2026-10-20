@@ -3,26 +3,30 @@ subsection: features
 order: 60
 grade: book
 name: Within-group normalisation
-description: >-
-  Express a value relative to its own group: a z-score against the group's mean and std. "Unusual for
-  this group" is often more predictive than the raw value, which mixes the group's baseline with the deviation.
-  Fit the group statistics on training data only.
+when: Rows belong to groups with different baselines (materials, sessions, devices).
+do: >-
+  Express a value relative to its own group: a z-score against the group's mean and std, fitted on training
+  data only.
+why: >-
+  "Unusual for this group" is often more predictive than the raw value, which mixes the group's baseline
+  with the deviation.
+see_also:
+- group-aggregate-features
 code: |
-  def add_group_zscore(X, stats, group_col, cols, prefix):
-      for col in cols:
-          mean = X[group_col].map(stats[f'{col}_mean'])
-          std = X[group_col].map(stats[f'{col}_std']).replace(0, np.nan)
-          z = (X[col] - mean) / std
-          X[f'{prefix}_{col}_stndrd_zscore'] = z
-          X[f'{prefix}_{col}_abs_zscore'] = z.abs()
-  material_stats = compute_group_stats(X_train_raw, 'material', zscore_cols)   # fit on train split only
-
-  filled[s] = g[s].transform(lambda c: c.ffill().bfill())
-  meta[f"{name}_absz"] = ((x - grp.transform("mean")).abs() / grp.transform("std")).values
+  # z-score against the row's own group
+  stats = X_train.groupby('group')[cols].agg(['mean', 'std'])          # fit on train only
+  for col in cols:
+      mean = X['group'].map(stats[(col, 'mean')])
+      std = X['group'].map(stats[(col, 'std')]).replace(0, np.nan)
+      X[f'{col}_group_z'] = (X[col] - mean) / std
+      X[f'{col}_group_absz'] = X[f'{col}_group_z'].abs()
 translations:
   ru:
     name: Нормализация внутри группы
-    description: >-
+    when: Строки принадлежат группам с разным базовым уровнем (материалы, сессии, устройства).
+    do: >-
       Выражайте значение относительно его группы: z-оценка относительно среднего и стандартного отклонения
-      группы. «Необычно для этой группы» часто предсказывает лучше, чем сырое значение, в котором смешаны
-      базовый уровень группы и отклонение от него. Статистики групп считайте только на обучающих данных.
+      группы, посчитанных только на обучающих данных.
+    why: >-
+      «Необычно для этой группы» часто предсказывает лучше сырого значения, в котором смешаны базовый
+      уровень группы и отклонение от него.

@@ -2,20 +2,27 @@ section: nlp
 order: 30
 grade: good
 name: Explicit overlap tokens for text pairs
-description: >-
-  For a pair of texts, emit tokens that describe their relation (term present in both, term absent from
-  the second, term negated nearby) and vectorise those. A linear model then sees the interaction between
-  the two texts, which two separate bags of words cannot express.
+when: The input is a pair of texts and the model is linear.
+do: >-
+  Emit tokens that describe their relation (term present in both, term absent from the second, term negated
+  nearby) and vectorise those.
+why: >-
+  Two separate bags of words can't express the interaction between the texts; relation tokens can.
+see_also:
+- rule-based-condition-matching
 code: |
-  for token in sorted(title_tokens):
-      features.append(("match_" if token in protocol_tokens else "absent_") + token)
-      for occ in re.finditer(re.escape(token[:max(4, len(token) - 2)]), protocol_normalized):
-          if NEGATION_RE.search(protocol_normalized[max(0, occ.start() - 45):occ.start()]):
+  # relation tokens for a (query, document) pair
+  for token in sorted(query_tokens):
+      features.append(("match_" if token in doc_tokens else "absent_") + token)
+      for occ in re.finditer(re.escape(token[:max(4, len(token) - 2)]), doc_text):
+          if NEGATION_RE.search(doc_text[max(0, occ.start() - 45):occ.start()]):
               features.append("negated_" + token); break
 translations:
   ru:
     name: Явные токены пересечения для пар текстов
-    description: >-
-      Для пары текстов порождайте токены, описывающие их отношение (термин есть в обоих, термина нет во
-      втором, рядом с термином отрицание), и векторизуйте их. Тогда линейная модель видит взаимодействие
-      двух текстов, которое не выразить двумя отдельными мешками слов.
+    when: На входе пара текстов, а модель линейная.
+    do: >-
+      Порождайте токены, описывающие их отношение (термин есть в обоих, термина нет во втором, рядом с
+      термином отрицание), и векторизуйте их.
+    why: >-
+      Два отдельных мешка слов не выражают взаимодействие текстов, а токены отношений — выражают.

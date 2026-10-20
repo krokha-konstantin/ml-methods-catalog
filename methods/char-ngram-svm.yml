@@ -2,15 +2,18 @@ section: nlp
 order: 10
 grade: book
 name: Character n-gram TF-IDF + linear SVM
-description: >-
-  Character n-grams within word boundaries are robust to inflection and spelling variants, which matters
-  for morphologically rich languages and short texts; a linear SVM on them is a fast, strong baseline.
+when: Texts are short, or the language has rich morphology and spelling variants.
+do: Vectorise character n-grams within word boundaries with TF-IDF and train a linear SVM.
+why: >-
+  Character n-grams are robust to inflection and typos, and the model is a fast, strong baseline.
 code: |
+  # char_wb n-grams + linear SVM
   vectorizer = TfidfVectorizer(analyzer="char_wb", ngram_range=(3, 6), min_df=2, sublinear_tf=True, max_features=150_000)
-  model = LinearSVC(C=1.2).fit(vectorizer.fit_transform(fit_docs), labels[fit_index])
+  model = LinearSVC(C=1.2).fit(vectorizer.fit_transform(train_texts), train_labels)
 translations:
   ru:
     name: TF-IDF по символьным n-граммам + линейный SVM
-    description: >-
-      Символьные n-граммы внутри границ слов устойчивы к словоизменению и вариантам написания, что важно
-      для языков с богатой морфологией и коротких текстов; линейный SVM на них — быстрый и сильный бейзлайн.
+    when: Тексты короткие, или в языке богатая морфология и варианты написания.
+    do: Векторизуйте символьные n-граммы внутри границ слов через TF-IDF и обучите линейный SVM.
+    why: >-
+      Символьные n-граммы устойчивы к словоизменению и опечаткам, а модель — быстрый и сильный бейзлайн.

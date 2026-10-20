@@ -3,18 +3,25 @@ subsection: thresholds
 order: 40
 grade: good
 name: Adjust the positive rate for label shift
-description: >-
-  If the test set's mix of groups differs from train, the expected share of positives differs too. Estimate
-  it from per-group training priors weighted by the test's group mix, and rescale the transferred share
-  accordingly.
+when: The test set's mix of groups differs from the training set's.
+do: >-
+  Estimate the expected positive rate from per-group training priors weighted by the test's group mix,
+  and rescale the transferred share of positives accordingly.
+why: >-
+  The expected share of positives moves with the group mix; keeping the training share is biased.
+see_also:
+- positive-share-transfer
 code: |
+  # expected positive rate under the test's group mix
   def expected_positive_rate(frame, priors, global_mean):
-      return float(priors.reindex(frame["title_text"].map(extract_leaf)).fillna(global_mean).mean())
+      return float(frame["group"].map(priors).fillna(global_mean).mean())
   share_multiplier = expected_positive_rate(test, priors, m) / expected_positive_rate(train, priors, m)
 translations:
   ru:
     name: Поправка доли положительных на сдвиг меток
-    description: >-
-      Если состав групп в тесте отличается от обучающего, ожидаемая доля положительных тоже другая. Оцените
-      её по априорным долям групп из обучения, взвешенным по составу теста, и масштабируйте переносимую
-      долю.
+    when: Состав групп в тесте отличается от обучающего.
+    do: >-
+      Оцените ожидаемую долю положительных по априорным долям групп из обучения, взвешенным по составу
+      теста, и масштабируйте переносимую долю положительных.
+    why: >-
+      Ожидаемая доля положительных меняется вместе с составом групп; обучающая доля даёт смещение.

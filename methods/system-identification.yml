@@ -1,26 +1,37 @@
-section: physics
+section: puzzles
+subsection: simulation
 order: 40
 grade: book
 name: System identification of the data generator
-description: >-
-  Guess the rule that generates the data from the observed transitions and fit its parameters by minimising
-  simulation error. Extend the simulated horizon progressively, so errors that only show up over many
-  steps refine the fit.
+when: The data comes from an unknown but simple generating rule.
+do: >-
+  Guess the rule from the observed transitions and fit its parameters by minimising simulation error,
+  extending the simulated horizon progressively.
+why: >-
+  A correct rule extrapolates far better than any learned model; the growing horizon lets errors that
+  only show up over many steps refine the fit.
+see_also:
+- billiard-simulation
+- predictability-horizon
 code: |
-  def apply_coll(p1, v1, p2, v2):
+  # a guessed collision law with one parameter, fitted by ternary search on simulation error
+  def collide(p1, v1, p2, v2):
       n = (p1 - p2) / np.linalg.norm(p1 - p2); vrn = np.dot(v1 - v2, n)
       if vrn >= 0: return v1.copy(), v2.copy()
       return v1 - (1 - ALPHA) * vrn * n, v2 + (1 + ALPHA) * vrn * n
-  def ternary_search_alpha(D, N, lo, hi, iters=60):
+  def fit_alpha(lo, hi, iters=60):
       for _ in range(iters):
           m1 = lo + (hi - lo) / 3; m2 = hi - (hi - lo) / 3
-          if run_n(m1, D, N) < run_n(m2, D, N): hi = m2
+          if simulation_error(m1) < simulation_error(m2): hi = m2
           else: lo = m1
       return (lo + hi) / 2
 translations:
   ru:
     name: Идентификация системы, порождающей данные
-    description: >-
-      Угадайте по наблюдаемым переходам правило, которое порождает данные, и подберите его параметры,
-      минимизируя ошибку симуляции. Постепенно увеличивайте горизонт симуляции, чтобы ошибки, заметные
-      только на многих шагах, уточняли подгонку.
+    when: Данные порождаются неизвестным, но простым правилом.
+    do: >-
+      Угадайте правило по наблюдаемым переходам и подберите его параметры, минимизируя ошибку симуляции
+      и постепенно увеличивая горизонт симуляции.
+    why: >-
+      Верное правило экстраполирует гораздо лучше любой обученной модели; растущий горизонт позволяет
+      ошибкам, заметным только на многих шагах, уточнять подгонку.

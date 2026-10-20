@@ -3,14 +3,17 @@ subsection: models
 order: 40
 grade: book
 name: Huber loss
-description: >-
-  Quadratic for small errors and linear for large ones, so a few outlier periods (closures, one-off events)
-  don't dominate training.
+when: A few outlier periods (closures, one-off events) are in the training data.
+do: 'Use the Huber loss: quadratic for small errors, linear for large ones.'
+why: The outliers no longer dominate training.
+see_also:
+- smoothing-and-robust-fit
 code: |
+  # Huber objective in gradient boosting
   LGB_HUBER = dict(objective='huber', metric='mae', alpha=0.9, learning_rate=0.03, num_leaves=255, min_data_in_leaf=200)
 translations:
   ru:
     name: Функция потерь Хьюбера
-    description: >-
-      Квадратичная для малых ошибок и линейная для больших, поэтому несколько выбросов (закрытия, разовые
-      события) не доминируют в обучении.
+    when: В обучающих данных есть несколько выбросов (закрытия, разовые события).
+    do: 'Используйте функцию потерь Хьюбера: квадратичную для малых ошибок и линейную для больших.'
+    why: Выбросы перестают доминировать в обучении.

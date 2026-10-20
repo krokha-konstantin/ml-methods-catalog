@@ -1,28 +1,32 @@
 # Copy this file to methods/<short-id>.yml (lowercase, hyphens). Files starting with "_" are ignored.
-# The file name is the method's id: it is used in page anchors (#en-m-<id>), so avoid renaming it later.
+# The file name is the method's id: it is used in page anchors (#en-m-<id>) and in `see_also`, so avoid renaming it later.
 
 section: universal            # an `id` from sections.yml
 subsection: validation        # required if the section has subsections, omitted otherwise
 order: 110                    # position inside the subsection (lower = earlier); steps of 10 leave room
 grade: good                   # book | good | brilliant — rate the idea, not whether it worked
 
-# English is required. Follow WRITING.md: the name is the general technique in standard ML terms,
-# the description is the principle + why it matters, with no task specifics.
-# Inline markdown (**bold**, `code`, *italic*) is allowed.
+# English is required. Follow WRITING.md: the name is the general technique in standard ML terms;
+# when / do / why are one or two sentences each, with no task specifics. Inline markdown is allowed.
+# Glossary terms (glossary.yml) are underlined automatically; don't define them inline.
 name: Short name of the technique
-description: >-
-  What to do, in general terms. Then the failure mode it prevents or the payoff.
+when: The situation in which the technique applies.     # optional: leave out for always-applicable techniques
+do: What to do, in general terms.                        # required
+why: The failure mode it prevents or the payoff.
+
+see_also: [k-fold-oof, stacking]   # optional: ids of related methods (add the reverse link in their files too)
 
 sketch: false                 # true = the code is a minimal illustration, not from a real solution
 code: |
-  # a short, self-contained snippet with readable variable names
-  ...
+  # one line saying what the snippet shows
+  ... a short, self-contained snippet with generic variable names
 
 # Optional. Any language listed in site.yml. A method without a translation for the chosen
 # language is shown in English (marked "EN"); missing fields fall back to English one by one.
 translations:
   ru:
     name: Короткое название приёма
-    description: >-
-      Что делать в общем виде и почему это важно.
+    when: Ситуация, в которой приём применим.
+    do: Что делать в общем виде.
+    why: Какую ошибку это предотвращает или что даёт.
     # code: |          # optional, only if the snippet itself needs translated comments

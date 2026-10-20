@@ -2,10 +2,15 @@ section: weak-supervision
 order: 30
 grade: book
 name: Cluster-then-label
-description: >-
-  With few labels, cluster all data, give each cluster the majority label of its labelled points, then
-  train a classifier on the resulting pseudo-labels.
+when: Few labels are available, and the classes form clusters.
+do: >-
+  Cluster all data, give each cluster the majority label of its labelled points, then train a classifier
+  on the resulting pseudo-labels.
+why: The unlabelled data shapes the boundary; the few labels only name the clusters.
+see_also:
+- dawid-skene
 code: |
+  # spectral clustering → majority label per cluster → SVM on pseudo-labels
   cluster_labels = SpectralClustering(n_clusters=2, affinity='rbf', gamma=10).fit_predict(X)
   for cluster in range(2):
       cluster_to_label[cluster] = Counter(y_labeled[cluster_labels[labeled_mask] == cluster]).most_common(1)[0][0]
@@ -13,6 +18,8 @@ code: |
 translations:
   ru:
     name: Кластеризация, затем разметка
-    description: >-
-      При малом числе меток кластеризуйте все данные, присвойте каждому кластеру метку большинства его
-      размеченных точек и обучите классификатор на полученных псевдометках.
+    when: Меток мало, а классы образуют кластеры.
+    do: >-
+      Кластеризуйте все данные, присвойте каждому кластеру метку большинства его размеченных точек и обучите
+      классификатор на полученных псевдометках.
+    why: Неразмеченные данные задают границу, а немногие метки лишь называют кластеры.

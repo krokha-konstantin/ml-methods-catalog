@@ -3,19 +3,24 @@ subsection: validation
 order: 40
 grade: good
 name: Cold-start stress test
-description: >-
-  If the test set may contain entities never seen in training, also run a CV grouped by that entity, next
-  to the normal CV. The gap between the two shows how much the score relies on memorising known entities.
+when: The test set may contain entities never seen in training.
+do: Next to the normal CV, also run a CV grouped by that entity.
+why: >-
+  The gap between the two scores shows how much the model relies on memorising known entities.
+see_also:
+- group-k-fold
+- shallow-regularised-trees
 code: |
-  groups = train["protocol_text"].map(normalize_text)
+  # same pipeline, harder split: no entity appears in both train and validation
+  groups = train["entity_id"]
   splitter = StratifiedGroupKFold(n_splits=n_splits, shuffle=True, random_state=SEED)
   for fold, (_, valid_index) in enumerate(splitter.split(train, labels, groups=groups)):
       folds[valid_index] = fold
-  oof = run_stage2_oof(train, test, precomputed_folds=folds)   # same pipeline, harder split
+  oof = run_pipeline_oof(train, test, precomputed_folds=folds)
 translations:
   ru:
     name: Стресс-тест холодного старта
-    description: >-
-      Если в тесте могут встретиться сущности, которых не было в обучении, помимо обычной CV запускают
-      CV с группировкой по этой сущности. Разница между ними показывает, насколько оценка держится на
-      запоминании известных сущностей.
+    when: В тесте могут встретиться сущности, которых не было в обучении.
+    do: Помимо обычной CV запустите CV с группировкой по этой сущности.
+    why: >-
+      Разница между двумя оценками показывает, насколько модель держится на запоминании известных сущностей.

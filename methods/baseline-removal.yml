@@ -2,16 +2,21 @@ section: signals
 order: 20
 grade: book
 name: Remove baseline drift
-description: >-
-  Subtract the slow drift of the signal before extracting features, so amplitude features measure the
-  waveform itself and not where the baseline happened to be.
+when: The signal has slow baseline drift.
+do: Subtract the drift before extracting features.
+why: >-
+  Amplitude features then measure the waveform itself, not where the baseline happened to be.
+see_also:
+- segment-based-features
 code: |
+  # subtract a known slow baseline
   def baseline_correction(x):
       baseline = 0.5 * np.sin(np.arange(x.shape[1]) / 45)
       return x - baseline
 translations:
   ru:
     name: Убирайте дрейф базовой линии
-    description: >-
-      Вычитайте медленный дрейф сигнала перед извлечением признаков, чтобы амплитудные признаки измеряли
-      саму форму волны, а не случайное положение базовой линии.
+    when: У сигнала медленный дрейф базовой линии.
+    do: Вычитайте дрейф перед извлечением признаков.
+    why: >-
+      Тогда амплитудные признаки измеряют саму форму волны, а не случайное положение базовой линии.

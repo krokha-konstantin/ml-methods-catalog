@@ -3,18 +3,27 @@ subsection: validation
 order: 100
 grade: book
 name: Fix the number of boosting rounds, then refit on all data
-description: >-
-  Early stopping needs held-out data, so find the best iteration on a held-out group, then retrain on
-  all data with that fixed count.
+when: >-
+  You want the final boosting model trained on all data, but early stopping needs held-out data.
+do: >-
+  Find the best number of rounds on a held-out group, then retrain on all data with that fixed count.
+why: The final model uses every row without guessing when to stop.
+see_also:
+- gbdt-early-stopping
+- validation-into-training
 code: |
+  # find the best iteration on held-out sessions, then refit on everything with that count
   es_val_sessions = rng.choice(sessions, size=6, replace=False)
   es_va_mask = np.isin(groups, es_val_sessions)
-  probe.fit(Wtr[~es_va_mask], y[~es_va_mask], eval_set=[(Wtr[es_va_mask], y[es_va_mask])],
+  probe.fit(X[~es_va_mask], y[~es_va_mask], eval_set=[(X[es_va_mask], y[es_va_mask])],
             callbacks=[lgb.early_stopping(200, verbose=False)])
-  final_lgb = lgb.LGBMClassifier(**{**lgbm_params, "n_estimators": probe.best_iteration_}).fit(Wtr, y)
+  final_model = lgb.LGBMClassifier(**params, n_estimators=probe.best_iteration_).fit(X, y)
 translations:
   ru:
     name: Зафиксировать число итераций бустинга и переобучить на всех данных
-    description: >-
-      Ранней остановке нужны отложенные данные, поэтому лучшая итерация находится на отложенной группе,
-      а затем модель переобучается на всех данных с этим фиксированным числом итераций.
+    when: >-
+      Итоговую модель бустинга хочется обучить на всех данных, но ранней остановке нужны отложенные данные.
+    do: >-
+      Найдите лучшее число итераций на отложенной группе, затем переобучите модель на всех данных с этим
+      фиксированным числом.
+    why: Итоговая модель использует все строки и не гадает, когда остановиться.

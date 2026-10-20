@@ -3,18 +3,22 @@ subsection: leaderboard
 order: 20
 grade: good
 name: Optimise expected improvement over your best score
-description: >-
-  If only your best submission counts, the mean score is the wrong objective: optimise E[max(score − best,
-  0)] instead. It deliberately prefers high-variance submissions that have a real chance of beating the
-  current best.
+when: Only your best submission counts.
+do: Optimise E[max(score − best, 0)] instead of the mean score.
+why: >-
+  It deliberately prefers high-variance submissions that have a real chance of beating the current best.
+see_also:
+- leaderboard-as-likelihood
 code: |
+  # expected improvement over the best score already banked
   BANK = 335.0                                       # best LB score already achieved
   def ei(scenario_scores): return np.maximum(scenario_scores - BANK, 0).mean()
   objective = ei(simulate(plan))                     # maximise this instead of the mean score
 translations:
   ru:
     name: Оптимизируйте ожидаемое улучшение над лучшим результатом
-    description: >-
-      Если засчитывается только лучшая посылка, средний результат — неправильная цель: оптимизируйте E[max(результат
-      − лучший, 0)]. Такая цель сознательно выбирает посылки с большим разбросом, у которых есть реальный
-      шанс превзойти текущий лучший результат.
+    when: Засчитывается только лучшая посылка.
+    do: Оптимизируйте E[max(результат − лучший, 0)] вместо среднего результата.
+    why: >-
+      Такая цель сознательно выбирает посылки с большим разбросом, у которых есть реальный шанс превзойти
+      текущий лучший результат.

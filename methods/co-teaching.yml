@@ -2,10 +2,15 @@ section: weak-supervision
 order: 40
 grade: book
 name: Co-teaching for noisy labels
-description: >-
+when: Training labels are noisy.
+do: >-
   Train two networks at once; each selects its low-loss samples (likely correctly labelled) and the other
-  network trains on them. Because the two make different mistakes, they filter each other's noise.
+  network trains on them.
+why: The two make different mistakes, so they filter each other's noise.
+see_also:
+- class-specific-keep-rates
 code: |
+  # each model trains on the other model's lowest-loss samples
   for i in range(2):
       t = losses[1 - i].clone()                      # the OTHER model's losses
       t[targets != class_idx] = float("Inf")
@@ -14,7 +19,8 @@ code: |
 translations:
   ru:
     name: Co-teaching для шумных меток
-    description: >-
+    when: Обучающие метки шумные.
+    do: >-
       Обучайте две сети одновременно; каждая отбирает свои примеры с малой ошибкой (вероятно, правильно
-      размеченные), и на них обучается другая сеть. Поскольку сети ошибаются по-разному, они отфильтровывают
-      шум друг друга.
+      размеченные), и на них обучается другая сеть.
+    why: Сети ошибаются по-разному, поэтому отфильтровывают шум друг друга.

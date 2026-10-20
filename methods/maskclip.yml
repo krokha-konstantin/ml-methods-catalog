@@ -3,11 +3,14 @@ subsection: matching
 order: 30
 grade: good
 name: Score many image regions in one forward pass
-description: >-
-  Add one extra token per candidate region to a vision transformer and restrict its attention to the patches
-  of that region. One forward pass then yields an embedding for every candidate, which can be compared
-  with text embeddings for zero-shot localisation (MaskCLIP).
+when: Many candidate regions of one image have to be compared with a text query.
+do: >-
+  Add one extra token per region to a vision transformer and restrict its attention to that region's patches
+  (MaskCLIP).
+why: >-
+  One forward pass yields an embedding for every candidate, ready for zero-shot comparison with text embeddings.
 code: |
+  # attention mask: one token per region, attending only to that region's patches
   attention_mask[:N+1, N+1:] = True                 # patches never see mask tokens
   attention_mask[N+1:, 1:N+1] = True                # mask tokens see nothing...
   for mask_idx in range(M):
@@ -16,7 +19,10 @@ code: |
 translations:
   ru:
     name: Оценка многих областей изображения за один проход
-    description: >-
-      Добавьте в визуальный трансформер по дополнительному токену на каждую область-кандидат и ограничьте
-      его внимание патчами этой области. Один прямой проход даёт эмбеддинг для каждого кандидата, который
-      можно сравнить с текстовыми эмбеддингами для локализации без обучения (MaskCLIP).
+    when: Много областей-кандидатов одного изображения нужно сравнить с текстовым запросом.
+    do: >-
+      Добавьте в визуальный трансформер по дополнительному токену на каждую область и ограничьте его внимание
+      патчами этой области (MaskCLIP).
+    why: >-
+      Один прямой проход даёт эмбеддинг для каждого кандидата, готовый для zero-shot сравнения с текстовыми
+      эмбеддингами.

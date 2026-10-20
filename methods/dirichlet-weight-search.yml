@@ -3,11 +3,15 @@ subsection: ensembling
 order: 50
 grade: good
 name: Random search of blend weights on the simplex
-description: >-
-  Sample candidate weight vectors from a Dirichlet distribution (non-negative, summing to 1) and score
-  each blend on saved OOF predictions. It handles any metric, including non-differentiable ones, and needs
-  no re-training.
+do: >-
+  Sample candidate blend weights from a Dirichlet distribution (non-negative, summing to 1) and score
+  each blend on saved OOF predictions.
+why: It works with any metric, including non-differentiable ones, and needs no re-training.
+see_also:
+- leave-one-branch-out
+- weighted-blend
 code: |
+  # random search of blend weights on the simplex
   trials = rng.dirichlet(np.ones(len(names)), size=n_trials)
   for trial in trials:
       blend = sum(weight * components[name] for weight, name in zip(trial, names))
@@ -15,7 +19,7 @@ code: |
 translations:
   ru:
     name: Случайный поиск весов бленда на симплексе
-    description: >-
-      Сэмплируйте векторы весов из распределения Дирихле (неотрицательные, сумма 1) и оценивайте каждый
-      бленд на сохранённых OOF-предсказаниях. Подходит для любой метрики, в том числе недифференцируемой,
-      и не требует переобучения.
+    do: >-
+      Сэмплируйте векторы весов бленда из распределения Дирихле (неотрицательные, сумма 1) и оценивайте
+      каждый бленд на сохранённых OOF-предсказаниях.
+    why: Подходит для любой метрики, в том числе недифференцируемой, и не требует переобучения.

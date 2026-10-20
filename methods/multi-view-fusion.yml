@@ -3,15 +3,22 @@ subsection: detection-segmentation
 order: 70
 grade: good
 name: Fuse several 2-D projections of a 3-D signal
-description: >-
-  Encode each projection with its own network, then bring them onto the target plane: sum over the axes
-  a view doesn't share with the target and broadcast along the missing one, then concatenate and decode.
+when: >-
+  A 3-D signal is given as several 2-D projections, and the output lives on one of the planes.
+do: >-
+  Encode each projection with its own network, then bring the features onto the target plane: sum over
+  the axes a view doesn't share with it and broadcast along the missing one; concatenate and decode.
+why: Every view contributes in the output's coordinates without building the full 3-D volume.
 code: |
-  feas_sre = torch.sum(feas_sre, 3, keepdim=True).expand(-1, -1, -1, azimuth_size)   # range-elevation → range-azimuth
-  feas_ra = torch.cat((feas_sra, feas_dra, feas_sre, feas_dre, feas_srd, feas_drd), 1)
+  # range-elevation features projected onto the range-azimuth plane
+  feats_re = torch.sum(feats_re, 3, keepdim=True).expand(-1, -1, -1, azimuth_size)
+  fused = torch.cat((feats_ra, feats_re, feats_rd), 1)
 translations:
   ru:
     name: Объединение нескольких 2-D проекций 3-D сигнала
-    description: >-
-      Кодируйте каждую проекцию своей сетью, затем переносите их на целевую плоскость: суммируйте по осям,
-      которых нет у целевой плоскости, и размножайте вдоль недостающей, после чего склейте и декодируйте.
+    when: >-
+      Трёхмерный сигнал дан несколькими двумерными проекциями, а выход задан на одной из плоскостей.
+    do: >-
+      Кодируйте каждую проекцию своей сетью, затем переносите признаки на целевую плоскость: суммируйте
+      по осям, которых у неё нет, и размножайте вдоль недостающей; склейте и декодируйте.
+    why: Каждый вид вносит вклад в координатах выхода без построения полного трёхмерного объёма.

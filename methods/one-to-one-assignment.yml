@@ -3,20 +3,31 @@ subsection: matching
 order: 20
 grade: good
 name: Enforce one-to-one matching
-description: >-
-  When each gallery item can be the answer for only one query, don't match queries independently: remove
-  an item once it is matched (greedy) or solve a global assignment (Hungarian). It also lets a hard query
-  be solved through a chain of easier matches.
+when: Each gallery item can be the answer for only one query.
+do: >-
+  Don't match queries independently: remove an item once it is matched (greedy) or solve a global assignment
+  (Hungarian algorithm).
+why: >-
+  Constraints between queries resolve ambiguous ones, and a hard query can be solved through a chain of
+  easier matches.
+see_also:
+- partial-fine-tune-contrastive
 code: |
-  for q_name, matched_crop in crop_matches.items():
-      sims = [(g, cos(gallery[matched_crop], f)) for g, f in gallery.items()
-              if g != matched_crop and g not in matched_galleries]
-      gender_match = max(sims, key=lambda s: s[1])[0]
-      matched_galleries.add(gender_match)
+  # greedy one-to-one: an item, once matched, is no longer a candidate
+  used = set()
+  for query, anchor in confident_matches.items():
+      sims = [(g, cos(gallery[anchor], f)) for g, f in gallery.items() if g != anchor and g not in used]
+      best = max(sims, key=lambda s: s[1])[0]
+      used.add(best)
+
+  rows, cols = linear_sum_assignment(-similarity)   # or the global optimum
 translations:
   ru:
     name: Навяжите взаимно однозначное сопоставление
-    description: >-
-      Если каждый элемент галереи может быть ответом только для одного запроса, не сопоставляйте запросы
-      независимо: убирайте элемент после сопоставления (жадно) или решайте глобальную задачу о назначениях
-      (венгерский алгоритм). Это также позволяет решить трудный запрос через цепочку более лёгких сопоставлений.
+    when: Каждый элемент галереи может быть ответом только для одного запроса.
+    do: >-
+      Не сопоставляйте запросы независимо: убирайте элемент после сопоставления (жадно) или решайте глобальную
+      задачу о назначениях (венгерский алгоритм).
+    why: >-
+      Ограничения между запросами разрешают неоднозначные случаи, а трудный запрос решается через цепочку
+      более лёгких сопоставлений.

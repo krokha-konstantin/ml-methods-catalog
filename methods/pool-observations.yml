@@ -1,17 +1,21 @@
-section: physics
+section: puzzles
+subsection: simulation
 order: 20
 grade: good
 name: Pool observations across agents
-description: >-
-  When several agents move through the same environment, merge what each of them reveals. Parts seen by
-  only one agent still constrain the others' predictions.
+when: Several agents move through the same environment.
+do: Merge what each of them reveals into one shared model of the environment.
+why: Parts seen by only one agent still constrain the others' predictions.
+see_also:
+- event-based-map-reconstruction
 code: |
-  combined = pd.concat([interior1, interior2])
+  # one shared map from both agents' observations
+  combined = pd.concat([observations_agent1, observations_agent2])
   for _, row in combined.iterrows():
-      wall_map.setdefault((row['snap_x'], row['snap_y']), []).append(row['angle_deg'])
+      env_map.setdefault((row['cell_x'], row['cell_y']), []).append(row['angle_deg'])
 translations:
   ru:
     name: Объединяйте наблюдения разных агентов
-    description: >-
-      Когда несколько агентов движутся в одной среде, объединяйте то, что открывает каждый. Части, увиденные
-      только одним агентом, всё равно ограничивают предсказания для остальных.
+    when: Несколько агентов движутся в одной среде.
+    do: Объединяйте то, что открывает каждый, в одну общую модель среды.
+    why: Части, увиденные только одним агентом, всё равно ограничивают предсказания для остальных.

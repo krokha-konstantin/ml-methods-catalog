@@ -3,19 +3,26 @@ subsection: detection-segmentation
 order: 40
 grade: good
 name: Shape-prior post-processing
-description: >-
-  If you know what a true object looks like (one object per image, a minimum width, typical elongation),
-  enforce it after prediction: keep the largest connected components, drop small or narrow ones, dilate
+when: >-
+  You know what a true object looks like (one per image, a minimum width, typical elongation).
+do: >-
+  Enforce it after prediction: keep the largest connected components, drop small or narrow ones, dilate
   along the expected direction, clear the borders.
+why: Cheap rules remove false positives the network can't rule out on its own.
+see_also:
+- unet-bce-dice
 code: |
-  labeled_array, num_features = label(label1_mask[i])
-  widths = [np.ptp(np.where(labeled_array == k)[1]) + 1 for k in range(1, num_features + 1)]
-  remove = widths < 0.5 * max(widths)                     # drop narrow blobs
+  # drop narrow components, dilate sideways only
+  labeled, n = label(mask)
+  widths = np.array([np.ptp(np.where(labeled == k)[1]) + 1 for k in range(1, n + 1)])
+  remove = widths < 0.5 * widths.max()                      # drop narrow blobs
   kernel = torch.zeros((1, 1, 3, 5)); kernel[0, 0, 1, :] = 1   # dilate 2 px sideways, 0 vertically
 translations:
   ru:
     name: Постобработка с априорной формой
-    description: >-
-      Если известно, как выглядит настоящий объект (один объект на изображение, минимальная ширина, типичная
-      вытянутость), навяжите это после предсказания: оставьте крупнейшие связные компоненты, уберите мелкие
-      или узкие, расширьте по ожидаемому направлению, очистите края.
+    when: >-
+      Известно, как выглядит настоящий объект (один на изображение, минимальная ширина, типичная вытянутость).
+    do: >-
+      Навяжите это после предсказания: оставьте крупнейшие связные компоненты, уберите мелкие или узкие,
+      расширьте по ожидаемому направлению, очистите края.
+    why: Дешёвые правила убирают ложные срабатывания, которые сеть сама не может исключить.

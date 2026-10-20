@@ -3,15 +3,18 @@ subsection: detection-segmentation
 order: 30
 grade: book
 name: Mixed-resolution training
-description: >-
-  Train one model on images of several native sizes, feeding each batch at its own resolution, so the
-  model works on every resolution it will meet at test time.
+when: Test images come in several native sizes.
+do: Train one model on all of them, feeding each batch at its own resolution.
+why: The model works on every resolution it will meet, without resizing artefacts.
+see_also:
+- image-training-recipe
 code: |
+  # restore a small sample's native resolution inside the model
   if size_flag == 0:   # 128-px sample was upsampled to 256 in the dataset; restore native size
       x = F.interpolate(x, size=(H // 2, W // 2), mode='nearest')
 translations:
   ru:
     name: Обучение на нескольких разрешениях
-    description: >-
-      Обучайте одну модель на изображениях нескольких исходных размеров, подавая каждый батч в его собственном
-      разрешении, чтобы модель работала на всех разрешениях, которые встретятся на тесте.
+    when: Тестовые изображения бывают нескольких исходных размеров.
+    do: Обучайте одну модель на всех, подавая каждый батч в его собственном разрешении.
+    why: Модель работает на всех разрешениях, которые встретит, без артефактов масштабирования.

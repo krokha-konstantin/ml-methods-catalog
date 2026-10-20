@@ -3,18 +3,19 @@ subsection: postprocessing
 order: 10
 grade: good
 name: Centred smoothing for retrospective labelling
-description: >-
-  If the task is to label a past sequence rather than forecast, future context is allowed: smooth the
-  scores with a centred window. Events that come in contiguous runs become more distinct from isolated
-  noise.
+when: The task is to label a past sequence, not to forecast.
+do: Smooth the scores with a centred window, since future context is allowed.
+why: Events that come in contiguous runs stand out more clearly from isolated noise.
+see_also:
+- bidirectional-rnn
 code: |
+  # centred rolling mean of the scores within each session
   def smooth_within_session(x, session_ids, window=19):
       return (pd.Series(x).groupby(session_ids)
               .transform(lambda c: c.rolling(window, center=True, min_periods=1).mean()).values)
 translations:
   ru:
     name: Центрированное сглаживание при ретроспективной разметке
-    description: >-
-      Если задача — разметить прошлую последовательность, а не прогнозировать, будущий контекст разрешён:
-      сглаживайте оценки центрированным окном. События, идущие сплошными участками, сильнее отделяются
-      от одиночного шума.
+    when: Задача — разметить прошлую последовательность, а не прогнозировать.
+    do: 'Сглаживайте оценки центрированным окном: будущий контекст разрешён.'
+    why: События, идущие сплошными участками, сильнее отделяются от одиночного шума.

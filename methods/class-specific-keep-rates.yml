@@ -2,15 +2,23 @@ section: weak-supervision
 order: 50
 grade: good
 name: Class-specific keep rates for sample selection
-description: >-
-  When selecting "clean" samples, choose the kept fraction per class. This both filters noise and re-balances
-  training toward the class distribution expected at test time.
+when: >-
+  "Clean" samples are selected from noisy labels and the class mix differs between train and test.
+do: Choose the kept fraction per class.
+why: >-
+  It both filters noise and re-balances training toward the class distribution expected at test time.
+see_also:
+- co-teaching
 code: |
+  # keep 50% of class 0 and 93% of class 1
   take_n_by_class = [0.5, 0.93]                      # train is mostly class 0, val mostly class 1
   take_n = int(len(class_indices) * take_n_by_class[class_idx])
 translations:
   ru:
     name: Свои доли отбора для каждого класса
-    description: >-
-      При отборе «чистых» примеров задавайте сохраняемую долю отдельно для каждого класса. Это одновременно
-      фильтрует шум и перебалансирует обучение к распределению классов, ожидаемому на тесте.
+    when: >-
+      Из шумных меток отбираются «чистые» примеры, а состав классов в обучении и тесте различается.
+    do: Задавайте сохраняемую долю отдельно для каждого класса.
+    why: >-
+      Это одновременно фильтрует шум и перебалансирует обучение к распределению классов, ожидаемому на
+      тесте.

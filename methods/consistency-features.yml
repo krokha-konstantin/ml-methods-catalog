@@ -3,11 +3,13 @@ subsection: features
 order: 90
 grade: good
 name: Consistency features
-description: >-
-  When several fields should agree (two answers to the same question, a total and its parts), encode whether
-  they do: agreement flags, contradictions and the joint combination as one category. How a person or
-  process breaks the rules is often a strong signature of who or what produced the row.
+when: Several fields should agree (two answers to the same question, a total and its parts).
+do: >-
+  Encode whether they do: agreement flags, contradictions, and the joint combination as one category.
+why: >-
+  How a person or process breaks the rules is often a strong signature of who or what produced the row.
 code: |
+  # does the stated preference agree with the two ratings?
   expected = np.select([pref == "a", pref == "b"], [1, -1], default=0)
   df["is_consistent"] = (np.sign(df["rating_diff"]) == expected).astype(int)
   df["contradiction_bothbad_highrating"] = ((pref == "both_bad") & ((df["rating_a"] == 2) | (df["rating_b"] == 2))).astype(int)
@@ -15,7 +17,8 @@ code: |
 translations:
   ru:
     name: Признаки согласованности
-    description: >-
-      Когда несколько полей должны согласовываться (два ответа на один вопрос, итог и его слагаемые),
-      закодируйте, согласуются ли они: флаги совпадения, противоречия и их совместная комбинация как одна
-      категория. То, как человек или процесс нарушает правила, часто выдаёт, кто или что породило строку.
+    when: Несколько полей должны согласовываться (два ответа на один вопрос, итог и его слагаемые).
+    do: >-
+      Закодируйте, согласуются ли они: флаги совпадения, противоречия и их совместная комбинация как одна
+      категория.
+    why: То, как человек или процесс нарушает правила, часто выдаёт, кто или что породило строку.

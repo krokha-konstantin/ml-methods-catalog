@@ -3,15 +3,18 @@ subsection: rl
 order: 10
 grade: book
 name: PPO with normalisation
-description: >-
-  Proximal Policy Optimization with running normalisation of observations and rewards and a linearly decaying
-  learning rate: a robust default for continuous control.
+do: >-
+  Train with Proximal Policy Optimization, running normalisation of observations and rewards, and a linearly
+  decaying learning rate.
+why: It is a robust default for continuous control.
 code: |
+  # PPO with VecNormalize and a linear learning-rate schedule
   venv = VecNormalize(venv, norm_obs=True, norm_reward=True, clip_obs=10.0, gamma=args.gamma)
   model = PPO("MlpPolicy", venv, learning_rate=linear_schedule(lr), gamma=0.99, gae_lambda=0.95, clip_range=0.2)
 translations:
   ru:
     name: PPO с нормализацией
-    description: >-
-      Proximal Policy Optimization с бегущей нормализацией наблюдений и наград и линейно убывающим шагом
-      обучения: надёжный выбор по умолчанию для непрерывного управления.
+    do: >-
+      Обучайте Proximal Policy Optimization с бегущей нормализацией наблюдений и наград и линейно убывающим
+      шагом обучения.
+    why: Это надёжный выбор по умолчанию для непрерывного управления.

@@ -3,11 +3,16 @@ subsection: hyperparameters
 order: 10
 grade: book
 name: Hyperparameter search against the CV score
-description: >-
+do: >-
   Search hyperparameters with Bayesian optimisation (e.g. TPE) or a grid, scoring every candidate with
   the same cross-validation as the final model.
+why: >-
+  Candidates scored any other way are tuned for a different setup than the one that is submitted.
+see_also:
+- coarse-to-fine-search
 sketch: true
 code: |
+  # TPE search scored by the same CV as the final model
   def objective(trial):
       params = {"num_leaves": trial.suggest_int("num_leaves", 15, 255), "learning_rate": trial.suggest_float("learning_rate", 0.01, 0.1, log=True)}
       return cv_mape(params)
@@ -15,6 +20,7 @@ code: |
 translations:
   ru:
     name: Подбор гиперпараметров по CV
-    description: >-
+    do: >-
       Подбирайте гиперпараметры байесовской оптимизацией (например, TPE) или по сетке, оценивая каждого
       кандидата той же кросс-валидацией, что и финальную модель.
+    why: Кандидаты, оценённые иначе, настроены под другую постановку, чем та, что отправляется.

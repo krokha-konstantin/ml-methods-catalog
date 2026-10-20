@@ -2,16 +2,22 @@ section: signals
 order: 40
 grade: book
 name: Attention pooling over a recurrent network
-description: >-
-  Instead of using only the last hidden state, learn a weight for every time step and pool the weighted
-  states, so information from anywhere in the sequence reaches the output.
+when: A recurrent network has to summarise a whole sequence.
+do: >-
+  Learn a weight for every time step and pool the weighted hidden states, instead of using only the last
+  state.
+why: Information from anywhere in the sequence reaches the output.
+see_also:
+- discrete-target-classification
 code: |
+  # attention pooling over LSTM outputs
   energy = torch.tanh(self.attn_weights(lstm_output)).squeeze(2)
   attention_scores = torch.softmax(energy, dim=1)
   context = (lstm_output * attention_scores.unsqueeze(2)).sum(1)
 translations:
   ru:
     name: Пулинг вниманием поверх рекуррентной сети
-    description: >-
-      Вместо использования только последнего скрытого состояния выучите вес для каждого шага и объединяйте
-      взвешенные состояния, чтобы информация из любой части последовательности доходила до выхода.
+    when: Рекуррентная сеть должна обобщить всю последовательность.
+    do: >-
+      Выучите вес для каждого шага и объединяйте взвешенные скрытые состояния, а не берите только последнее.
+    why: Информация из любой части последовательности доходит до выхода.

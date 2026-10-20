@@ -3,11 +3,17 @@ subsection: validation
 order: 110
 grade: book
 name: Reproduce the competition metric exactly
-description: >-
+do: >-
   Re-implement the official metric locally, including its edge cases (how predictions are matched to targets,
-  how malformed spans are decoded). Every threshold sweep and model comparison is then made on the number
-  that is actually scored, not on a convenient proxy.
+  how malformed spans are decoded).
+why: >-
+  Every threshold sweep and model comparison is then made on the number that is actually scored, not on
+  a convenient proxy.
+see_also:
+- metric-as-loss
+- select-checkpoint-by-metric
 code: |
+  # detection F1 with one-to-one IoU matching, and span decoding that follows the official rules
   def count_tp(pred, gt):
       m = np.array([[iou(p, g) >= 0.5 for g in gt] for p in pred], dtype=float)
       r, c = linear_sum_assignment(-m)
@@ -23,7 +29,9 @@ code: |
 translations:
   ru:
     name: Точно воспроизведите метрику соревнования
-    description: >-
-      Реализуйте официальную метрику локально со всеми её крайними случаями (как предсказания сопоставляются
-      с целями, как разбираются некорректные спаны). Тогда подбор порогов и сравнение моделей идут по
-      той величине, которая реально оценивается, а не по удобному заменителю.
+    do: >-
+      Реализуйте официальную метрику локально со всеми крайними случаями (как предсказания сопоставляются
+      с целями, как разбираются некорректные спаны).
+    why: >-
+      Тогда подбор порогов и сравнение моделей идут по величине, которая реально оценивается, а не по
+      удобному заменителю.

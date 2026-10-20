@@ -3,14 +3,21 @@ subsection: detection-segmentation
 order: 20
 grade: book
 name: U-Net with BCE + Dice loss
-description: >-
-  Binary cross-entropy gives stable per-pixel gradients, Dice directly optimises overlap and copes with
-  small foreground areas; their sum is a robust default for segmentation.
+do: >-
+  Train the segmentation network (e.g. a U-Net) on the sum of binary cross-entropy and Dice loss.
+why: >-
+  Cross-entropy gives stable per-pixel gradients; Dice directly optimises overlap and copes with small
+  foreground areas.
+see_also:
+- focal-loss
+- shape-prior-postprocessing
 code: |
+  # BCE + Dice
   loss = bce_loss(logits_clamped, y) + dice_loss(logits_clamped, y)
 translations:
   ru:
     name: U-Net с функцией потерь BCE + Dice
-    description: >-
-      Бинарная кросс-энтропия даёт устойчивые попиксельные градиенты, Dice напрямую оптимизирует пересечение
-      и справляется с малыми областями переднего плана; их сумма — надёжный выбор по умолчанию для сегментации.
+    do: Обучайте сегментационную сеть (например, U-Net) на сумме бинарной кросс-энтропии и Dice.
+    why: >-
+      Кросс-энтропия даёт устойчивые попиксельные градиенты; Dice напрямую оптимизирует пересечение и
+      справляется с малыми областями переднего плана.

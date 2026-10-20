@@ -1,13 +1,16 @@
-section: planning
+section: puzzles
 subsection: games
 order: 30
 grade: good
 name: Avoid greedy overshoot when options grow
-description: >-
-  When the goal is to reach a target without exceeding it and the available options grow over time, taking
-  the locally best option every round overshoots. Take less early and leave room for the larger options
-  that are expected later.
+when: >-
+  The goal is to reach a target without exceeding it, and the available options grow over time.
+do: Take less early and leave room for the larger options expected later.
+why: Taking the locally best option every round overshoots.
+see_also:
+- online-opponent-model
 code: |
+  # take the smallest option while bigger ones are still expected
   if max(t) <= ideal and avg_rank >= 0.7 and opp_ranks:
       take_i = min(range(3), key=lambda i: t[i])
   else:
@@ -15,7 +18,7 @@ code: |
 translations:
   ru:
     name: Не перескакивайте цель жадным выбором при растущих вариантах
-    description: >-
-      Если нужно дойти до цели, не превысив её, а доступные варианты со временем растут, выбор локально
-      лучшего варианта на каждом ходу приводит к перебору. Берите меньше в начале и оставляйте место для
-      более крупных вариантов, которые ожидаются позже.
+    when: Нужно дойти до цели, не превысив её, а доступные варианты со временем растут.
+    do: >-
+      Берите меньше в начале и оставляйте место для более крупных вариантов, которые ожидаются позже.
+    why: Выбор локально лучшего варианта на каждом ходу приводит к перебору.

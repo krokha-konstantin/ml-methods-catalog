@@ -3,16 +3,22 @@ subsection: model-based
 order: 30
 grade: book
 name: Bootstrap for model uncertainty
-description: >-
-  Refit the learned models on bootstrap resamples of whole series and plan against all of them, so the
-  plan is robust to the uncertainty in the models themselves, not only to the noise inside one model.
+when: Plans are optimised against learned models.
+do: Refit the models on bootstrap resamples of whole series and plan against all of them.
+why: >-
+  The plan becomes robust to the uncertainty in the models themselves, not only to the noise inside one
+  model.
+see_also:
+- learned-simulator
 code: |
+  # bootstrap over whole series, one model per resample
   s = rng.choice(ids, len(ids))
   tr = pd.concat([df[df.series_id == i].assign(series_id=f'{i}_{j}') for j, i in enumerate(s)])
   out.append(fit(tr))
 translations:
   ru:
     name: Бутстрэп для неопределённости модели
-    description: >-
-      Переобучайте выученные модели на бутстрэп-выборках целых рядов и планируйте сразу по всем, чтобы
-      план был устойчив к неопределённости самих моделей, а не только к шуму внутри одной модели.
+    when: Планы оптимизируются по выученным моделям.
+    do: Переобучайте модели на бутстрэп-выборках целых рядов и планируйте сразу по всем.
+    why: >-
+      План становится устойчивым к неопределённости самих моделей, а не только к шуму внутри одной модели.

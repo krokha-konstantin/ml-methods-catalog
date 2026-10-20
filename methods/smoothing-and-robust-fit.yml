@@ -3,10 +3,15 @@ subsection: postprocessing
 order: 30
 grade: book
 name: Smoothing and a robust trend fit
-description: >-
-  Smooth a predicted trajectory with a Savitzky–Golay filter, then fit a low-degree polynomial with iteratively
-  reweighted least squares (IRLS), which down-weights outliers, and blend it with the prediction.
+when: A predicted trajectory is noisy and may contain outliers.
+do: >-
+  Smooth it with a Savitzky–Golay filter, fit a low-degree polynomial with iteratively reweighted least
+  squares (IRLS), and blend the fit with the prediction.
+why: IRLS down-weights outliers, so the trend follows the bulk of the points.
+see_also:
+- huber-loss
 code: |
+  # Savitzky–Golay smoothing, then a robust polynomial trend via IRLS
   out[pos] = savgol_filter(v, wl, 3)
   def _robfit(s, y, deg=5):
       c = np.polyfit(s, y, deg)
@@ -18,6 +23,8 @@ code: |
 translations:
   ru:
     name: Сглаживание и робастная аппроксимация тренда
-    description: >-
-      Сгладьте предсказанную траекторию фильтром Савицкого–Голея, затем подберите полином низкой степени
-      итеративно перевзвешенным МНК (IRLS), который уменьшает вес выбросов, и смешайте его с предсказанием.
+    when: Предсказанная траектория шумная и может содержать выбросы.
+    do: >-
+      Сгладьте её фильтром Савицкого–Голея, подберите полином низкой степени итеративно перевзвешенным
+      МНК (IRLS) и смешайте его с предсказанием.
+    why: IRLS уменьшает вес выбросов, поэтому тренд следует за основной массой точек.

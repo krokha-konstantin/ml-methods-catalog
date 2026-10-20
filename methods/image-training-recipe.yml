@@ -3,10 +3,14 @@ subsection: super-resolution
 order: 30
 grade: book
 name: Standard image-to-image training recipe
-description: >-
-  Random crops, the 8 rotations/flips (D4) as augmentation, cosine learning-rate decay, mixed precision,
-  gradient clipping, and flip test-time augmentation (TTA) averaged at inference.
+do: >-
+  Train with random crops, the 8 rotations/flips (D4) as augmentation, cosine learning-rate decay, mixed
+  precision and gradient clipping; average flip test-time augmentation (TTA) at inference.
+why: It is a robust default for image-to-image tasks that rarely needs tuning.
+see_also:
+- mixed-resolution-training
 code: |
+  # D4 augmentation and flip TTA
   r = np.random.randint(4); lo, hi = np.rot90(lo, r), np.rot90(hi, r)
   if np.random.rand() < 0.5: lo, hi = lo[:, ::-1], hi[:, ::-1]
   y = model(x) + model(x.flip(3)).flip(3) + model(x.flip(2)).flip(2) + model(x.flip(2, 3)).flip(2, 3)
@@ -14,6 +18,7 @@ code: |
 translations:
   ru:
     name: Стандартный рецепт обучения image-to-image
-    description: >-
-      Случайные кропы, 8 поворотов/отражений (D4) как аугментация, косинусное затухание шага обучения,
-      смешанная точность, обрезка градиента и TTA с отражениями, усредняемая при инференсе.
+    do: >-
+      Обучайте со случайными кропами, 8 поворотами/отражениями (D4) как аугментацией, косинусным затуханием
+      шага обучения, смешанной точностью и обрезкой градиента; при инференсе усредняйте TTA с отражениями.
+    why: Это надёжный выбор по умолчанию для задач image-to-image, который редко нужно настраивать.

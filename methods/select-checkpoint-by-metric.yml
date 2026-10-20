@@ -3,15 +3,21 @@ subsection: super-resolution
 order: 40
 grade: book
 name: Select checkpoints by the real metric
-description: >-
+do: >-
   Choose the checkpoint by the competition metric on a holdout, not by training loss or a proxy such as
-  PSNR, which can rank checkpoints differently.
+  PSNR.
+why: A proxy can rank checkpoints differently from the metric that is scored.
+see_also:
+- metric-as-loss
+- reproduce-the-metric-exactly
 code: |
+  # keep the weights with the best holdout metric
   scores = [final_score(raw_score(upscale(model, lo), hi)[0], b) for (lo, hi), b in zip(holdout, holdout_base)]
   if np.mean(scores) > best: best, best_state = np.mean(scores), copy.deepcopy(model.state_dict())
 translations:
   ru:
     name: Выбирайте чекпойнт по настоящей метрике
-    description: >-
+    do: >-
       Выбирайте чекпойнт по метрике соревнования на отложенной выборке, а не по функции потерь или заменителю
-      вроде PSNR, который может упорядочить чекпойнты иначе.
+      вроде PSNR.
+    why: Заменитель может упорядочить чекпойнты иначе, чем оцениваемая метрика.

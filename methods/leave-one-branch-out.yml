@@ -3,18 +3,23 @@ subsection: ensembling
 order: 60
 grade: book
 name: Leave-one-model-out ablation
-description: >-
-  Remove each model from the ensemble in turn, renormalise the remaining weights and re-score. A model
-  whose removal costs nothing adds complexity without signal and can be dropped.
+do: >-
+  Remove each model from the ensemble in turn, renormalise the remaining weights and re-score.
+why: A model whose removal costs nothing adds complexity without signal and can be dropped.
+see_also:
+- dirichlet-weight-search
+- univariate-auc-filter
 code: |
-  for name in STAGE2_WEIGHTS:
-      remaining = [c for c in STAGE2_WEIGHTS if c != name]
-      total = sum(STAGE2_WEIGHTS[c] for c in remaining)
-      without = sum(STAGE2_WEIGHTS[c] / total * components[c] for c in remaining)
-      rows.append({"branch": name, "drop_delta": score_branch(y_true, without, beta=2.0) - blend_metric})
+  # score change when each component is dropped
+  for name in WEIGHTS:
+      remaining = [c for c in WEIGHTS if c != name]
+      total = sum(WEIGHTS[c] for c in remaining)
+      without = sum(WEIGHTS[c] / total * components[c] for c in remaining)
+      rows.append({"model": name, "drop_delta": metric(y_true, without) - blend_metric})
 translations:
   ru:
     name: Абляция с исключением одной модели
-    description: >-
+    do: >-
       По очереди убирайте каждую модель из ансамбля, перенормируйте оставшиеся веса и пересчитывайте метрику.
+    why: >-
       Модель, удаление которой ничего не стоит, добавляет сложность без сигнала, и её можно убрать.

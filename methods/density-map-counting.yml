@@ -3,17 +3,20 @@ subsection: detection-segmentation
 order: 50
 grade: book
 name: Counting by density-map regression
-description: >-
-  Predict a density map whose integral is the object count instead of detecting each object. It handles
-  heavy overlap and tiny objects; scale the target density up so the regression target isn't vanishingly
-  small.
+when: Objects to count overlap heavily or are tiny.
+do: >-
+  Predict a density map whose integral is the count instead of detecting each object; scale the target
+  density up so the regression target isn't vanishingly small.
+why: Counting by integration doesn't need to separate touching objects.
 code: |
+  # scaled density target; count = density.sum()
   "density": torch.tensor(item["density"]).unsqueeze(0) * 300.0      # scaled density target
   loss_mae = criterion_mae(model(inputs), targets)                   # count = density.sum()
 translations:
   ru:
     name: Подсчёт через регрессию карты плотности
-    description: >-
-      Предсказывайте карту плотности, интеграл которой равен числу объектов, вместо детекции каждого объекта.
-      Это справляется с сильным перекрытием и крошечными объектами; масштабируйте целевую плотность вверх,
-      чтобы цель регрессии не была исчезающе малой.
+    when: Подсчитываемые объекты сильно перекрываются или очень малы.
+    do: >-
+      Предсказывайте карту плотности, интеграл которой равен числу объектов, вместо детекции каждого объекта;
+      масштабируйте целевую плотность вверх, чтобы цель регрессии не была исчезающе малой.
+    why: Подсчёт интегрированием не требует разделять соприкасающиеся объекты.

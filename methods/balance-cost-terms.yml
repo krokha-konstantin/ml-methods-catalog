@@ -2,19 +2,22 @@ section: tracking
 order: 60
 grade: good
 name: Keep the cost terms on comparable scales
-description: >-
-  In a cost made of several terms (mismatch + movement penalty), rescaling one term silently changes the
-  trade-off: normalising the signal can shrink the mismatch term until the penalty dominates and the optimum
-  stops responding to the data. Check the magnitudes of all terms after any normalisation.
+when: A cost is made of several terms (mismatch + movement penalty).
+do: After any normalisation, check the magnitudes of all terms.
+why: >-
+  Rescaling one term silently changes the trade-off: normalising the signal can shrink the mismatch term
+  until the penalty dominates and the optimum stops responding to the data.
+see_also:
+- sequence-alignment
 sketch: true
 code: |
-  cost = (gr_obs_api[i] - tw_gr_api[state]) ** 2 / sigma + mu * abs(state - prev_state)
-  # z-scored GR: observation term ≈ 0.03 vs move term 4–35 → the optimum is "stay put"
+  cost = (observed[i] - reference[state]) ** 2 / sigma + mu * abs(state - prev_state)
+  # with a z-scored signal: mismatch term ≈ 0.03 vs movement term 4–35 → the optimum is "stay put"
 translations:
   ru:
     name: Держите слагаемые стоимости в сопоставимых масштабах
-    description: >-
-      В стоимости из нескольких слагаемых (несовпадение + штраф за движение) изменение масштаба одного
-      слагаемого незаметно меняет баланс: нормализация сигнала может уменьшить слагаемое несовпадения
-      настолько, что доминирует штраф и оптимум перестаёт реагировать на данные. После любой нормализации
-      проверяйте величины всех слагаемых.
+    when: Стоимость состоит из нескольких слагаемых (несовпадение + штраф за движение).
+    do: После любой нормализации проверяйте величины всех слагаемых.
+    why: >-
+      Изменение масштаба одного слагаемого незаметно меняет баланс: нормализация сигнала может уменьшить
+      слагаемое несовпадения настолько, что доминирует штраф и оптимум перестаёт реагировать на данные.

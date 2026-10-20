@@ -3,20 +3,28 @@ subsection: features
 order: 10
 grade: book
 name: Lags and rolling statistics
-description: >-
-  Past values (lags), rolling means, std, min, max and exponentially weighted means, plus ratios between
+do: >-
+  Add past values (lags), rolling means, std, min, max and exponentially weighted means, plus ratios between
   them, all shifted so they only use data available at prediction time.
+why: >-
+  They are the basic memory of a tabular forecasting model; the shift prevents leaking the target.
+see_also:
+- group-aggregate-features
+- time-series-backtesting
 code: |
+  # lags, shifted rolling means, a year-over-year ratio
+  g = df.groupby('series_id')
   for lag in range(1, 15):
-      df[f'rto_lag_{lag}'] = g['rto'].shift(lag)
-  shifted = g['rto'].shift(1)
+      df[f'sales_lag_{lag}'] = g['sales'].shift(lag)
+  shifted = g['sales'].shift(1)
   for win in [3, 6, 12]:
-      df[f'rto_rmean_{win}'] = shifted.groupby(df['new_id']).rolling(win, min_periods=1).mean().reset_index(level=0, drop=True).values
-  df['rto_yoy_lag1'] = df['rto_lag_1'] / df['rto_lag_13']
+      df[f'sales_rmean_{win}'] = shifted.groupby(df['series_id']).rolling(win, min_periods=1).mean().reset_index(level=0, drop=True)
+  df['sales_yoy_lag1'] = df['sales_lag_1'] / df['sales_lag_13']
 translations:
   ru:
     name: Лаги и скользящие статистики
-    description: >-
-      Прошлые значения (лаги), скользящие средние, стандартные отклонения, минимумы, максимумы и экспоненциально
-      взвешенные средние, а также отношения между ними; всё со сдвигом, чтобы использовались только данные,
-      доступные на момент предсказания.
+    do: >-
+      Добавьте прошлые значения (лаги), скользящие средние, стандартные отклонения, минимумы, максимумы
+      и экспоненциально взвешенные средние, а также отношения между ними; всё со сдвигом, чтобы использовались
+      только данные, доступные на момент предсказания.
+    why: Это базовая память табличной модели прогноза; сдвиг не даёт протечь целевой переменной.

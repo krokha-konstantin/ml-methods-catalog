@@ -3,18 +3,24 @@ subsection: target
 order: 30
 grade: book
 name: Normalise the target by exposure
-description: >-
-  Divide the target by the amount of opportunity behind it (days in the period, opening hours, number
-  of users) and multiply back after predicting. The model no longer has to learn the arithmetic of period
-  lengths or calendar quirks.
+when: >-
+  The target scales with the amount of opportunity behind it (days in the period, opening hours, number
+  of users).
+do: Divide the target by that exposure and multiply back after predicting.
+why: The model no longer has to learn the arithmetic of period lengths or calendar quirks.
+see_also:
+- log-target
 code: |
-  df["month_days"] = df["month"].map(DAYS_IN_MONTH)
-  df.loc[df["n"] == LEAP_MONTH_N, "month_days"] = LEAP_FEB_DAYS
-  df["rto"] /= df["month_days"]
+  # sales per day instead of sales per month
+  df["days"] = df["month"].map(DAYS_IN_MONTH)
+  df.loc[df["is_leap_february"], "days"] = 29
+  df["sales_per_day"] = df["sales"] / df["days"]
+  pred = model.predict(X_test) * test["days"]
 translations:
   ru:
     name: Нормируйте целевую переменную на экспозицию
-    description: >-
-      Разделите целевую переменную на объём возможностей за ней (дни в периоде, часы работы, число пользователей)
-      и умножьте обратно после предсказания. Модели больше не нужно выучивать арифметику длины периодов
-      и календарных особенностей.
+    when: >-
+      Целевая переменная пропорциональна объёму возможностей за ней (дни в периоде, часы работы, число
+      пользователей).
+    do: Разделите целевую переменную на эту экспозицию и умножьте обратно после предсказания.
+    why: Модели больше не нужно выучивать арифметику длины периодов и календарных особенностей.

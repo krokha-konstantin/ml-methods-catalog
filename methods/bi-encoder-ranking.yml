@@ -2,16 +2,23 @@ section: nlp
 order: 120
 grade: book
 name: Fine-tuned bi-encoder for ranking
-description: >-
+when: Many candidates have to be ranked for each query.
+do: >-
   Encode queries and candidates separately with a sentence encoder fine-tuned on positive pairs, and rank
-  candidates by cosine similarity. Candidates can be embedded once and reused.
+  by cosine similarity.
+why: Candidates are embedded once and reused, so ranking stays cheap.
+see_also:
+- domain-encoders
+- partial-fine-tune-contrastive
 code: |
-  train_examples.append(InputExample(texts=[hints_to_sentence(val['hints']), val['label']], label=1))
+  # fine-tune a sentence encoder on (query, positive) pairs
+  train_examples = [InputExample(texts=[query, positive], label=1) for query, positive in pairs]
   model.fit(train_objectives=[(DataLoader(train_examples, batch_size=2), losses.CosineSimilarityLoss(model))], epochs=80)
 translations:
   ru:
     name: Дообученный би-энкодер для ранжирования
-    description: >-
+    when: Для каждого запроса нужно ранжировать много кандидатов.
+    do: >-
       Кодируйте запросы и кандидатов по отдельности энкодером предложений, дообученным на положительных
-      парах, и ранжируйте кандидатов по косинусному сходству. Кандидатов можно закодировать один раз и
-      переиспользовать.
+      парах, и ранжируйте по косинусному сходству.
+    why: Кандидатов кодируют один раз и переиспользуют, поэтому ранжирование остаётся дешёвым.

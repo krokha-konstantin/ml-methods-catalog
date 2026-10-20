@@ -3,17 +3,26 @@ subsection: features
 order: 40
 grade: book
 name: External covariates
-description: >-
+do: >-
   Add external series that drive the target (macroeconomic indicators, weather) at the time resolution
-  of the data. Use the actual published series: approximations add noise, not signal.
+  of the data, using only values published before the forecast date.
+why: >-
+  They explain shifts the target's own history can't. Use the actual published series: approximations
+  add noise, not signal.
+see_also:
+- domain-calendar
+sketch: true
 code: |
-  if year == 2023:
-      df.at[period, "real_income_yoy"] = 105.4
-      df.at[period, "overall_cpi_yoy"] = round(2.5 + (month * 0.45), 2) if month < 8 else 7.42
+  # join published monthly indicators, lagged to what was known at forecast time
+  macro = pd.read_csv("indicators.csv", parse_dates=["month"])          # official releases
+  macro[["cpi_yoy", "real_income_yoy"]] = macro[["cpi_yoy", "real_income_yoy"]].shift(PUBLICATION_LAG)
+  df = df.merge(macro, on="month", how="left")
 translations:
   ru:
     name: Внешние ковариаты
-    description: >-
-      Добавьте внешние ряды, влияющие на целевую переменную (макроэкономические показатели, погода), в
-      временном разрешении данных. Используйте реальные опубликованные ряды: приближения добавляют шум,
-      а не сигнал.
+    do: >-
+      Добавьте внешние ряды, влияющие на целевую переменную (макроэкономические показатели, погода), во
+      временном разрешении данных, используя только значения, опубликованные до даты прогноза.
+    why: >-
+      Они объясняют сдвиги, которые не видны в собственной истории ряда. Берите реальные опубликованные
+      ряды: приближения добавляют шум, а не сигнал.

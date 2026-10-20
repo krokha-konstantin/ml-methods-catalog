@@ -3,11 +3,15 @@ subsection: hyperparameters
 order: 20
 grade: book
 name: Coarse-to-fine grid search
-description: >-
-  Search a coarse grid first, then refine repeatedly around the best few points with a finer step. It
-  finds a near-exact optimum of a low-dimensional, non-smooth objective at a tiny fraction of the cost
-  of a full fine grid.
+when: >-
+  A low-dimensional, non-smooth objective (blend weights, thresholds) needs a near-exact optimum.
+do: >-
+  Search a coarse grid first, then refine repeatedly around the best few points with a finer step.
+why: It reaches the optimum at a tiny fraction of the cost of a full fine grid.
+see_also:
+- hyperparameter-search
 code: |
+  # 1/20 grid over blend weights, then zoom in twice around the 5 best points
   L1, _ = run(jobs, 20)                                   # weights on a 1/20 grid, all model triples
   top = np.argsort(L1.min(1))[:5]
   for ti in top:
@@ -18,7 +22,8 @@ code: |
 translations:
   ru:
     name: Поиск по сетке от грубой к точной
-    description: >-
-      Сначала перебирайте грубую сетку, затем многократно уточняйте вокруг нескольких лучших точек с меньшим
-      шагом. Так находится почти точный оптимум маломерной негладкой функции за малую долю стоимости полного
-      перебора по мелкой сетке.
+    when: Маломерную негладкую функцию (веса бленда, пороги) нужно оптимизировать почти точно.
+    do: >-
+      Сначала переберите грубую сетку, затем многократно уточняйте вокруг нескольких лучших точек с меньшим
+      шагом.
+    why: Оптимум находится за малую долю стоимости полного перебора по мелкой сетке.

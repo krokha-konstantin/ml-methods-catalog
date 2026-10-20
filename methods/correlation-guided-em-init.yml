@@ -2,21 +2,28 @@ section: weak-supervision
 order: 20
 grade: good
 name: Initialise EM from the most reliable sources
-description: >-
-  EM for latent labels has local optima and a label-flip symmetry. Use the pairwise correlation matrix
-  of the sources to find the cluster that agrees with each other (and copycat or noise groups), start
-  EM from that cluster's majority vote, pick restarts by log-likelihood and fix the flip explicitly.
+when: EM is used for latent labels, which has local optima and a label-flip symmetry.
+do: >-
+  Use the pairwise correlation matrix of the sources to find the cluster that agrees with each other (and
+  copycat or noise groups), start EM from that cluster's majority vote, pick restarts by log-likelihood
+  and fix the flip explicitly.
+why: A good start lands EM in the right optimum; a random one often doesn't.
+see_also:
+- dawid-skene
 sketch: true
 code: |
-  corr = whispers[cols].corr(min_periods=500)           # pairwise, co-filled cells only
-  quality = ['v4', 'v6', 'v10', 'v13']                  # clique with r ≈ 0.58
-  p0 = whispers[quality].mean(axis=1).fillna(0.5)       # init from the clique only
-  if (sens + spec < 1).mean() > 0.5: p = 1 - p          # resolve the flip symmetry
+  # initialise EM from the clique of mutually agreeing sources
+  corr = votes[source_cols].corr(min_periods=500)          # pairwise, co-filled cells only
+  clique = ['s4', 's6', 's10', 's13']                       # mutually correlated, r ≈ 0.58
+  p0 = votes[clique].mean(axis=1).fillna(0.5)              # init from the clique only
+  if (sens + spec < 1).mean() > 0.5: p = 1 - p             # resolve the flip symmetry
 translations:
   ru:
     name: Инициализируйте EM по самым надёжным источникам
-    description: >-
-      У EM для скрытых меток есть локальные оптимумы и симметрия перестановки меток. По матрице попарных
-      корреляций источников найдите кластер, согласующийся внутри себя (а также группы копирующих и шумных),
-      начните EM с голосования большинством этого кластера, выбирайте перезапуски по лог-правдоподобию
+    when: >-
+      Для скрытых меток используется EM, у которого есть локальные оптимумы и симметрия перестановки меток.
+    do: >-
+      По матрице попарных корреляций источников найдите согласующийся кластер (а также группы копирующих
+      и шумных), начните EM с голосования большинством этого кластера, выбирайте перезапуски по лог-правдоподобию
       и явно фиксируйте перестановку.
+    why: Хорошая начальная точка приводит EM к правильному оптимуму, а случайная — часто нет.

@@ -3,10 +3,15 @@ subsection: model-based
 order: 50
 grade: good
 name: Coordinate ascent with cached prefixes
-description: >-
-  Improve a plan one step at a time, trying every action at that step while keeping the rest. Cache the
-  simulated state before each step, so changing step i only re-simulates from i onward.
+when: A long sequential plan is optimised against a simulator.
+do: >-
+  Improve it one step at a time, trying every action at that step while keeping the rest; cache the simulated
+  state before each step.
+why: Changing step i only re-simulates from i onward.
+see_also:
+- common-random-numbers
 code: |
+  # coordinate ascent over plan steps, resuming from cached states
   for i in range(100):                              # one step at a time
       for k in [REST] + candidates[i]:
           pl = plan.copy(); pl[i] = k
@@ -16,7 +21,8 @@ code: |
 translations:
   ru:
     name: Покоординатный подъём с кешированием префиксов
-    description: >-
-      Улучшайте план по одному шагу, пробуя на этом шаге каждое действие при неизменном остальном. Кешируйте
-      смоделированное состояние перед каждым шагом, чтобы изменение шага i требовало пересчёта только
-      начиная с i.
+    when: Длинный последовательный план оптимизируется по симулятору.
+    do: >-
+      Улучшайте его по одному шагу, пробуя на этом шаге каждое действие при неизменном остальном; кешируйте
+      смоделированное состояние перед каждым шагом.
+    why: Изменение шага i требует пересчёта только начиная с i.

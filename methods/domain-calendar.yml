@@ -3,10 +3,15 @@ subsection: features
 order: 30
 grade: book
 name: Domain-specific calendar features
-description: >-
+do: >-
   Count, for each period, the days that matter for this domain and region (local holidays, including moveable
-  ones computed from their rules, paydays, long weekends) rather than a generic holiday list.
+  ones computed from their rules, paydays, long weekends).
+why: A generic holiday list misses the days that actually move the target.
+see_also:
+- domain-knowledge-features
+- external-covariates
 code: |
+  # a moveable holiday computed from its rule, then the number of affected days per month
   def _easter(y):                                   # Orthodox Easter (Gregorian date)
       a, b, c = y % 4, y % 7, y % 19
       d = (19 * c + 15) % 30
@@ -20,6 +25,8 @@ code: |
 translations:
   ru:
     name: Календарные признаки предметной области
-    description: >-
+    do: >-
       Считайте для каждого периода дни, важные именно для этой области и региона (местные праздники, включая
-      переходящие, вычисленные по их правилам, дни зарплаты, длинные выходные), а не общий список праздников.
+      переходящие, вычисленные по их правилам, дни зарплаты, длинные выходные).
+    why: >-
+      Общий список праздников пропускает дни, которые на самом деле влияют на целевую переменную.

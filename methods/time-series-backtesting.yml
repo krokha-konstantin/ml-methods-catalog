@@ -3,10 +3,15 @@ subsection: validation
 order: 80
 grade: book
 name: Time-series backtesting at several cut-offs
-description: >-
-  Train only on data before a cut-off and validate on the period right after it, repeated for several
-  cut-offs (including one in the same season as the test period), then average.
+when: The data is ordered in time and the test lies in the future.
+do: >-
+  Train only on data before a cut-off and validate on the period right after it; repeat for several cut-offs
+  (including one in the same season as the test period) and average.
+why: A random split lets the model peek at the future and overstates the score.
+see_also:
+- lag-and-rolling-features
 code: |
+  # expanding-window backtest: train on the past, validate on the next period, several cut-offs
   VAL_TS = [14, 22, 25]
   for t_val in VAL_TS:
       val_df = panel[panel['t'] == t_val]           # one month as validation
@@ -15,6 +20,8 @@ code: |
 translations:
   ru:
     name: Бэктестинг временного ряда на нескольких точках отсечения
-    description: >-
+    when: Данные упорядочены во времени, а тест лежит в будущем.
+    do: >-
       Обучайтесь только на данных до точки отсечения и валидируйтесь на периоде сразу после неё; повторите
-      для нескольких точек (включая одну в том же сезоне, что и тестовый период) и усредните.
+      для нескольких точек (включая одну в том же сезоне, что и тест) и усредните.
+    why: Случайное разбиение позволяет модели заглянуть в будущее и завышает оценку.

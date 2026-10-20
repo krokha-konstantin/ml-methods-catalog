@@ -3,20 +3,26 @@ subsection: matching
 order: 10
 grade: book
 name: Contrastive fine-tuning of the last layers
-description: >-
-  Freeze a pretrained encoder except its last few blocks and train it with a symmetric InfoNCE loss on
-  positive pairs, using the other items in the batch as negatives. Little data suffices because most of
-  the representation is kept.
+when: A pretrained encoder has to be adapted with little data.
+do: >-
+  Freeze it except its last few blocks and train with a symmetric InfoNCE loss on positive pairs, using
+  the other items in the batch as negatives.
+why: Little data suffices because most of the representation is kept.
+see_also:
+- bi-encoder-ranking
+- one-to-one-assignment
 code: |
-  for p in self.clip_model.parameters(): p.requires_grad = False
-  for i in range(total_blocks - unfreeze_last_n_layers, total_blocks):
-      for p in self.clip_model.visual.transformer.resblocks[i].parameters(): p.requires_grad = True
-  logits = (orig_feat @ crop_feat.t()) / 0.07
+  # unfreeze the last blocks of CLIP; symmetric InfoNCE with in-batch negatives
+  for p in model.parameters(): p.requires_grad = False
+  for block in model.visual.transformer.resblocks[-unfreeze_last_n:]:
+      for p in block.parameters(): p.requires_grad = True
+  logits = (feats_a @ feats_b.t()) / 0.07
   loss = 0.5 * (F.cross_entropy(logits, labels) + F.cross_entropy(logits.t(), labels))
 translations:
   ru:
     name: Контрастивное дообучение последних слоёв
-    description: >-
-      Заморозьте предобученный энкодер, кроме нескольких последних блоков, и обучайте его симметричной
-      функцией InfoNCE на положительных парах, используя остальные элементы батча как отрицательные. Хватает
-      немного данных, потому что большая часть представления сохраняется.
+    when: Предобученный энкодер нужно адаптировать на малом объёме данных.
+    do: >-
+      Заморозьте его, кроме нескольких последних блоков, и обучайте симметричной InfoNCE на положительных
+      парах, используя остальные элементы батча как отрицательные.
+    why: Хватает немного данных, потому что большая часть представления сохраняется.

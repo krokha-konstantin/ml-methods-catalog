@@ -3,18 +3,25 @@ subsection: target
 order: 10
 grade: book
 name: Predict the change, not the level
-description: >-
-  Use the difference (or log-ratio) between the target and its last known value as the training target,
-  and add the last value back at prediction time. The model then learns dynamics shared across series
-  instead of each series' level.
+when: Many series are forecast with one model and their levels differ.
+do: >-
+  Train on the difference (or log-ratio) between the target and its last known value, and add the last
+  value back at prediction time.
+why: The model learns dynamics shared across series instead of each series' level.
+see_also:
+- anchor-choice
+- residual-over-baseline
+- warm-up-damping
 code: |
-  res["target"] = ev.TVT.to_numpy(np.float32) - np.float32(last_tvt)     # depth: delta from the last known depth
-  y_tr = np.log(train_df['rto'].values / train_df['rto_lag_1'].values)   # sales: log ratio to last month
-  pred = np.exp(model.predict(X_va) + np.log(val_df['rto_lag_1'].values))
+  # target = change from the last known value
+  y_delta = target - last_value                                 # additive change
+  y_ratio = np.log(train_df['sales'] / train_df['sales_lag_1'])   # or a log ratio
+  pred = np.exp(model.predict(X_val) + np.log(val_df['sales_lag_1']))
 translations:
   ru:
     name: Предсказывайте изменение, а не уровень
-    description: >-
+    when: Одна модель прогнозирует много рядов, а их уровни различаются.
+    do: >-
       Берите в качестве цели разность (или логарифм отношения) между целевой величиной и её последним
-      известным значением, а при предсказании прибавляйте последнее значение обратно. Модель учит общую
-      для рядов динамику, а не уровень каждого ряда.
+      известным значением, а при предсказании прибавляйте последнее значение обратно.
+    why: Модель учит общую для рядов динамику, а не уровень каждого ряда.

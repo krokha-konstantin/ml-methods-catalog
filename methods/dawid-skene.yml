@@ -2,12 +2,18 @@ section: weak-supervision
 order: 10
 grade: book
 name: Dawid–Skene label aggregation
-description: >-
-  With several noisy annotators and no ground truth, estimate each annotator's sensitivity and specificity
-  and the posterior of each true label jointly with EM. Reliable annotators get more weight than in a
-  majority vote, and missing answers simply drop out.
+when: Several noisy annotators label the data and there is no ground truth.
+do: >-
+  Estimate each annotator's sensitivity and specificity and the posterior of each true label jointly with
+  EM.
+why: >-
+  Reliable annotators get more weight than in a majority vote, and missing answers simply drop out.
+see_also:
+- cluster-then-label
+- correlation-guided-em-init
 sketch: true
 code: |
+  # binary Dawid–Skene: EM over annotator sensitivity/specificity and the true label
   for _ in range(100):
       sens = ((p[:, None] * V * obs).sum(0) + 1) / ((p[:, None] * obs).sum(0) + 2)
       spec = (((1 - p)[:, None] * (1 - V) * obs).sum(0) + 1) / (((1 - p)[:, None] * obs).sum(0) + 2)
@@ -17,7 +23,10 @@ code: |
 translations:
   ru:
     name: Агрегация разметки методом Дэвида–Скина
-    description: >-
-      При нескольких шумных разметчиках и отсутствии эталона совместно оценивайте EM-алгоритмом чувствительность
-      и специфичность каждого разметчика и апостериорную вероятность каждой истинной метки. Надёжные разметчики
-      получают больший вес, чем при голосовании большинством, а пропущенные ответы просто выпадают.
+    when: Данные размечают несколько шумных разметчиков, а эталона нет.
+    do: >-
+      Совместно оценивайте EM-алгоритмом чувствительность и специфичность каждого разметчика и апостериорную
+      вероятность каждой истинной метки.
+    why: >-
+      Надёжные разметчики получают больший вес, чем при голосовании большинством, а пропущенные ответы
+      просто выпадают.

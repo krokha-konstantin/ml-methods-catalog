@@ -3,17 +3,18 @@ subsection: thresholds
 order: 50
 grade: book
 name: Weight the loss like the metric
-description: >-
-  If the metric rewards some classes or pixels far more than others, give them matching weights in the
-  loss (cost-sensitive learning). Otherwise the model optimises the unweighted error and under-predicts
-  the expensive class.
+when: The metric rewards some classes or pixels far more than others.
+do: Give them matching weights in the loss (cost-sensitive learning).
+why: Otherwise the model optimises the unweighted error and under-predicts the expensive class.
+see_also:
+- metric-as-loss
 code: |
+  # rare, expensive class weighted 4000× in cross-entropy
   weight_tensor = torch.tensor([1., 4000.], dtype=torch.float32).cuda()
   criterion = nn.CrossEntropyLoss(weight=weight_tensor)
 translations:
   ru:
     name: Взвешивайте функцию потерь так же, как метрика
-    description: >-
-      Если метрика ценит одни классы или пиксели гораздо выше других, задайте им соответствующие веса
-      в функции потерь (обучение с учётом стоимости). Иначе модель оптимизирует невзвешенную ошибку и
-      недопредсказывает дорогой класс.
+    when: Метрика ценит одни классы или пиксели гораздо выше других.
+    do: Задайте им соответствующие веса в функции потерь (обучение с учётом стоимости).
+    why: Иначе модель оптимизирует невзвешенную ошибку и недопредсказывает дорогой класс.

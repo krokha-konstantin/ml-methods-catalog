@@ -3,19 +3,27 @@ subsection: target
 order: 20
 grade: good
 name: Choose the reference point of a relative target
-description: >-
-  A target relative to the same period last year handles seasonality but inherits every structural break
-  since then; relative to last period, it tracks the newest level and keeps more training rows. Compare
-  both on time-based folds and blend them by validation.
+when: The target is defined relative to a past value.
+do: >-
+  Compare anchors: relative to the same period last year handles seasonality but inherits every structural
+  break since then; relative to the last period tracks the newest level and keeps more rows. Evaluate
+  both on time-based folds and blend them.
+why: Neither anchor wins everywhere, and a validated blend takes the strengths of both.
+see_also:
+- predict-the-change
 code: |
-  base = 'rto_lag_1' if target == 'mom' else 'rto_lag_12'
+  # month-over-month vs year-over-year targets, blended by validation
+  base = 'sales_lag_1' if target == 'mom' else 'sales_lag_12'
   for w in np.arange(0, 1.01, 0.05):
-      s = np.mean([mape(y, np.exp(w * lm + (1 - w) * ly)) for y, lm, ly, _, _ in fold_preds.values()])
+      s = np.mean([mape(y, np.exp(w * mom + (1 - w) * yoy)) for y, mom, yoy in fold_preds])
   # chosen: 0.9 MoM + 0.1 YoY
 translations:
   ru:
     name: Выберите точку отсчёта относительной цели
-    description: >-
-      Цель относительно того же периода прошлого года учитывает сезонность, но наследует все структурные
-      сдвиги с тех пор; относительно прошлого периода она следует за новейшим уровнем и сохраняет больше
-      обучающих строк. Сравните оба варианта на временных фолдах и смешайте их по валидации.
+    when: Целевая величина задана относительно прошлого значения.
+    do: >-
+      Сравните опорные точки: относительно того же периода прошлого года учитывает сезонность, но наследует
+      все структурные сдвиги с тех пор; относительно прошлого периода следует за новейшим уровнем и сохраняет
+      больше строк. Оцените оба варианта на временных фолдах и смешайте.
+    why: >-
+      Ни одна опорная точка не выигрывает везде, а провалидированная смесь берёт сильные стороны обеих.

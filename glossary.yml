@@ -1,0 +1,482 @@
+# Glossary: terms are underlined on their first mention in each method (hover or tap shows the definition)
+# and listed together in the Glossary section at the end of the page.
+#
+#   term:  shown in the Glossary list            {lang: text}
+#   match: regular expressions per language that mark the term in method text; `ru` falls back to `en`.
+#          A pattern without lowercase letters (OOF, EM) is case-sensitive, any other pattern ignores case.
+#          Word boundaries are added automatically; use \w* for word endings (e.g. 'z-scor\w*').
+#   def:   one or two plain sentences, no markup  {lang: text}
+
+- term: {en: Out-of-fold (OOF) prediction, ru: Out-of-fold (OOF) предсказание}
+  match: {en: ['out-of-fold', 'OOF']}
+  def:
+    en: A prediction for a training row made by a model that did not see that row, because the row was in the held-out fold.
+    ru: Предсказание для обучающей строки, сделанное моделью, которая эту строку не видела, потому что строка была в отложенном фолде.
+
+- term: {en: Cross-validation (CV), ru: Кросс-валидация (CV)}
+  match: {en: ['cross-validation', 'CV'], ru: ['кросс-валидаци\w*', 'CV']}
+  def:
+    en: Splitting the training data into folds and training one model per fold, each scored on the fold it did not see.
+    ru: Разбиение обучающих данных на фолды и обучение по модели на каждый, каждая оценивается на фолде, которого не видела.
+
+- term: {en: Holdout, ru: Отложенная выборка}
+  match: {en: ['holdout', 'held-out'], ru: ['отложенн\w+ выборк\w*', 'отложенн\w+ данн\w+']}
+  def:
+    en: Data set aside and never used for training, only for evaluating or choosing models.
+    ru: Данные, отложенные в сторону и не используемые для обучения, только для оценки или выбора моделей.
+
+- term: {en: Leaderboard, ru: Лидерборд}
+  match: {en: ['leaderboard'], ru: ['лидерборд\w*']}
+  def:
+    en: The competition's public ranking; each submission is scored on a hidden test set and the score is shown.
+    ru: Публичный рейтинг соревнования; каждая посылка оценивается на скрытом тесте, и результат показывается.
+
+- term: {en: Calibration, ru: Калибровка}
+  match: {en: ['calibration'], ru: ['калибровк\w*']}
+  def:
+    en: How well predicted scores match real frequencies; two models can rank rows the same way with differently calibrated scores.
+    ru: Насколько предсказанные оценки соответствуют реальным частотам; две модели могут одинаково упорядочивать строки при разной калибровке.
+
+- term: {en: Meta-model, ru: Мета-модель}
+  match: {en: ['meta-model'], ru: ['мета-модел\w*']}
+  def:
+    en: A model whose inputs are other models' predictions (used in stacking).
+    ru: Модель, входы которой — предсказания других моделей (используется в стекинге).
+
+- term: {en: Bootstrap, ru: Бутстрэп}
+  match: {en: ['bootstrap'], ru: ['бутстрэп\w*']}
+  def:
+    en: Drawing n items with replacement from n; repeated draws show how much a result depends on the particular sample.
+    ru: Выбор n элементов с возвращением из n; повторные выборки показывают, насколько результат зависит от конкретной выборки.
+
+- term: {en: Leave-one-out, ru: Leave-one-out}
+  match: {en: ['leave-one-out']}
+  def:
+    en: Computing a statistic for a row from all other rows, excluding only that row.
+    ru: Вычисление статистики для строки по всем остальным строкам, исключая только её саму.
+
+- term: {en: Bayesian optimisation, ru: Байесовская оптимизация}
+  match: {en: ['Bayesian optimi[sz]ation'], ru: ['байесовск\w+ оптимизаци\w+']}
+  def:
+    en: Hyperparameter search that fits a model of score versus settings and picks the next trial where improvement is most likely.
+    ru: Подбор гиперпараметров, который строит модель зависимости результата от настроек и выбирает следующую пробу там, где улучшение наиболее вероятно.
+
+- term: {en: TPE, ru: TPE}
+  match: {en: ['TPE']}
+  def:
+    en: Tree-structured Parzen Estimator, a popular Bayesian-optimisation algorithm (the default in Optuna).
+    ru: Tree-structured Parzen Estimator, популярный алгоритм байесовской оптимизации (по умолчанию в Optuna).
+
+- term: {en: ROC-AUC, ru: ROC-AUC}
+  match: {en: ['ROC-AUC']}
+  def:
+    en: Probability that a random positive gets a higher score than a random negative; 0.5 is random, 1 is perfect. Depends only on the order of scores.
+    ru: Вероятность того, что случайный положительный объект получит оценку выше случайного отрицательного; 0.5 — случайно, 1 — идеально. Зависит только от порядка оценок.
+
+- term: {en: F1 score, ru: F1-мера}
+  match: {en: ['F1']}
+  def:
+    en: Harmonic mean of precision and recall for hard yes/no predictions; it depends on the chosen threshold.
+    ru: Среднее гармоническое точности и полноты для жёстких предсказаний да/нет; зависит от выбранного порога.
+
+- term: {en: Dirichlet distribution, ru: Распределение Дирихле}
+  match: {en: ['Dirichlet'], ru: ['Дирихле']}
+  def:
+    en: A distribution over vectors of non-negative numbers that sum to 1, e.g. random blend weights.
+    ru: Распределение над векторами неотрицательных чисел с суммой 1, например случайными весами бленда.
+
+- term: {en: z-score, ru: z-оценка}
+  match: {en: ['z-scor\w*'], ru: ['z-оценк\w*']}
+  def:
+    en: (value − mean) / standard deviation; how many standard deviations a value is from the mean.
+    ru: (значение − среднее) / стандартное отклонение; на сколько стандартных отклонений значение отстоит от среднего.
+
+- term: {en: Record linkage, ru: Record linkage}
+  match: {en: ['record linkage']}
+  def:
+    en: Finding rows in two data sets that describe the same real object, when there is no shared exact key.
+    ru: Поиск строк в двух наборах данных, описывающих один и тот же реальный объект, когда общего точного ключа нет.
+
+- term: {en: Gradient boosting, ru: Градиентный бустинг}
+  match: {en: ['gradient[- ]boost\w*'], ru: ['градиентн\w+ бустинг\w*']}
+  def:
+    en: An ensemble of decision trees built one after another, each correcting the errors of the previous ones (LightGBM, CatBoost, XGBoost).
+    ru: Ансамбль деревьев решений, строящихся одно за другим, каждое исправляет ошибки предыдущих (LightGBM, CatBoost, XGBoost).
+
+- term: {en: Early stopping, ru: Ранняя остановка}
+  match: {en: ['early stopping'], ru: ['ранн\w+ остановк\w*']}
+  def:
+    en: Stopping training when the validation score stops improving, to avoid overfitting.
+    ru: Остановка обучения, когда оценка на валидации перестаёт улучшаться, чтобы избежать переобучения.
+
+- term: {en: Lag, ru: Лаг}
+  match: {en: ['lag\w*'], ru: ['лаг\w*']}
+  def:
+    en: The value of a series a fixed number of steps in the past.
+    ru: Значение ряда на фиксированное число шагов в прошлом.
+
+- term: {en: Exposure, ru: Экспозиция}
+  match: {en: ['exposure'], ru: ['экспозици\w*']}
+  def:
+    en: The amount of opportunity for events (time, users, area); counts are often modelled per unit of exposure.
+    ru: Объём возможностей для событий (время, пользователи, площадь); счётчики часто моделируют на единицу экспозиции.
+
+- term: {en: Isolation Forest, ru: Isolation Forest}
+  match: {en: ['Isolation Forest']}
+  def:
+    en: An unsupervised anomaly detector; points that random splits isolate quickly are considered anomalous.
+    ru: Детектор аномалий без учителя; точки, которые случайные разбиения быстро изолируют, считаются аномальными.
+
+- term: {en: ARIMA / SARIMAX, ru: ARIMA / SARIMAX}
+  match: {en: ['S?ARIMAX?']}
+  def:
+    en: Classical time-series model on autoregression, differencing and moving-average errors; the S adds seasonality, the X external regressors.
+    ru: Классическая модель временного ряда на авторегрессии, разностях и скользящем среднем ошибок; S добавляет сезонность, X — внешние регрессоры.
+
+- term: {en: Huber loss, ru: Функция потерь Хьюбера}
+  match: {en: ['Huber'], ru: ['Хьюбер\w*']}
+  def:
+    en: Squared error for small residuals and absolute error for large ones, so outliers pull less.
+    ru: Квадратичная ошибка для малых остатков и абсолютная для больших, поэтому выбросы влияют меньше.
+
+- term: {en: Savitzky–Golay filter, ru: Фильтр Савицкого–Голея}
+  match: {en: ['Savitzky–Golay'], ru: ['Савицкого–Голея']}
+  def:
+    en: Smoothing by fitting a low-degree polynomial in a sliding window; keeps peaks better than a moving average.
+    ru: Сглаживание подгонкой полинома низкой степени в скользящем окне; лучше скользящего среднего сохраняет пики.
+
+- term: {en: IRLS, ru: IRLS}
+  match: {en: ['IRLS']}
+  def:
+    en: Iteratively reweighted least squares; refits repeatedly, giving points with large residuals less weight each time.
+    ru: Итеративно перевзвешенный МНК; модель переобучается несколько раз, и точки с большими остатками каждый раз получают меньший вес.
+
+- term: {en: Kalman filter, ru: Фильтр Калмана}
+  match: {en: ['Kalman'], ru: ['Калмана']}
+  def:
+    en: Optimal tracker for linear dynamics with Gaussian noise; the state estimate is a single Gaussian.
+    ru: Оптимальный трекер для линейной динамики с гауссовым шумом; оценка состояния — одно гауссово распределение.
+
+- term: {en: Roughening, ru: Roughening}
+  match: {en: ['roughening']}
+  def:
+    en: Adding small noise to particles after resampling so that copies of the same particle spread out again.
+    ru: Добавление небольшого шума к частицам после ресэмплинга, чтобы копии одной частицы снова разошлись.
+
+- term: {en: Dynamic time warping, ru: Динамическая трансформация времени}
+  match: {en: ['dynamic time warping'], ru: ['динамическ\w+ трансформаци\w+ времени']}
+  def:
+    en: Aligning two sequences that run at varying speeds by finding the cheapest monotone path between them.
+    ru: Выравнивание двух последовательностей, идущих с разной скоростью, поиском самого дешёвого монотонного пути между ними.
+
+- term: {en: Viterbi algorithm, ru: Алгоритм Витерби}
+  match: {en: ['Viterbi'], ru: ['Витерби']}
+  def:
+    en: Dynamic programming that finds the most likely sequence of hidden states.
+    ru: Динамическое программирование, находящее наиболее вероятную последовательность скрытых состояний.
+
+- term: {en: Beam search, ru: Лучевой поиск}
+  match: {en: ['beam search'], ru: ['лучев\w+ поиск\w*']}
+  def:
+    en: Keeping only the best few partial solutions at every step instead of all of them.
+    ru: Сохранение на каждом шаге только нескольких лучших частичных решений вместо всех.
+
+- term: {en: Normalised cross-correlation (NCC), ru: Нормированная взаимная корреляция}
+  match: {en: ['normali[sz]ed cross-correlation'], ru: ['нормированн\w+ взаимн\w+ корреляци\w+']}
+  def:
+    en: Correlation between a window and a template after subtracting each one's mean and dividing by its std.
+    ru: Корреляция окна и шаблона после вычитания у каждого среднего и деления на стандартное отклонение.
+
+- term: {en: D4 augmentation, ru: Аугментация D4}
+  match: {en: ['D4']}
+  def:
+    en: "The 8 symmetries of a square image: 4 rotations, each with or without a flip."
+    ru: "8 симметрий квадратного изображения: 4 поворота, каждый с отражением или без."
+
+- term: {en: Test-time augmentation (TTA), ru: TTA}
+  match: {en: ['test-time augmentation', 'TTA']}
+  def:
+    en: Predicting on several transformed copies of an input (e.g. flips) and averaging the results.
+    ru: Предсказание на нескольких преобразованных копиях входа (например, отражениях) с усреднением результатов.
+
+- term: {en: Mixed precision, ru: Смешанная точность}
+  match: {en: ['mixed precision'], ru: ['смешанн\w+ точност\w+']}
+  def:
+    en: Training with 16-bit floats where safe and 32-bit where needed; faster and lighter on memory.
+    ru: Обучение в 16-битных числах там, где безопасно, и в 32-битных там, где нужно; быстрее и экономнее по памяти.
+
+- term: {en: Gradient clipping, ru: Обрезка градиента}
+  match: {en: ['gradient clipping'], ru: ['обрезк\w+ градиента']}
+  def:
+    en: Capping the gradient's norm to keep single bad batches from destabilising training.
+    ru: Ограничение нормы градиента, чтобы отдельные плохие батчи не дестабилизировали обучение.
+
+- term: {en: PSNR, ru: PSNR}
+  match: {en: ['PSNR']}
+  def:
+    en: Peak signal-to-noise ratio, a pixel-error image quality score that often disagrees with perceived quality.
+    ru: Пиковое отношение сигнал/шум, оценка качества изображения по попиксельной ошибке, часто расходящаяся с воспринимаемым качеством.
+
+- term: {en: U-Net, ru: U-Net}
+  match: {en: ['U-Net']}
+  def:
+    en: Encoder–decoder segmentation network with skip connections that pass fine detail from encoder to decoder.
+    ru: Сегментационная сеть кодер–декодер со skip-соединениями, передающими мелкие детали от кодера к декодеру.
+
+- term: {en: Dice loss, ru: Dice}
+  match: {en: ['Dice']}
+  def:
+    en: 1 − 2|A∩B| / (|A| + |B|), a loss that directly measures overlap between predicted and true masks.
+    ru: 1 − 2|A∩B| / (|A| + |B|), функция потерь, напрямую измеряющая перекрытие предсказанной и истинной масок.
+
+- term: {en: Focal loss, ru: Focal loss}
+  match: {en: ['focal loss']}
+  def:
+    en: Cross-entropy multiplied by (1 − p)^γ, which shrinks the loss of examples that are already easy.
+    ru: Кросс-энтропия, умноженная на (1 − p)^γ, что уменьшает потери на уже лёгких примерах.
+
+- term: {en: Mosaic augmentation, ru: Аугментация mosaic}
+  match: {en: ['mosaic']}
+  def:
+    en: Stitching four training images into one, so each batch shows objects at many scales and contexts.
+    ru: Склейка четырёх обучающих изображений в одно, чтобы каждый батч показывал объекты в разных масштабах и контекстах.
+
+- term: {en: YOLO, ru: YOLO}
+  match: {en: ['YOLO']}
+  def:
+    en: A family of fast single-stage object detectors.
+    ru: Семейство быстрых одностадийных детекторов объектов.
+
+- term: {en: Connected component, ru: Связная компонента}
+  match: {en: ['connected component\w*'], ru: ['связн\w+ компонент\w*']}
+  def:
+    en: A group of foreground pixels that touch each other; each separate blob in a mask is one component.
+    ru: Группа соприкасающихся пикселей переднего плана; каждое отдельное пятно в маске — одна компонента.
+
+- term: {en: InfoNCE, ru: InfoNCE}
+  match: {en: ['InfoNCE']}
+  def:
+    en: Contrastive loss that scores the true pair against all other pairs in the batch with a softmax.
+    ru: Контрастивная функция потерь, сравнивающая истинную пару со всеми другими парами батча через softmax.
+
+- term: {en: Hungarian algorithm, ru: Венгерский алгоритм}
+  match: {en: ['Hungarian'], ru: ['венгерск\w+ алгоритм\w*']}
+  def:
+    en: Solves the assignment problem exactly; pairs items one-to-one at minimum total cost.
+    ru: "Точно решает задачу о назначениях: сопоставляет элементы один к одному с минимальной суммарной стоимостью."
+
+- term: {en: Vision transformer (ViT), ru: Визуальный трансформер (ViT)}
+  match: {en: ['vision transformer'], ru: ['визуальн\w+ трансформер\w*']}
+  def:
+    en: A transformer applied to an image cut into patches, each patch acting as one token.
+    ru: Трансформер, применённый к изображению, нарезанному на патчи; каждый патч — один токен.
+
+- term: {en: Zero-shot, ru: Zero-shot}
+  match: {en: ['zero-shot']}
+  def:
+    en: Solving a task without any training examples for it, e.g. matching images to text descriptions with a pretrained model.
+    ru: Решение задачи без обучающих примеров для неё, например сопоставление изображений текстовым описаниям предобученной моделью.
+
+- term: {en: Embedding, ru: Эмбеддинг}
+  match: {en: ['embedding\w*'], ru: ['эмбеддинг\w*']}
+  def:
+    en: A learned vector representation in which similar items lie close together.
+    ru: Выученное векторное представление, в котором похожие объекты лежат рядом.
+
+- term: {en: CLAHE, ru: CLAHE}
+  match: {en: ['CLAHE']}
+  def:
+    en: Contrast-limited adaptive histogram equalisation; boosts local contrast without amplifying noise too much.
+    ru: Адаптивное выравнивание гистограммы с ограничением контраста; усиливает локальный контраст, не слишком усиливая шум.
+
+- term: {en: SIFT, ru: SIFT}
+  match: {en: ['SIFT']}
+  def:
+    en: A classical keypoint detector and descriptor, robust to scale and rotation.
+    ru: Классический детектор и дескриптор ключевых точек, устойчивый к масштабу и повороту.
+
+- term: {en: Ratio test, ru: Тест отношения}
+  match: {en: ['ratio test'], ru: ['тест\w* отношения']}
+  def:
+    en: Keep a match only if the best candidate is clearly closer than the second best (Lowe's ratio test).
+    ru: Сопоставление сохраняется, только если лучший кандидат заметно ближе второго (тест отношения Лоу).
+
+- term: {en: Essential matrix, ru: Существенная матрица}
+  match: {en: ['essential matrix'], ru: ['существенн\w+ матриц\w+']}
+  def:
+    en: Encodes the rotation and translation direction between two calibrated cameras; estimated from point matches.
+    ru: Кодирует поворот и направление переноса между двумя откалиброванными камерами; оценивается по сопоставлениям точек.
+
+- term: {en: RANSAC, ru: RANSAC}
+  match: {en: ['RANSAC']}
+  def:
+    en: Fits a model to random minimal subsets and keeps the one most data agrees with, ignoring outliers.
+    ru: Подгоняет модель по случайным минимальным подмножествам и оставляет ту, с которой согласно больше всего данных, игнорируя выбросы.
+
+- term: {en: Inlier, ru: Инлаер}
+  match: {en: ['inlier\w*'], ru: ['инлаер\w*']}
+  def:
+    en: A data point consistent with the fitted model (the opposite of an outlier).
+    ru: Точка данных, согласующаяся с подогнанной моделью (противоположность выбросу).
+
+- term: {en: Camera intrinsics, ru: Внутренние параметры камеры}
+  match: {en: ['intrinsics'], ru: ['внутренн\w+ параметр\w+']}
+  def:
+    en: Focal length and principal point, which map 3-D directions to pixels.
+    ru: Фокусное расстояние и главная точка, переводящие трёхмерные направления в пиксели.
+
+- term: {en: Parallax, ru: Параллакс}
+  match: {en: ['parallax'], ru: ['параллакс\w*']}
+  def:
+    en: Apparent shift of near objects relative to far ones when the camera moves; it carries the depth information.
+    ru: Видимый сдвиг близких объектов относительно далёких при движении камеры; несёт информацию о глубине.
+
+- term: {en: TF-IDF, ru: TF-IDF}
+  match: {en: ['TF-IDF']}
+  def:
+    en: Term frequency × inverse document frequency; weights words that are frequent in a document but rare overall.
+    ru: Частота термина × обратная документная частота; повышает вес слов, частых в документе, но редких в целом.
+
+- term: {en: n-gram, ru: n-грамма}
+  match: {en: ['n-gram\w*'], ru: ['n-грамм\w*']}
+  def:
+    en: A sequence of n consecutive characters or words.
+    ru: Последовательность из n подряд идущих символов или слов.
+
+- term: {en: SVM, ru: SVM}
+  match: {en: ['SVM']}
+  def:
+    en: Support vector machine; a linear SVM finds the separating hyperplane with the widest margin.
+    ru: Метод опорных векторов; линейный SVM находит разделяющую гиперплоскость с наибольшим зазором.
+
+- term: {en: k-nearest neighbours (kNN), ru: k ближайших соседей (kNN)}
+  match: {en: ['kNN', 'k-nearest[- ]neighbou?r\w*', 'nearest neighbou?r\w*'], ru: ['kNN', 'ближайш\w+ сосед\w*']}
+  def:
+    en: Predicting from the k training items most similar to the query.
+    ru: Предсказание по k обучающим объектам, наиболее похожим на запрос.
+
+- term: {en: Bag of words, ru: Мешок слов}
+  match: {en: ['bag[- ]of[- ]words', 'bags? of words'], ru: ['мешк\w* слов']}
+  def:
+    en: Representing a text by which words occur in it and how often, ignoring order.
+    ru: Представление текста тем, какие слова в нём встречаются и как часто, без учёта порядка.
+
+- term: {en: Feature cross, ru: Пересечение признаков}
+  match: {en: ['feature cross'], ru: ['пересечени\w+ признаков']}
+  def:
+    en: A new feature formed by combining two others, so a linear model can weight their combinations separately.
+    ru: Новый признак из комбинации двух других, чтобы линейная модель могла отдельно взвешивать их сочетания.
+
+- term: {en: Collaborative filtering, ru: Коллаборативная фильтрация}
+  match: {en: ['collaborative filtering'], ru: ['коллаборативн\w+ фильтраци\w+']}
+  def:
+    en: Recommending from the pattern of who liked what, without using item content.
+    ru: Рекомендации по структуре того, кому что понравилось, без использования содержания объектов.
+
+- term: {en: SVD, ru: SVD}
+  match: {en: ['SVD']}
+  def:
+    en: Singular value decomposition; its top components give the best low-rank approximation of a matrix.
+    ru: Сингулярное разложение; его старшие компоненты дают лучшее приближение матрицы низкого ранга.
+
+- term: {en: Low-rank completion, ru: Восполнение низкого ранга}
+  match: {en: ['low-rank'], ru: ['низкого ранга']}
+  def:
+    en: Filling missing matrix entries by assuming the full matrix is explained by a few latent factors.
+    ru: Заполнение пропусков матрицы в предположении, что вся матрица объясняется несколькими скрытыми факторами.
+
+- term: {en: Subword token, ru: Подслово}
+  match: {en: ['subword\w*'], ru: ['подслов\w*']}
+  def:
+    en: A piece of a word produced by a transformer's tokenizer; rare words are split into several.
+    ru: Часть слова, которую выдаёт токенизатор трансформера; редкие слова делятся на несколько.
+
+- term: {en: Tokenizer, ru: Токенизатор}
+  match: {en: ['tokenizer'], ru: ['токенизатор\w*']}
+  def:
+    en: The component that splits text into the tokens a language model works with.
+    ru: Компонент, разбивающий текст на токены, с которыми работает языковая модель.
+
+- term: {en: LLM, ru: LLM}
+  match: {en: ['LLM']}
+  def:
+    en: Large language model.
+    ru: Большая языковая модель.
+
+- term: {en: LoRA, ru: LoRA}
+  match: {en: ['LoRA']}
+  def:
+    en: Low-rank adaptation; fine-tunes a large model by training small low-rank weight updates only.
+    ru: Low-rank adaptation; дообучение большой модели обучением только небольших низкоранговых добавок к весам.
+
+- term: {en: Log-likelihood, ru: Лог-правдоподобие}
+  match: {en: ['log-likelihood'], ru: ['лог-правдоподоби\w*']}
+  def:
+    en: Log of the probability a model assigns to the observed data; higher means the model explains the data better.
+    ru: Логарифм вероятности, которую модель присваивает наблюдаемым данным; чем выше, тем лучше модель объясняет данные.
+
+- term: {en: Monte Carlo, ru: Монте-Карло}
+  match: {en: ['Monte Carlo'], ru: ['Монте-Карло']}
+  def:
+    en: Estimating a quantity by averaging over many random simulations.
+    ru: Оценка величины усреднением по многим случайным симуляциям.
+
+- term: {en: PPO, ru: PPO}
+  match: {en: ['Proximal Policy Optimization', 'PPO']}
+  def:
+    en: Proximal Policy Optimization, a policy-gradient RL algorithm that limits how far each update moves the policy.
+    ru: Proximal Policy Optimization, алгоритм RL на градиенте политики, ограничивающий шаг каждого обновления.
+
+- term: {en: Goal-conditioned task, ru: Задача с заданной целью}
+  match: {en: ['goal-conditioned'], ru: ['с заданной целью']}
+  def:
+    en: An RL task where the target (e.g. a speed to reach) is part of the input and changes between episodes.
+    ru: Задача RL, где цель (например, нужная скорость) входит во вход и меняется от эпизода к эпизоду.
+
+- term: {en: EM algorithm, ru: EM-алгоритм}
+  match: {en: ['EM']}
+  def:
+    en: Expectation–maximisation; alternates between estimating hidden variables and refitting parameters until convergence.
+    ru: Expectation–maximisation; чередует оценку скрытых переменных и переподбор параметров до сходимости.
+
+- term: {en: Sensitivity and specificity, ru: Чувствительность и специфичность}
+  match: {en: ['sensitivity'], ru: ['чувствительност\w+']}
+  def:
+    en: Sensitivity is the share of true positives labelled positive; specificity is the share of true negatives labelled negative.
+    ru: Чувствительность — доля истинно положительных, отмеченных положительными; специфичность — доля истинно отрицательных, отмеченных отрицательными.
+
+- term: {en: Pseudo-label, ru: Псевдометка}
+  match: {en: ['pseudo-label\w*'], ru: ['псевдометк\w*']}
+  def:
+    en: A label assigned by a model or rule rather than by an annotator, then used for training.
+    ru: Метка, присвоенная моделью или правилом, а не разметчиком, и затем используемая для обучения.
+
+- term: {en: Cost-sensitive learning, ru: Обучение с учётом стоимости}
+  match: {en: ['cost-sensitive'], ru: ['обучение с учётом стоимости']}
+  def:
+    en: Training where different errors have different costs, usually through per-class or per-sample weights.
+    ru: Обучение, где разные ошибки стоят по-разному, обычно через веса классов или примеров.
+
+- term: {en: Partial correlation, ru: Частная корреляция}
+  match: {en: ['partial correlation'], ru: ['частн\w+ корреляци\w+']}
+  def:
+    en: Correlation between two variables after removing the linear effect of a third.
+    ru: Корреляция двух переменных после удаления линейного влияния третьей.
+
+- term: {en: Linear program, ru: Линейное программирование}
+  match: {en: ['linear program\w*'], ru: ['линейного программирования']}
+  def:
+    en: Optimising a linear objective under linear constraints; an optimum always lies at a vertex of the feasible region.
+    ru: Оптимизация линейной функции при линейных ограничениях; оптимум всегда лежит в вершине допустимой области.
+
+- term: {en: SLSQP, ru: SLSQP}
+  match: {en: ['SLSQP']}
+  def:
+    en: Sequential least-squares programming, a local optimiser for smooth problems with constraints.
+    ru: Sequential least-squares programming, локальный оптимизатор для гладких задач с ограничениями.
+
+- term: {en: Absorbing state, ru: Поглощающее состояние}
+  match: {en: ['absorbing'], ru: ['поглощающ\w+']}
+  def:
+    en: A state of a Markov chain that, once reached, is never left.
+    ru: Состояние цепи Маркова, из которого, попав в него, уже не выходят.

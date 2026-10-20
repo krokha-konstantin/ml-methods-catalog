@@ -1,20 +1,21 @@
-section: planning
+section: puzzles
 subsection: games
 order: 10
 grade: good
 name: Online opponent modelling
-description: >-
-  When the opponent is a fixed but unknown policy, summarise its observed choices during the game and
-  adapt your strategy to that estimate. A strategy tuned to the actual opponent beats one that assumes
-  a generic one.
+when: The opponent plays a fixed but unknown policy.
+do: Summarise its observed choices during the game and adapt your strategy to that estimate.
+why: A strategy tuned to the actual opponent beats one that assumes a generic one.
+see_also:
+- avoid-greedy-overshoot
 code: |
+  # record which option (by rank) the opponent hands over each round
   lo, mid, hi = sorted(range(3), key=lambda i: t[i])
   rank = 0.5 if t[lo] == t[hi] else {lo: 0.0, mid: 0.5, hi: 1.0}[give - 1]
   opp_ranks.append(rank)
 translations:
   ru:
     name: Моделирование соперника по ходу игры
-    description: >-
-      Если соперник следует фиксированной, но неизвестной стратегии, обобщайте его наблюдаемые ходы по
-      ходу игры и подстраивайте свою стратегию под эту оценку. Стратегия под реального соперника обыгрывает
-      стратегию против абстрактного.
+    when: Соперник играет по фиксированной, но неизвестной стратегии.
+    do: Обобщайте его наблюдаемые ходы по ходу игры и подстраивайте свою стратегию под эту оценку.
+    why: Стратегия под реального соперника обыгрывает стратегию против абстрактного.

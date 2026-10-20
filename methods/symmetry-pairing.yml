@@ -1,11 +1,17 @@
-section: theory
+section: puzzles
+subsection: theory
 order: 60
 grade: good
 name: Exploit symmetry to shrink the search
-description: >-
-  If the data and the model class share a symmetry (separating lines through the centre of a point-symmetric
-  set), points and their mirror images always land on opposite sides. Pairs whose contribution is the
-  same for every model can be dropped, and only the rest needs optimising.
+when: >-
+  The data and the model class share a symmetry (separating lines through the centre of a point-symmetric
+  set).
+do: >-
+  Pair points with their mirror images; drop pairs whose contribution is the same for every model and
+  optimise only the rest.
+why: >-
+  A point and its mirror image always land on opposite sides, which shrinks the search and bounds the
+  best achievable score.
 code: |
   # a cell and its mirror image through the centre always fall on opposite sides of the line:
   # same colour → exactly one of the pair is right, whatever the line;
@@ -14,7 +20,12 @@ code: |
 translations:
   ru:
     name: Используйте симметрию, чтобы сократить перебор
-    description: >-
-      Если у данных и класса моделей общая симметрия (разделяющие прямые через центр центрально-симметричного
-      множества), точка и её зеркальное отражение всегда оказываются по разные стороны. Пары, вклад которых
-      одинаков для любой модели, можно отбросить и оптимизировать только остальные.
+    when: >-
+      У данных и класса моделей общая симметрия (разделяющие прямые через центр центрально-симметричного
+      множества).
+    do: >-
+      Разбейте точки на пары с их зеркальными отражениями; отбросьте пары, вклад которых одинаков для
+      любой модели, и оптимизируйте только остальные.
+    why: >-
+      Точка и её отражение всегда оказываются по разные стороны, что сокращает перебор и ограничивает
+      лучшую достижимую оценку.

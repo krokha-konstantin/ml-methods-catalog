@@ -3,11 +3,16 @@ subsection: features
 order: 50
 grade: good
 name: Short-to-long volatility ratio
-description: >-
-  Divide a short-window rolling std by a long-window one: values well above 1 mark a change of regime
-  even when the level stays within normal bounds. With many sensors, aggregate the ratios across them
-  (sum, count above a threshold, max, top-k mean).
+when: A regime change shows up as unusual variability rather than an unusual level.
+do: >-
+  Divide a short-window rolling std by a long-window one; with many sensors, aggregate the ratios across
+  them (sum, count above a threshold, max, top-k mean).
+why: >-
+  Values well above 1 flag a change of regime even when the level stays within normal bounds.
+see_also:
+- isolation-forest
 code: |
+  # short/long rolling std per sensor, aggregated across sensors
   g = df.groupby("session_id")
   for s in SENSORS:
       long_std = g[s].transform(lambda c: c.rolling(150, min_periods=10).std())
@@ -19,7 +24,8 @@ code: |
 translations:
   ru:
     name: Отношение краткосрочной волатильности к долгосрочной
-    description: >-
-      Делите скользящее стандартное отклонение по короткому окну на отклонение по длинному: значения заметно
-      больше 1 отмечают смену режима, даже если уровень остаётся в норме. При многих датчиках агрегируйте
-      отношения по ним (сумма, число превышений порога, максимум, среднее топ-k).
+    when: Смена режима проявляется необычной изменчивостью, а не необычным уровнем.
+    do: >-
+      Делите скользящее стандартное отклонение по короткому окну на отклонение по длинному; при многих
+      датчиках агрегируйте отношения по ним (сумма, число превышений порога, максимум, среднее топ-k).
+    why: Значения заметно больше 1 отмечают смену режима, даже если уровень остаётся в норме.

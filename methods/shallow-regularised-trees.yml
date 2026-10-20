@@ -3,16 +3,19 @@ subsection: models
 order: 20
 grade: book
 name: Shallow, slow, heavily regularised trees
-description: >-
-  When the test comes from new groups (sessions, users), shallow trees, a small learning rate, large minimum
-  leaf sizes and subsampling generalise better than deep trees, which memorise group-specific patterns.
+when: The test comes from new groups (sessions, users).
+do: Use shallow trees, a small learning rate, large minimum leaf sizes and subsampling.
+why: Deep trees memorise group-specific patterns that don't transfer to unseen groups.
+see_also:
+- cold-start-stress-test
 code: |
+  # shallow, slow, heavily regularised boosting
   lgbm_params = dict(n_estimators=8000, learning_rate=0.005, num_leaves=7, max_depth=3,
                      min_child_samples=200, subsample=0.7, colsample_bytree=0.6, reg_alpha=0.5, reg_lambda=2.0)
 translations:
   ru:
     name: Неглубокие медленные сильно регуляризованные деревья
-    description: >-
-      Если тест состоит из новых групп (сессий, пользователей), неглубокие деревья, малый шаг обучения,
-      большой минимальный размер листа и сабсэмплинг обобщают лучше глубоких деревьев, которые запоминают
-      особенности групп.
+    when: Тест состоит из новых групп (сессий, пользователей).
+    do: >-
+      Используйте неглубокие деревья, малый шаг обучения, большой минимальный размер листа и сабсэмплинг.
+    why: Глубокие деревья запоминают особенности групп, которые не переносятся на новые группы.

@@ -3,11 +3,18 @@ subsection: super-resolution
 order: 20
 grade: good
 name: Use a differentiable copy of the metric as the loss
-description: >-
-  If the metric is a weighted sum of differentiable terms, implement the same terms with the official
-  weights in the training framework and train on them directly, often with an extra plain L1 term for
-  stability.
+when: The metric is a weighted sum of differentiable terms.
+do: >-
+  Implement the same terms with the official weights in the training framework and train on them directly,
+  often with an extra plain L1 term for stability.
+why: >-
+  The model optimises exactly what is scored instead of a proxy that ranks solutions differently.
+see_also:
+- metric-weighted-loss
+- reproduce-the-metric-exactly
+- select-checkpoint-by-metric
 code: |
+  # differentiable copy of the competition metric (SSIM + MAE + gradient + Laplacian terms)
   def metric_loss(out, y):
       nmae = (out - y).abs().mean()
       grad_err = (grad_mag(out) - grad_mag(y)).abs().mean() / (2 * math.sqrt(2))
@@ -16,6 +23,9 @@ code: |
 translations:
   ru:
     name: Используйте дифференцируемую копию метрики как функцию потерь
-    description: >-
-      Если метрика — взвешенная сумма дифференцируемых слагаемых, реализуйте те же слагаемые с официальными
-      весами во фреймворке обучения и учитесь прямо на них, часто с добавочным L1 для устойчивости.
+    when: Метрика — взвешенная сумма дифференцируемых слагаемых.
+    do: >-
+      Реализуйте те же слагаемые с официальными весами во фреймворке обучения и учитесь прямо на них,
+      часто с добавочным L1 для устойчивости.
+    why: >-
+      Модель оптимизирует ровно то, что оценивается, а не заменитель, который упорядочивает решения иначе.

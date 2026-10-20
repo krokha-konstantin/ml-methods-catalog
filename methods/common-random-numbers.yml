@@ -3,9 +3,12 @@ subsection: model-based
 order: 40
 grade: book
 name: Common random numbers
-description: >-
-  Evaluate all candidate plans on the same random draws. Their difference then reflects the plans, not
-  the luck of the draw, so far fewer simulations are needed to tell two plans apart.
+when: Candidate plans are compared by simulation.
+do: Evaluate all candidates on the same random draws.
+why: >-
+  Their difference then reflects the plans, not the luck of the draw, so far fewer simulations are needed.
+see_also:
+- prefix-cached-coordinate-ascent
 code: |
   E, U = draw_noise(n_scenarios, rng)    # drawn once...
   for plan in candidate_plans:
@@ -13,6 +16,7 @@ code: |
 translations:
   ru:
     name: Общие случайные числа
-    description: >-
-      Оценивайте все планы-кандидаты на одних и тех же случайных реализациях. Тогда их разница отражает
-      сами планы, а не удачу выборки, и для различения двух планов нужно гораздо меньше симуляций.
+    when: Планы-кандидаты сравниваются симуляцией.
+    do: Оценивайте всех кандидатов на одних и тех же случайных реализациях.
+    why: >-
+      Тогда их разница отражает сами планы, а не удачу выборки, и симуляций нужно гораздо меньше.

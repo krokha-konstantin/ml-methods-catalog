@@ -13,14 +13,19 @@ The entry teaches a **general technique**; the code snippet is the only concrete
   a noisy copy of train". Ask: *what would this be called in a textbook or a course?*
 - Short: a noun phrase or an imperative, no full sentence, no trailing period.
 
-## 2. Description
+## 2. When / Do / Why
 
-Two parts, usually two or three sentences (about 25–70 words):
+The description is three short fields, one or two sentences each (about 40–80 words in total):
 
-1. **The principle**: when it applies and what to do, in general terms. Start conditional techniques with the
-   condition: "If additional data is given …", "When rows come in groups …".
-2. **Why it matters**: the failure mode it prevents or the payoff. "Otherwise the model is scored on near-copies of
-   its own training rows." "A known formula costs one line, while a model would need far more data to rediscover it."
+| field | content | example |
+|---|---|---|
+| `when` | The situation that calls for the technique, as a statement. Leave it out only when the technique always applies (a standard recipe). | "Additional data is given that describes the same objects as the training set." |
+| `do` | What to do, in general terms. Required. | "Match each training row to its counterpart by nearest neighbour on the shared columns and add the extra columns." |
+| `why` | The failure mode it prevents or the payoff. | "Otherwise the model is scored on near-copies of its own training rows." |
+
+- Each field must read on its own: no "it" pointing back to another field's noun.
+- `when` describes the data or the setting, not the method ("Labels are noisy", not "Use when labels are noisy").
+- Don't repeat the name in `do`; add what the name leaves out.
 
 Rules:
 
@@ -33,13 +38,15 @@ Rules:
   library names (CatBoost, Optuna) belong in the code only.
 - **No "Example:" line.** Examples were removed: the code snippet is the example.
 - One technique per entry. If a description needs "and also …" for an unrelated idea, split it or drop the extra part.
-- Inline markdown only (`code`, *italic*). No links.
+- Inline markdown only (`code`, *italic*). No links: related methods go in `see_also`, definitions in the glossary.
 
 ## 3. Code
 
-- Keep the snippet from the solution; it shows the technique working on real data. Do not rewrite it to match
-  the wording.
-- Short and self-contained, with readable names. Trim lines that don't illustrate the technique.
+- Keep the logic of the snippet from the solution; it shows the technique working on real data.
+- Start with a one-line comment saying what the snippet shows: `# out-of-fold encoding, and a smoothed leave-one-out variant`.
+- Use generic names: `target`, `category`, `entity_id`, `sales`, `series_id`, not the source's column names
+  (`rent_price`, `protocol_text`). Library names are fine in code.
+- Short and self-contained. Trim lines that don't illustrate the technique.
 - If there is no real code, write a minimal illustration and set `sketch: true`.
 - When entries are merged, their snippets are concatenated, separated by a blank line.
 
@@ -64,15 +71,27 @@ catch this). Two entries are duplicates when their reworded names describe the s
 of correlation" and "Group K-fold", or "leave-one-out context features" and "target encoding". Merge them: keep the
 more general name, fold the extra nuance into one clause of the description, concatenate the code, delete the other file.
 
-## 6. Placement
+## 6. Placement and links
 
 - `section` is the task type the technique belongs to in general, not the task it was found in. A technique that works
   on any task type goes to `universal` (validation, ensembling, thresholds, hyperparameters, leaderboard).
+- Solutions to one-off puzzles (simulators, games, math problems) go to `puzzles`, so they don't interrupt the
+  reusable material.
 - Order within a subsection: from the most basic to the most specialised.
+- `see_also`: two to four closely related methods, especially ones in other sections (metric as loss ↔ metric-weighted
+  loss; predict the change ↔ residual over a baseline). Add the link in both files.
 
-## 7. Translation
+## 7. Glossary
+
+- A term that an outsider may not know (OOF, RANSAC, InfoNCE) goes into `glossary.yml`, not into the method text.
+  It is then underlined automatically on its first mention in every method.
+- Definitions are one or two plain sentences, readable without other glossary entries.
+- Don't add everyday ML words (model, feature, training) or the method names themselves.
+
+## 8. Translation
 
 - Translate the reworded English, not the original note. Same content and the same grade; never add specifics.
+- Translate `when`, `do` and `why` field by field; add Russian `match` patterns for new glossary terms (word stems with `\w*`).
 - Russian: names in the imperative or a noun phrase, like the English. Keep the standard English term when that is
   what Russian-speaking practitioners use (out-of-fold, target encoding, record linkage, bagging), optionally with a
   Russian gloss.
@@ -80,9 +99,11 @@ more general name, fold the extra nuance into one clause of the description, con
 
 ## Checklist
 
-- [ ] Would an outsider understand the name and description without the code?
+- [ ] Would an outsider understand the name and the when / do / why without the code?
 - [ ] Is there any word that only makes sense in the source task? Remove it.
-- [ ] Does the description say *why*, not only *what*?
+- [ ] Is `why` filled in, and is it a reason rather than a restatement of `do`?
+- [ ] Does the code start with a one-line comment and use generic names?
+- [ ] Are related methods linked in `see_also`, and new jargon added to the glossary?
 - [ ] Is the grade still right for the general idea?
 - [ ] Is there already an entry for the same idea?
 - [ ] Is the translation updated?

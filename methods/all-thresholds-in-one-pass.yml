@@ -3,23 +3,28 @@ subsection: thresholds
 order: 20
 grade: good
 name: Evaluate every threshold in one pass
-description: >-
-  Sort by score once; cumulative sums of the labels then give TP and FP for every possible cut-off, so
-  F1 (or a cost) for all thresholds costs O(n log n). Constraints such as "recall ≥ 90% in every group"
-  become a feasible range of cut-offs found with binary search.
+when: Many cut-offs, or cut-offs under constraints, have to be evaluated.
+do: >-
+  Sort by score once; cumulative sums of the labels give TP and FP for every cut-off at once. Constraints
+  such as "recall ≥ 90% in every group" become a feasible range of cut-offs found with binary search.
+why: F1 or a cost for all thresholds costs O(n log n) instead of one pass per threshold.
+see_also:
+- threshold-tuning
 code: |
-  order = np.argsort(-ri, kind='stable')
+  # F1 for every cut-off from one sort and a cumulative sum
+  order = np.argsort(-scores, kind='stable')
   tp_cum = np.cumsum(y[order])
   k = np.arange(1, len(y) + 1)
-  f1 = 2 * tp_cum / (k + n_pos)                 # F1 for every cut at once
-  best_f1 = max(best_f1, f1.max())
+  f1 = 2 * tp_cum / (k + n_pos)                 # F1 when the top k rows are labelled positive
+  best_f1 = f1.max()
   # with constraints: the feasible range of k comes from searchsorted on cumulative counts
-  k_lo = np.searchsorted(tp, need_all) + 1
-  k_hi = min(kmax_all, np.searchsorted(np.cumsum(mg), kmax_g[g], side='right'))
+  k_lo = np.searchsorted(tp_cum, need_tp) + 1
 translations:
   ru:
     name: Оценка всех порогов за один проход
-    description: >-
-      Отсортируйте объекты по оценке один раз; кумулятивные суммы меток дают TP и FP для каждого возможного
-      порога, так что F1 (или стоимость) для всех порогов считается за O(n log n). Ограничения вроде «полнота
-      ≥ 90% в каждой группе» превращаются в допустимый диапазон порогов, который находится бинарным поиском.
+    when: Нужно оценить много порогов или пороги с ограничениями.
+    do: >-
+      Отсортируйте по оценке один раз; кумулятивные суммы меток сразу дают TP и FP для каждого порога.
+      Ограничения вроде «полнота ≥ 90% в каждой группе» превращаются в допустимый диапазон порогов, который
+      находится бинарным поиском.
+    why: F1 или стоимость для всех порогов считается за O(n log n), а не за проход на каждый порог.

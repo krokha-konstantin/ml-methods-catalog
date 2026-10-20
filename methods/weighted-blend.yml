@@ -3,11 +3,16 @@ subsection: ensembling
 order: 30
 grade: book
 name: Weighted blend of independent pipelines
-description: >-
-  Blend the final predictions of separately built pipelines with a weight. When the weight can't be validated
-  reliably, sweep a few values and report how far each blend moves from the stronger pipeline, so the
-  risk of each choice is visible.
+when: >-
+  Two separately built pipelines are to be blended, and the weight can't be validated reliably.
+do: Sweep a few weights and report how far each blend moves from the stronger pipeline.
+why: The risk of each choice becomes visible instead of being hidden in a single number.
+see_also:
+- bagging
+- dirichlet-weight-search
+- rank-average-blending
 code: |
+  # how far each candidate blend moves away from pipeline A
   for w in [0.50, 0.52, 0.55, 0.58, 0.60]:
       out = w * pred_a + (1 - w) * pred_b
       diff = out - pred_a
@@ -16,7 +21,7 @@ code: |
 translations:
   ru:
     name: Взвешенный бленд независимых пайплайнов
-    description: >-
-      Смешайте итоговые предсказания отдельно построенных пайплайнов с весом. Если вес нельзя надёжно
-      провалидировать, переберите несколько значений и посмотрите, насколько каждый бленд отходит от более
-      сильного пайплайна: так виден риск каждого выбора.
+    when: Нужно смешать два отдельно построенных пайплайна, а вес нельзя надёжно провалидировать.
+    do: >-
+      Переберите несколько весов и посмотрите, насколько каждый бленд отходит от более сильного пайплайна.
+    why: Риск каждого выбора становится виден, а не прячется в одном числе.

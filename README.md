@@ -11,6 +11,7 @@ catalog/
 ├── methods/            one file per method (<id>.yml); _template.yml shows every field
 ├── sections.yml        section/subsection ids, order and titles (all languages)
 ├── site.yml            languages, page texts, grade labels, UI strings
+├── glossary.yml        term definitions shown on hover and in the Glossary section
 ├── template.html       page layout, styles and script (no content)
 ├── build.py            validates everything and writes methods_catalog.html
 ├── WRITING.md          how to word, grade and translate a method
@@ -27,9 +28,9 @@ python build.py --private # local build that also includes private/ (see below)
 
 ## Add a method
 1. Copy `methods/_template.yml` to `methods/<short-id>.yml`.
-2. Fill in `section`, `subsection`, `order`, `grade`, `name`, `description`, `code`,
+2. Fill in `section`, `subsection`, `order`, `grade`, `name`, `when`, `do`, `why`, `see_also`, `code`,
    following [WRITING.md](WRITING.md).
-3. Run `python build.py`. Errors name the file and the problem (unknown section, bad grade, …).
+3. Run `python build.py`. Errors name the file and the problem (unknown section, bad grade, unknown `see_also` id, …).
 
 ## Content that can't be public yet
 `private/methods/` is git-ignored and never published, e.g. code from a competition that is still running.
@@ -42,11 +43,16 @@ To publish later, reword the files per [WRITING.md](WRITING.md) and move them fr
 Add an entry to `sections.yml` with an `id` and a `title` per language. Numbering follows the list order.
 Quote titles in the `{en: "...", ru: "..."}` form: an unquoted comma ends the value.
 
+## Add a glossary term
+Add an entry to `glossary.yml` with `term`, `match` (regular expressions per language) and `def`. The build
+underlines the first mention of the term in each method (definition on hover or tap) and lists it in the Glossary
+section at the end of the page.
+
 ## Translate
-- **A method**: add `translations: {<lang>: {name, description}}` to its file. Untranslated methods
+- **A method**: add `translations: {<lang>: {name, when, do, why}}` to its file. Untranslated methods
   are shown in English with an "EN" marker, and untranslated fields fall back to English one by one.
 - **A new language**: add it under `languages` in `site.yml`, then add that key to the strings in
-  `site.yml` and `sections.yml` (missing strings fall back to English too).
+  `site.yml`, `sections.yml` and `glossary.yml` (missing strings fall back to English too).
 
 The page has a language switcher; `?lang=ru` in the URL selects a language directly.
 

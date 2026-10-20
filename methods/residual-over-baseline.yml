@@ -3,10 +3,13 @@ subsection: super-resolution
 order: 10
 grade: book
 name: Learn the residual over a simple baseline
-description: >-
-  Let the network predict only the correction to a cheap baseline (bicubic upscaling) and add the two.
-  It starts from a good solution and spends capacity on the missing detail.
+when: A cheap baseline already gets close (bicubic upscaling).
+do: Let the network predict only the correction to the baseline and add the two.
+why: Training starts from a good solution and spends capacity on the missing detail.
+see_also:
+- predict-the-change
 code: |
+  # output = bicubic upscale + learned residual
   def forward(self, x):
       base = F.interpolate(x, scale_factor=4, mode="bicubic", align_corners=False)
       f = self.head(x)
@@ -15,6 +18,6 @@ code: |
 translations:
   ru:
     name: Учите остаток поверх простого бейзлайна
-    description: >-
-      Пусть сеть предсказывает только поправку к дешёвому бейзлайну (бикубическому увеличению), и складывайте
-      их. Сеть начинает с хорошего решения и тратит ёмкость на недостающие детали.
+    when: Дешёвый бейзлайн уже даёт близкий результат (бикубическое увеличение).
+    do: Пусть сеть предсказывает только поправку к бейзлайну, и складывайте их.
+    why: Обучение начинается с хорошего решения и тратит ёмкость на недостающие детали.

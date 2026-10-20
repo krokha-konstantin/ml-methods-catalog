@@ -2,14 +2,15 @@ section: nlp
 order: 90
 grade: book
 name: Expand abbreviations
-description: >-
-  Replace domain abbreviations with their full forms from a dictionary before vectorising, so both spellings
-  map to the same tokens.
+when: The domain uses many abbreviations.
+do: Replace them with their full forms from a dictionary before vectorising.
+why: Both spellings then map to the same tokens.
 code: |
-  return SYNONYM_RE.sub(lambda m: MKB10_SYNONYMS[m.group(1)], normalize_text(text))   # ИБС → ишемическая болезнь сердца
+  # e.g. "MI" → "myocardial infarction"
+  return ABBREVIATION_RE.sub(lambda m: ABBREVIATIONS[m.group(1)], normalize_text(text))
 translations:
   ru:
     name: Раскрывайте сокращения
-    description: >-
-      Заменяйте сокращения предметной области полными формами из словаря перед векторизацией, чтобы оба
-      написания давали одни и те же токены.
+    when: В предметной области много сокращений.
+    do: Заменяйте их полными формами из словаря перед векторизацией.
+    why: Тогда оба написания дают одни и те же токены.

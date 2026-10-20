@@ -12,11 +12,13 @@ title:
 
 intro:
   en: >-
-    A catalog of methods used in ML competition solutions, grouped by task type. Each method has a short
-    code snippet; snippets marked *sketch* are minimal illustrations rather than code lifted from a solution.
+    A catalog of methods used in ML competition solutions, grouped by task type. Each method says when it
+    applies, what to do and why, with a short code snippet; snippets marked *sketch* are minimal illustrations
+    rather than code lifted from a solution. BOOK methods are collapsed: click a name to open it.
   ru: >-
-    Каталог методов из решений ML-соревнований, сгруппированных по типу задачи. У каждого метода есть
-    короткий фрагмент кода; фрагменты с пометкой *набросок* — минимальные иллюстрации, а не код из решения.
+    Каталог методов из решений ML-соревнований, сгруппированных по типу задачи. Для каждого метода сказано,
+    когда он применим, что делать и зачем, и приведён короткий фрагмент кода; фрагменты с пометкой *набросок* —
+    минимальные иллюстрации, а не код из решения. Методы КЛАССИКА свёрнуты: нажмите на название, чтобы открыть.
 
 grades_heading:
   en: Grades (they rate the idea, not whether it worked)
@@ -44,7 +46,7 @@ brilliant_heading:
 
 ui:
   search: {en: "Search methods and code…", ru: "Поиск по методам и коду…"}
-  expand: {en: expand all code, ru: развернуть весь код}
+  expand: {en: expand everything, ru: развернуть всё}
   theme: {en: Theme, ru: Тема}
   methods: {en: methods, ru: методов}
   code: {en: Code, ru: Код}
@@ -52,3 +54,10 @@ ui:
   sketch_note: {en: minimal illustration, ru: минимальная иллюстрация}
   untranslated: {en: not translated yet, ru: ещё не переведено}
   language: {en: Language, ru: Язык}
+  when: {en: When, ru: Когда}
+  do: {en: Do, ru: Что делать}
+  why: {en: Why, ru: Зачем}
+  see_also: {en: See also, ru: См. также}
+  glossary: {en: Glossary, ru: Глоссарий}
+  glossary_intro: {en: "Terms underlined with dots in the methods; hover or tap them to see the definition in place.", ru: "Термины, подчёркнутые точками в методах; наведите или нажмите, чтобы увидеть определение на месте."}
+  permalink: {en: Link to this method, ru: Ссылка на этот метод}

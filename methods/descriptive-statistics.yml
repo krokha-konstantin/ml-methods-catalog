@@ -1,18 +1,26 @@
-section: theory
+section: puzzles
+subsection: theory
 order: 10
 grade: book
 name: Partial and lagged correlation
-description: >-
-  Partial correlation removes the effect of a third variable; lagged cross-correlation, computed per entity
-  and then averaged, shows which of two series leads the other.
+when: >-
+  Two variables are related and a third may explain the relation, or one series may lead another.
+do: >-
+  Use partial correlation to remove the third variable's effect; compute lagged cross-correlation per
+  entity, then average.
+why: Raw correlation confuses shared causes and timing with a direct relation.
 code: |
+  # partial correlation; lagged correlation per entity
   def partial_corr(x, y, z):
       r_xy, r_xz, r_yz = x.corr(y), x.corr(z), y.corr(z)
       return (r_xy - r_xz * r_yz) / np.sqrt((1 - r_xz ** 2) * (1 - r_yz ** 2))
-  per_sat = [g['solar_panel_temp_mean'].corr(g['battery_temp_mean'].shift(-lag)) for _, g in data.groupby('satellite_id')]
+  per_entity = [g['x'].corr(g['y'].shift(-lag)) for _, g in data.groupby('entity_id')]
 translations:
   ru:
     name: Частная и лаговая корреляция
-    description: >-
-      Частная корреляция убирает влияние третьей переменной; лаговая взаимная корреляция, посчитанная
-      по каждой сущности и затем усреднённая, показывает, какой из двух рядов опережает другой.
+    when: >-
+      Две переменные связаны, и связь может объяснять третья, или один ряд может опережать другой.
+    do: >-
+      Частной корреляцией уберите влияние третьей переменной; лаговую взаимную корреляцию считайте по
+      каждой сущности, затем усредняйте.
+    why: Сырая корреляция путает общие причины и сдвиг во времени с прямой связью.

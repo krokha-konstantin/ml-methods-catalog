@@ -2,11 +2,18 @@ section: tracking
 order: 10
 grade: book
 name: Particle filter
-description: >-
-  Track a hidden state (position and rate) with a set of weighted samples: move them by a motion model,
-  re-weight them by how well each explains the next observation, then resample. Systematic resampling
-  with a little added noise (roughening) keeps the particles diverse.
+when: >-
+  A hidden state (position and rate) has to be tracked through noisy observations, and its dynamics or
+  noise are not Gaussian.
+do: >-
+  Represent the state by weighted samples: move them by a motion model, re-weight each by how well it
+  explains the next observation, then resample. Systematic resampling with a little added noise (roughening)
+  keeps the particles diverse.
+why: It handles non-linear, multi-modal posteriors that a Kalman filter can't.
+see_also:
+- trackers-as-features
 code: |
+  # systematic resampling with roughening noise (numba-compiled)
   @njit(cache=True)
   def _resamp(pos, aux, w, N, rp, rv):
       cum = np.zeros(N + 1)
@@ -20,8 +27,13 @@ code: |
 translations:
   ru:
     name: Фильтр частиц
-    description: >-
-      Отслеживайте скрытое состояние (положение и скорость) набором взвешенных сэмплов: сдвигайте их по
-      модели движения, перевзвешивайте по тому, насколько каждый объясняет следующее наблюдение, затем
-      делайте ресэмплинг. Систематический ресэмплинг с небольшим добавленным шумом (roughening) сохраняет
-      разнообразие частиц.
+    when: >-
+      Скрытое состояние (положение и скорость) нужно отслеживать по шумным наблюдениям, а его динамика
+      или шум не гауссовы.
+    do: >-
+      Представьте состояние взвешенными сэмплами: сдвигайте их по модели движения, перевзвешивайте по
+      тому, насколько каждый объясняет следующее наблюдение, затем делайте ресэмплинг. Систематический
+      ресэмплинг с небольшим добавленным шумом (roughening) сохраняет разнообразие частиц.
+    why: >-
+      Справляется с нелинейными многомодальными апостериорными распределениями, которые не под силу фильтру
+      Калмана.

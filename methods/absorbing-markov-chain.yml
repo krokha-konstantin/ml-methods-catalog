@@ -1,16 +1,21 @@
-section: theory
+section: puzzles
+subsection: theory
 order: 30
 grade: book
 name: 'Absorbing Markov chain: expected hitting time'
-description: >-
+when: The expected time until a Markov chain reaches an absorbing state is needed.
+do: >-
   Write one linear equation per state, E[x] = 1 + Σ p(x→y) E[y], with the absorbing transition removed,
-  and solve the system; check the result by Monte Carlo.
+  and solve the system; check by Monte Carlo.
+why: It gives the exact answer, where simulation only approximates it.
 code: |
   # E_X = 1 + Σ_Y p(X→Y)·E_Y, with the absorbing transition M→L dropped
   E = np.linalg.inv(A) @ b          # E_S = 173/12
 translations:
   ru:
     name: 'Поглощающая марковская цепь: ожидаемое время достижения'
-    description: >-
+    when: Нужно ожидаемое время до попадания цепи Маркова в поглощающее состояние.
+    do: >-
       Запишите по одному линейному уравнению на состояние, E[x] = 1 + Σ p(x→y) E[y], без поглощающего
-      перехода, и решите систему; проверьте результат методом Монте-Карло.
+      перехода, и решите систему; проверьте методом Монте-Карло.
+    why: Это даёт точный ответ, а симуляция лишь приближает его.

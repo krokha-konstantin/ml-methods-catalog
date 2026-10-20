@@ -3,16 +3,22 @@ subsection: detection-segmentation
 order: 60
 grade: book
 name: Focal loss for rare positives
-description: >-
-  Down-weight easy, well-classified pixels so the loss concentrates on the hard ones; the standard fix
-  when positives are a tiny fraction of the output map.
+when: Positives are a tiny fraction of the output map.
+do: >-
+  Use focal loss: down-weight easy, well-classified pixels so the loss concentrates on the hard ones.
+why: Otherwise the many easy negatives dominate the gradient.
+see_also:
+- unet-bce-dice
 code: |
+  # focal loss (CenterNet form)
   pos_loss = torch.log(pred) * torch.pow(1 - pred, 2) * pos_inds
   neg_loss = torch.log(1 - pred) * torch.pow(pred, 2) * neg_inds
   loss = -(pos_loss.sum() + neg_loss.sum()) / num_pos
 translations:
   ru:
     name: Focal loss для редких положительных
-    description: >-
-      Уменьшайте вес лёгких, уже правильно классифицированных пикселей, чтобы функция потерь сосредоточилась
-      на трудных; стандартное решение, когда положительные составляют крошечную долю выходной карты.
+    when: Положительные составляют крошечную долю выходной карты.
+    do: >-
+      Используйте focal loss: уменьшайте вес лёгких, уже правильно классифицированных пикселей, чтобы
+      функция потерь сосредоточилась на трудных.
+    why: Иначе многочисленные лёгкие отрицательные доминируют в градиенте.

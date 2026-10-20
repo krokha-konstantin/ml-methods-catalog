@@ -2,13 +2,18 @@ section: nlp
 order: 70
 grade: brilliant
 name: Matrix completion for pairwise classification
-description: >-
-  If the rows are pairs (entity × question) and many pairs are labelled, arrange the labels into an entity
-  × question matrix and fill in the missing cells with a low-rank completion (iterative SVD). It is collaborative
-  filtering applied to a classification task, and uses the structure of which pairs are positive without
-  reading any text.
+when: Rows are pairs (entity × question) and many pairs are labelled.
+do: >-
+  Arrange the labels into an entity × question matrix and fill in the missing cells with a low-rank completion
+  (iterative SVD).
+why: >-
+  It is collaborative filtering applied to classification: it uses the structure of which pairs are positive
+  without reading any text.
+see_also:
+- oof-target-encoding
 code: |
-  matrix[protocol_index[row.protocol_text], title_index[row.title_text]] = row.label   # NaN = unknown
+  # rank-1 iterative SVD completion of the entity × question label matrix
+  matrix[entity_index[row.entity], question_index[row.question]] = row.label   # NaN = unknown
   completed = bias.copy(); completed[observed_mask] = matrix[observed_mask]
   for _ in range(50):
       left, singular, right = np.linalg.svd(completed - global_mean, full_matrices=False)
@@ -18,8 +23,10 @@ code: |
 translations:
   ru:
     name: Восполнение матрицы для попарной классификации
-    description: >-
-      Если строки — пары (сущность × вопрос) и многие пары размечены, сложите метки в матрицу сущность
-      × вопрос и заполните пропущенные ячейки восполнением низкого ранга (итеративное SVD). Это коллаборативная
-      фильтрация, применённая к задаче классификации: она использует структуру того, какие пары положительны,
-      не читая никакого текста.
+    when: Строки — пары (сущность × вопрос), и многие пары размечены.
+    do: >-
+      Сложите метки в матрицу сущность × вопрос и заполните пропущенные ячейки восполнением низкого ранга
+      (итеративное SVD).
+    why: >-
+      Это коллаборативная фильтрация, применённая к классификации: она использует структуру того, какие
+      пары положительны, не читая никакого текста.

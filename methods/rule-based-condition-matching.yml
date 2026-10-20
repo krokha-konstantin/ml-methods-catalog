@@ -2,20 +2,25 @@ section: nlp
 order: 40
 grade: good
 name: Rule-based attribute extraction and matching
-description: >-
-  Extract a few structured attributes from each text with regular expressions, taking nearby negation
-  into account. For text pairs, add flags for whether each attribute matches, is missing, or contradicts.
-  Exact constraints that a bag of words dilutes become explicit features.
+when: A few structured attributes in the texts decide the label.
+do: >-
+  Extract them with regular expressions, taking nearby negation into account; for text pairs, add flags
+  for whether each attribute matches, is missing, or contradicts.
+why: Exact constraints that a bag of words dilutes become explicit features.
+see_also:
+- pair-overlap-tokens
 code: |
-  for title_pattern, protocol_pattern in CONCEPT_PATTERNS.values():   # sex, age, pregnancy, severity...
-      title_has = bool(re.search(title_pattern, title))
-      m = re.search(protocol_pattern, protocol)
-      negated = m is not None and bool(NEGATION_RE.search(protocol[max(0, m.start() - 55):m.start()]))
-      values += [title_has, m is not None, title_has and m and not negated, title_has and not m, title_has and m and negated]
+  # match / missing / contradicted flags per extracted attribute
+  for pattern_a, pattern_b in ATTRIBUTE_PATTERNS.values():
+      a_has = bool(re.search(pattern_a, text_a))
+      m = re.search(pattern_b, text_b)
+      negated = m is not None and bool(NEGATION_RE.search(text_b[max(0, m.start() - 55):m.start()]))
+      values += [a_has, m is not None, a_has and m and not negated, a_has and not m, a_has and m and negated]
 translations:
   ru:
     name: Извлечение и сопоставление атрибутов правилами
-    description: >-
-      Извлеките из каждого текста несколько структурированных атрибутов регулярными выражениями с учётом
-      отрицания рядом. Для пар текстов добавьте флаги: атрибут совпадает, отсутствует или противоречит.
-      Точные ограничения, которые размываются в мешке слов, становятся явными признаками.
+    when: Метку определяют несколько структурированных атрибутов в текстах.
+    do: >-
+      Извлеките их регулярными выражениями с учётом отрицания рядом; для пар текстов добавьте флаги: атрибут
+      совпадает, отсутствует или противоречит.
+    why: Точные ограничения, которые размываются в мешке слов, становятся явными признаками.

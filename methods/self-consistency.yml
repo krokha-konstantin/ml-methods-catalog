@@ -2,18 +2,23 @@ section: nlp
 order: 150
 grade: book
 name: Self-consistency across sampled answers
-description: >-
+when: An LLM's answer has to be judged and several answers can be sampled.
+do: >-
   Sample several answers to the same question and measure how much they agree (number of distinct answers,
-  share of the most common one, pairwise text similarity). Answers the model is unsure about vary between
-  samples.
+  share of the most common one, pairwise similarity).
+why: Answers the model is unsure about vary between samples.
+see_also:
+- token-probability-features
 code: |
+  # agreement between sampled answers
   answer_counts = Counter(re.findall(r"<answer>(.*?)</answer>", "".join(supporting_answers), re.S))
   features['num_unique_answers'] = len(answer_counts)
   features['agreement_ratio'] = answer_counts.most_common(1)[0][1] / len(supporting_answers)
 translations:
   ru:
     name: Согласованность между сэмплированными ответами
-    description: >-
-      Сэмплируйте несколько ответов на один и тот же вопрос и измерьте, насколько они согласуются (число
-      разных ответов, доля самого частого, попарное текстовое сходство). Ответы, в которых модель не уверена,
-      меняются от сэмпла к сэмплу.
+    when: Нужно оценить ответ LLM, и можно сэмплировать несколько ответов.
+    do: >-
+      Сэмплируйте несколько ответов на один вопрос и измерьте, насколько они согласуются (число разных
+      ответов, доля самого частого, попарное сходство).
+    why: Ответы, в которых модель не уверена, меняются от сэмпла к сэмплу.

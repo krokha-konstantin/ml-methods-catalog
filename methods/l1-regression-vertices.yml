@@ -1,11 +1,15 @@
-section: theory
+section: puzzles
+subsection: theory
 order: 40
 grade: good
 name: The L1 regression optimum passes through data points
-description: >-
-  Least-absolute-deviation regression is a linear program, so an optimal line passes through at least
-  two data points: enumerating all pairs finds the exact optimum.
+when: The exact least-absolute-deviation (L1) regression line is needed on a small dataset.
+do: >-
+  Enumerate all pairs of data points and keep the line through the pair with the lowest loss.
+why: >-
+  L1 regression is a linear program, so an optimal line passes through at least two data points.
 code: |
+  # exact L1 line: try the line through every pair of points
   for i in range(n):
       for j in range(i + 1, n):
           if xs[j] == xs[i]: continue
@@ -15,6 +19,9 @@ code: |
 translations:
   ru:
     name: Оптимум L1-регрессии проходит через точки данных
-    description: >-
-      Регрессия по наименьшим абсолютным отклонениям — задача линейного программирования, поэтому оптимальная
-      прямая проходит хотя бы через две точки данных: перебор всех пар находит точный оптимум.
+    when: >-
+      Нужна точная прямая регрессии по наименьшим абсолютным отклонениям (L1) на небольшом наборе данных.
+    do: Переберите все пары точек и оставьте прямую через пару с наименьшей ошибкой.
+    why: >-
+      L1-регрессия — задача линейного программирования, поэтому оптимальная прямая проходит хотя бы через
+      две точки данных.

@@ -3,9 +3,13 @@ subsection: validation
 order: 70
 grade: good
 name: For ranking tasks, split by query
-description: >-
-  All candidates of one query go to the same fold. Otherwise the ranker has seen the query's other candidates
-  during training, and tuning selects settings that overfit.
+when: The task ranks candidates for each query.
+do: Put all candidates of one query in the same fold.
+why: >-
+  Otherwise the ranker has seen the query's other candidates in training, and tuning selects settings
+  that overfit.
+see_also:
+- group-k-fold
 sketch: true
 code: |
   for tr, va in GroupKFold(5).split(X, y, groups=query_id):   # all candidates of a query stay together
@@ -13,6 +17,8 @@ code: |
 translations:
   ru:
     name: В задачах ранжирования разбивайте по запросу
-    description: >-
-      Все кандидаты одного запроса попадают в один фолд. Иначе ранкер уже видел на обучении других кандидатов
-      этого запроса, и подбор выбирает переобученные настройки.
+    when: Задача — ранжировать кандидатов для каждого запроса.
+    do: Все кандидаты одного запроса попадают в один фолд.
+    why: >-
+      Иначе ранкер уже видел на обучении других кандидатов этого запроса, и подбор выбирает переобученные
+      настройки.

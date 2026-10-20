@@ -2,10 +2,12 @@ section: nlp
 order: 110
 grade: book
 name: Align word labels to subword tokens
-description: >-
-  For token classification with a transformer, give each word's label to its first subword and mask the
-  remaining subwords (label −100) so each word is scored exactly once.
+when: >-
+  Token classification is done with a transformer whose tokenizer splits words into subwords.
+do: Give each word's label to its first subword and mask the remaining subwords (label −100).
+why: Each word is scored exactly once, matching how word-level metrics count.
 code: |
+  # label the first subword of each word, mask the rest
   for wid in tokenized.word_ids(batch_index=i):
       if wid is None: label_ids.append(-100)
       elif wid != prev_word_id: label_ids.append(label2id[labels[wid]])
@@ -14,6 +16,7 @@ code: |
 translations:
   ru:
     name: Сопоставьте метки слов подсловным токенам
-    description: >-
-      При классификации токенов трансформером отдавайте метку слова его первому подслову, а остальные
-      подслова маскируйте (метка −100), чтобы каждое слово оценивалось ровно один раз.
+    when: >-
+      Классификация токенов делается трансформером, токенизатор которого делит слова на подслова.
+    do: Отдавайте метку слова его первому подслову, а остальные подслова маскируйте (метка −100).
+    why: Каждое слово оценивается ровно один раз, как в метриках на уровне слов.

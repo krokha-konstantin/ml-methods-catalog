@@ -1,12 +1,20 @@
-section: physics
+section: puzzles
+subsection: simulation
 order: 10
 grade: good
 name: Reconstruct the hidden environment from events
-description: >-
-  Detect events in observed trajectories (sharp changes of direction), infer the obstacle that caused
-  each one, and aggregate them on a grid into a map. Average orientations with an axial circular mean
-  (double the angle, average, halve), since θ and θ + π describe the same line.
+when: Trajectories move through an environment with hidden obstacles.
+do: >-
+  Detect events in the trajectories (sharp changes of direction), infer the obstacle behind each one,
+  and aggregate them on a grid into a map. Average orientations with an axial circular mean (double the
+  angle, average, halve).
+why: >-
+  Each event is weak evidence on its own, but many of them reveal the environment. θ and θ + π describe
+  the same line, so a plain mean of angles is wrong.
+see_also:
+- pool-observations
 code: |
+  # bounces → wall orientation → axial mean per grid cell
   step_angle = np.arctan2(np.diff(pts[:, 1]), np.diff(pts[:, 0]))
   d_angle = (np.diff(step_angle) + np.pi) % (2 * np.pi) - np.pi
   snap = np.where(np.abs(d_angle) > 0.15)[0] + 2              # bounce indices
@@ -16,7 +24,11 @@ code: |
 translations:
   ru:
     name: Восстановление скрытой среды по событиям
-    description: >-
-      Находите события в наблюдаемых траекториях (резкие смены направления), восстанавливайте препятствие,
-      вызвавшее каждое, и собирайте их на сетке в карту. Ориентации усредняйте осевым круговым средним
-      (удвоить угол, усреднить, поделить пополам), поскольку θ и θ + π описывают одну и ту же прямую.
+    when: Траектории проходят через среду со скрытыми препятствиями.
+    do: >-
+      Находите события в траекториях (резкие смены направления), восстанавливайте препятствие за каждым
+      и собирайте их на сетке в карту. Ориентации усредняйте осевым круговым средним (удвоить угол, усреднить,
+      поделить пополам).
+    why: >-
+      Одно событие — слабое свидетельство, но многие вместе раскрывают среду. θ и θ + π описывают одну
+      прямую, поэтому простое среднее углов неверно.

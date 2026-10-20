@@ -3,16 +3,24 @@ subsection: validation
 order: 50
 grade: good
 name: Nested evaluation of tuned post-processing
-description: >-
-  A threshold or cut-off chosen on the same OOF predictions it is scored on gives an optimistic score.
-  Choose it on the other folds and apply it to the held-out fold. If this optimism is larger than the
-  gain from a new idea, OOF "improvements" will not reproduce on the leaderboard.
+when: A threshold or cut-off is tuned on OOF predictions.
+do: >-
+  Choose it on the other folds and apply it to the held-out fold, instead of tuning and scoring on the
+  same predictions.
+why: >-
+  Tuning on the scored predictions is optimistic; if that optimism exceeds the gain of a new idea, OOF
+  "improvements" won't reproduce on the leaderboard.
+see_also:
+- positive-share-transfer
+- threshold-tuning
 code: |
-  def honest_rank_metric(labels, scores, folds, beta=2.0):
+  # honest score of a tuned cut-off: tune on the other folds, apply to the held-out one
+  def honest_rank_metric(y_true, scores, folds, beta=2.0):
+      predictions = np.zeros_like(y_true)
       for fold in sorted(np.unique(folds)):
           fit = folds != fold
           valid = np.flatnonzero(folds == fold)
-          count = int(np.argmax(macro_fbeta_rank_curve(y_true[fit], scores[fit], beta)))
+          count = int(np.argmax(fbeta_rank_curve(y_true[fit], scores[fit], beta)))
           take = int(round(count / fit.sum() * len(valid)))     # share chosen out-of-fold
           order = valid[np.argsort(-scores[valid], kind="mergesort")]
           predictions[order[:take]] = 1
@@ -20,7 +28,10 @@ code: |
 translations:
   ru:
     name: Вложенная оценка подобранной постобработки
-    description: >-
-      Порог или отсечка, подобранные на тех же OOF-предсказаниях, на которых их оценивают, дают завышенную
-      оценку. Подбирайте их на остальных фолдах и применяйте к отложенному. Если это завышение больше
-      выигрыша от новой идеи, «улучшения» на OOF не повторятся на лидерборде.
+    when: Порог или отсечка подбирается на OOF-предсказаниях.
+    do: >-
+      Подбирайте его на остальных фолдах и применяйте к отложенному, а не подбирайте и оценивайте на одних
+      и тех же предсказаниях.
+    why: >-
+      Подбор на оцениваемых предсказаниях даёт завышенную оценку; если завышение больше выигрыша от новой
+      идеи, «улучшения» на OOF не повторятся на лидерборде.

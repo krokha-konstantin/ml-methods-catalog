@@ -3,10 +3,13 @@ subsection: models
 order: 10
 grade: book
 name: Bidirectional RNN for per-step labels
-description: >-
-  When every step of a sequence needs a label and the whole sequence is available, a bidirectional GRU
-  or LSTM uses both past and future context; mask the padding in the loss.
+when: Every step of a sequence needs a label and the whole sequence is available.
+do: Use a bidirectional GRU or LSTM and mask the padding in the loss.
+why: Each step's prediction uses both past and future context.
+see_also:
+- centered-smoothing
 code: |
+  # bidirectional GRU head; padding masked out of the loss
   self.gru = nn.GRU(n_feat, hidden, num_layers=layers, batch_first=True, bidirectional=True, dropout=dropout)
   self.head = nn.Sequential(nn.Linear(hidden * 2, 64), nn.ReLU(), nn.Dropout(dropout), nn.Linear(64, 1))
 
@@ -16,6 +19,6 @@ code: |
 translations:
   ru:
     name: Двунаправленная RNN для меток на каждом шаге
-    description: >-
-      Когда метка нужна на каждом шаге последовательности и вся последовательность доступна, двунаправленная
-      GRU или LSTM использует и прошлый, и будущий контекст; паддинг исключается из функции потерь маской.
+    when: Метка нужна на каждом шаге последовательности, и вся последовательность доступна.
+    do: Используйте двунаправленную GRU или LSTM и исключайте паддинг из функции потерь маской.
+    why: Предсказание на каждом шаге использует и прошлый, и будущий контекст.

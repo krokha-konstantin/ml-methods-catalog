@@ -3,10 +3,12 @@ subsection: leaderboard
 order: 60
 grade: book
 name: Reproducible submission with a checksum
-description: >-
-  Rebuild the submission from code and assert that its hash equals the file that was scored. This proves
-  the final notebook really produces the submitted result.
+do: Rebuild the submission from code and assert that its hash equals the file that was scored.
+why: It proves that the final code really produces the submitted result.
+see_also:
+- sanity-check-implied-statistics
 code: |
+  # the rebuilt file must be byte-identical to the scored one
   digest = hashlib.sha256()
   with path.open("rb") as stream:
       for chunk in iter(lambda: stream.read(1 << 20), b""):
@@ -15,6 +17,5 @@ code: |
 translations:
   ru:
     name: Воспроизводимая посылка с контрольной суммой
-    description: >-
-      Пересоберите посылку из кода и проверьте, что её хэш совпадает с оценённым файлом. Это доказывает,
-      что итоговый ноутбук действительно даёт отправленный результат.
+    do: Пересоберите посылку из кода и проверьте, что её хэш совпадает с оценённым файлом.
+    why: Это доказывает, что итоговый код действительно даёт отправленный результат.

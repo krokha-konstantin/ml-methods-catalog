@@ -3,11 +3,12 @@ subsection: rl
 order: 20
 grade: good
 name: Curriculum by goal resampling
-description: >-
-  In goal-conditioned tasks, oversample the hard goals during training only (re-draw the goal from the
-  hard range with some probability). The policy gets more practice where it fails without changing the
-  evaluation distribution.
+when: The task is goal-conditioned and some goals are much harder than others.
+do: >-
+  During training only, oversample the hard goals (re-draw the goal from the hard range with some probability).
+why: The policy gets more practice where it fails without changing the evaluation distribution.
 code: |
+  # on reset, sometimes replace the goal with one from the hard range
   def reset(self, **kwargs):
       obs, info = self.env.reset(**kwargs)
       if self.env.unwrapped.np_random.uniform() < self.high_prob:
@@ -18,7 +19,8 @@ code: |
 translations:
   ru:
     name: Учебный план через пересэмплирование целей
-    description: >-
-      В задачах с заданной целью только во время обучения чаще выбирайте трудные цели (с некоторой вероятностью
-      пересэмплируйте цель из трудного диапазона). Политика больше тренируется там, где ошибается, а распределение
-      при оценке не меняется.
+    when: Задача с заданной целью, и некоторые цели гораздо труднее других.
+    do: >-
+      Только во время обучения чаще выбирайте трудные цели (с некоторой вероятностью пересэмплируйте цель
+      из трудного диапазона).
+    why: Политика больше тренируется там, где ошибается, а распределение при оценке не меняется.

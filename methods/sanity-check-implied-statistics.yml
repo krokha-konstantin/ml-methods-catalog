@@ -3,18 +3,21 @@ subsection: leaderboard
 order: 50
 grade: good
 name: Sanity-check a submission's implied statistics
-description: >-
-  Before submitting, compute aggregate quantities the predictions imply (median growth, positive rate,
-  mean level) and compare them with history and with a known-good submission. A systematic bias shows
-  up there long before the leaderboard does.
+do: >-
+  Before submitting, compute the aggregates the predictions imply (median growth, positive rate, mean
+  level) and compare them with history and with a known-good submission.
+why: A systematic bias shows up there long before the leaderboard does.
+see_also:
+- reproducible-submission
 sketch: true
 code: |
-  implied_mom = (pred / feb_2025_rto).median() - 1      # this submission +9.4% vs a strong reference +11.5%
-  implied_yoy = (pred / mar_2024_rto).median() - 1      # this submission +7.5% vs a strong reference +9.5%
+  # growth implied by the submission vs a known-good reference
+  implied_mom = (pred / last_month_actual).median() - 1     # this submission +9.4% vs reference +11.5%
+  implied_yoy = (pred / same_month_last_year).median() - 1  # this submission +7.5% vs reference +9.5%
 translations:
   ru:
     name: Проверяйте статистики, которые подразумевает посылка
-    description: >-
+    do: >-
       Перед отправкой посчитайте агрегаты, которые следуют из предсказаний (медианный рост, доля положительных,
-      средний уровень), и сравните их с историей и с заведомо хорошей посылкой. Систематическое смещение
-      видно там задолго до лидерборда.
+      средний уровень), и сравните их с историей и с заведомо хорошей посылкой.
+    why: Систематическое смещение видно там задолго до лидерборда.

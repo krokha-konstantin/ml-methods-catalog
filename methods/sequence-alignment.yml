@@ -2,19 +2,30 @@ section: tracking
 order: 20
 grade: book
 name: Sequence alignment by dynamic programming
-description: >-
-  Align a measured signal to a reference signal by minimising a cost of mismatch plus a penalty for moving
-  along the reference (dynamic time warping / Viterbi; beam search for a cheaper approximation).
+when: A measured signal has to be aligned to a reference signal.
+do: >-
+  Minimise a cost of mismatch plus a penalty for moving along the reference with dynamic programming (dynamic
+  time warping / Viterbi); beam search is a cheaper approximation.
+why: The globally best path survives local ambiguities that greedy matching gets stuck on.
+see_also:
+- balance-cost-terms
+- multiscale-ncc
+- structural-prior-plus-matcher
+- trackers-as-features
 code: |
+  # beam search over reference positions: mismatch cost + movement penalty
   for step in range(n):
-      for bi in range(bn):
+      for bi in range(beam_size):
           for d in range(-2, 3):                 # move at most 2 reference cells per step
-              ni = bidx[bi] + d
-              c = bcost[bi] + (sgr[step] - tw_gr[ni]) ** 2 / es + mc * abs(d)
-              ...                                # keep the BS cheapest candidates
+              ni = beam_idx[bi] + d
+              c = beam_cost[bi] + (signal[step] - reference[ni]) ** 2 / sigma + move_cost * abs(d)
+              ...                                # keep the beam_size cheapest candidates
 translations:
   ru:
     name: Выравнивание последовательностей динамическим программированием
-    description: >-
-      Выравнивайте измеренный сигнал по эталонному, минимизируя стоимость несовпадения плюс штраф за перемещение
-      по эталону (динамическая трансформация времени / Витерби; лучевой поиск как более дешёвое приближение).
+    when: Измеренный сигнал нужно выровнять по эталонному.
+    do: >-
+      Минимизируйте стоимость несовпадения плюс штраф за перемещение по эталону динамическим программированием
+      (динамическая трансформация времени / Витерби); лучевой поиск — более дешёвое приближение.
+    why: >-
+      Глобально лучший путь переживает локальные неоднозначности, на которых застревает жадное сопоставление.

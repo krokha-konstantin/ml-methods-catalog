@@ -1,12 +1,16 @@
-section: planning
+section: puzzles
 subsection: games
 order: 40
 grade: book
 name: Brute-force the endgame, exactly
-description: >-
-  When few moves remain, enumerate them all instead of using heuristics, and compare in integers (cross-multiply
-  instead of dividing) so ties and boundaries are decided exactly.
+when: Few moves remain.
+do: >-
+  Enumerate them all instead of using heuristics, and compare in integers (cross-multiply instead of dividing).
+why: Exhaustive search is exact, and integer comparisons decide ties and boundaries correctly.
+see_also:
+- exact-order-statistics
 code: |
+  # exact comparison of |A − S/3| without division
   def _key(A_final, B_final):
       dist_a = abs(3 * A_final - S); dist_b = abs(3 * B_final - S)
       return (0 if dist_a <= dist_b else 1, dist_a)
@@ -14,6 +18,7 @@ code: |
 translations:
   ru:
     name: Полный перебор в эндшпиле, без погрешностей
-    description: >-
-      Когда ходов осталось мало, переберите их все вместо эвристик и сравнивайте в целых числах (умножайте
-      крест-накрест вместо деления), чтобы ничьи и граничные случаи решались точно.
+    when: Ходов осталось мало.
+    do: >-
+      Переберите их все вместо эвристик и сравнивайте в целых числах (умножайте крест-накрест вместо деления).
+    why: Полный перебор точен, а целочисленные сравнения правильно решают ничьи и граничные случаи.

@@ -3,11 +3,18 @@ subsection: geometry
 order: 40
 grade: good
 name: Learn what geometry cannot observe
-description: >-
-  Two-view geometry gives the direction of motion but not its length. Predict the missing scale with a
-  small regressor on geometric cues (parallax left after removing rotation, raw pixel flow, a planarity
-  score), falling back to the best constant.
+when: >-
+  Part of the answer is unobservable from geometry (two-view geometry gives the direction of motion but
+  not its length).
+do: >-
+  Predict the missing quantity with a small regressor on geometric cues (parallax left after removing
+  rotation, raw pixel flow, a planarity score), falling back to the best constant.
+why: Weak cues still beat a constant, and the fallback caps the damage when they fail.
+see_also:
+- feature-matching-pose
+- safe-fallback
 code: |
+  # geometric cues → robust regressor for the translation scale
   def derot_flow(pts1, pts2, K, R):              # flow left after removing the rotation = parallax
       rays = (np.linalg.inv(K) @ np.c_[pts1, np.ones(len(pts1))].T).T
       rays_rot = (R @ rays.T).T; rays_rot /= rays_rot[:, 2:3]
@@ -17,7 +24,12 @@ code: |
 translations:
   ru:
     name: Выучите то, что геометрия не наблюдает
-    description: >-
-      Геометрия двух видов даёт направление движения, но не его длину. Предсказывайте недостающий масштаб
-      небольшим регрессором по геометрическим признакам (параллакс после удаления поворота, сырой поток
-      пикселей, оценка планарности), с запасным вариантом в виде лучшей константы.
+    when: >-
+      Часть ответа не наблюдаема из геометрии (геометрия двух видов даёт направление движения, но не его
+      длину).
+    do: >-
+      Предсказывайте недостающую величину небольшим регрессором по геометрическим признакам (параллакс
+      после удаления поворота, сырой поток пикселей, оценка планарности), с запасным вариантом в виде
+      лучшей константы.
+    why: >-
+      Слабые признаки всё равно лучше константы, а запасной вариант ограничивает ущерб, когда они не работают.

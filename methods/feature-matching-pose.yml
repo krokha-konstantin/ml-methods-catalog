@@ -3,10 +3,17 @@ subsection: geometry
 order: 10
 grade: book
 name: Classic two-view pose estimation
-description: >-
-  Contrast enhancement (CLAHE), SIFT keypoints, mutual nearest-neighbour matches with the ratio test,
-  RANSAC estimation of the essential matrix and pose recovery.
+when: The relative camera pose between two images is needed.
+do: >-
+  Enhance contrast (CLAHE), detect SIFT keypoints, keep mutual nearest-neighbour matches that pass the
+  ratio test, estimate the essential matrix with RANSAC and recover the pose.
+why: It is the standard, training-free pipeline and a strong baseline.
+see_also:
+- convention-calibration
+- learned-scale
+- search-unknown-intrinsics
 code: |
+  # SIFT + ratio test + mutual matches → essential matrix (RANSAC) → pose
   _sift = cv2.SIFT_create(nfeatures=6000, contrastThreshold=0.003, edgeThreshold=20)
   knn12 = _bf.knnMatch(des1, des2, k=2)
   good12 = {m.queryIdx: m.trainIdx for m, n in knn12 if m.distance < ratio * n.distance}
@@ -16,6 +23,8 @@ code: |
 translations:
   ru:
     name: Классическая оценка позы по двум видам
-    description: >-
-      Повышение контраста (CLAHE), ключевые точки SIFT, взаимные сопоставления ближайших соседей с тестом
-      отношения, оценка существенной матрицы RANSAC и восстановление позы.
+    when: Нужна относительная поза камеры между двумя снимками.
+    do: >-
+      Повысьте контраст (CLAHE), найдите ключевые точки SIFT, оставьте взаимные сопоставления ближайших
+      соседей, прошедшие тест отношения, оцените существенную матрицу RANSAC и восстановите позу.
+    why: Это стандартный конвейер без обучения и сильный бейзлайн.

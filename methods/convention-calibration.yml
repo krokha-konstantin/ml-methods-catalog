@@ -3,11 +3,17 @@ subsection: geometry
 order: 30
 grade: good
 name: Calibrate output conventions on training data
-description: >-
-  When a task's coordinate or sign conventions are ambiguous (which frame the translation is in, inverse
-  or forward rotation), try every combination on training data and keep the one that matches the ground
-  truth before tuning anything else.
+when: >-
+  A task's coordinate or sign conventions are ambiguous (which frame the translation is in, inverse or
+  forward rotation).
+do: >-
+  Try every combination on training data and keep the one that matches the ground truth, before tuning
+  anything else.
+why: A convention mismatch caps the score no matter how good the model is.
+see_also:
+- feature-matching-pose
 code: |
+  # score one rotation/translation convention against the ground truth
   def evaluate_convention(results, r_transform, t_transform):
       for r, res in results:
           q_pred = R_to_quat_wxyz(r_transform(res["R"]))
@@ -18,7 +24,10 @@ code: |
 translations:
   ru:
     name: Калибруйте соглашения о формате ответа на обучающих данных
-    description: >-
-      Если соглашения задачи о системе координат или знаках неоднозначны (в какой системе дана трансляция,
-      прямой или обратный поворот), переберите все комбинации на обучающих данных и оставьте совпадающую
-      с разметкой, прежде чем настраивать что-либо ещё.
+    when: >-
+      Соглашения задачи о системе координат или знаках неоднозначны (в какой системе дана трансляция,
+      прямой или обратный поворот).
+    do: >-
+      Переберите все комбинации на обучающих данных и оставьте совпадающую с разметкой, прежде чем настраивать
+      что-либо ещё.
+    why: Несовпадение соглашений ограничивает оценку, как бы хороша ни была модель.

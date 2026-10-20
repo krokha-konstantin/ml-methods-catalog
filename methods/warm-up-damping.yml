@@ -3,15 +3,24 @@ subsection: postprocessing
 order: 20
 grade: good
 name: Damp predicted changes near the forecast start
-description: >-
-  Right after the last observation, the true change is small and the model's predicted change is mostly
-  noise. Multiply it by a factor that rises from 0 to 1 with the distance from the start.
+when: A model predicts the change from the last observation.
+do: >-
+  Multiply the predicted change by a factor that rises from 0 to 1 with the distance from the forecast
+  start.
+why: >-
+  Right after the last observation the true change is small, and the predicted change is mostly noise.
+see_also:
+- predict-the-change
 code: |
-  def warmup(md_since, tau): return 1. - np.exp(-np.maximum(md_since, 0.) / tau)
-  sub1 = PP.alpha * warmup(df["md_since"].values, PP.tau) * model_delta
+  # damping that rises from 0 to 1 with distance from the last observation
+  def warmup(steps_since_last, tau):
+      return 1. - np.exp(-np.maximum(steps_since_last, 0.) / tau)
+  pred = last_value + alpha * warmup(df["steps_since_last"].values, tau) * model_delta
 translations:
   ru:
     name: Приглушайте предсказанные изменения у начала прогноза
-    description: >-
-      Сразу после последнего наблюдения истинное изменение мало, и предсказанное моделью изменение — в
-      основном шум. Умножайте его на множитель, растущий от 0 до 1 с удалением от начала.
+    when: Модель предсказывает изменение относительно последнего наблюдения.
+    do: >-
+      Умножайте предсказанное изменение на множитель, растущий от 0 до 1 с удалением от начала прогноза.
+    why: >-
+      Сразу после последнего наблюдения истинное изменение мало, а предсказанное — в основном шум.

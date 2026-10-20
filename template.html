@@ -53,9 +53,35 @@ h1 { font-size: 30px; margin: 0 0 12px; }
 h2 { font-size: 22px; margin: 40px 0 10px; padding-top: 8px; border-top: 1px solid var(--line); }
 h3 { font-size: 17px; margin: 26px 0 6px; }
 ul.legend { padding-left: 22px; }
-.method { margin: 10px 0 14px; }
-.method p { margin: 0; }
+.method { margin: 4px 0; max-width: 860px; }
 .method.hidden { display: none; }
+.mhead { display: flex; align-items: baseline; gap: 8px; padding: 4px 6px; margin-left: -6px; border-radius: 6px;
+  cursor: pointer; user-select: none; }
+.mhead:hover { background: var(--panel); }
+.mhead:focus-visible { outline: 2px solid var(--link); outline-offset: 1px; }
+.mhead::before { content: "▾"; color: var(--muted); font-size: 12px; width: 10px; flex: none; transition: transform .12s; }
+.method.collapsed .mhead::before { transform: rotate(-90deg); }
+.mname { font-weight: 600; font-size: 15.5px; }
+.perma { color: var(--muted); opacity: 0; font-size: 13px; }
+.mhead:hover .perma, .perma:focus { opacity: 1; }
+.mbody { margin: 2px 0 14px 18px; }
+.method.collapsed .mbody { display: none; }
+.slot { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 10px; margin: 3px 0; }
+.slot .label { color: var(--muted); font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em;
+  padding-top: 3px; }
+.slot.see .text { font-size: 14px; }
+.term { border-bottom: 1px dotted var(--muted); cursor: help; position: relative; }
+.term:focus { outline: none; background: var(--code); border-radius: 3px; }
+.term:hover::after, .term:focus::after { content: attr(data-def); position: absolute; left: 0; top: calc(100% + 6px);
+  z-index: 20; width: max-content; max-width: min(340px, 80vw); padding: 8px 10px; background: var(--panel);
+  color: var(--text); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 4px 16px rgba(0, 0, 0, .18);
+  font-size: 13px; line-height: 1.45; font-weight: 400; font-style: normal; text-transform: none; white-space: normal;
+  pointer-events: none; }
+.term.flip::after { left: auto; right: 0; }
+.muted { color: var(--muted); }
+dl.glossary { max-width: 860px; }
+dl.glossary dt { font-weight: 600; margin-top: 10px; }
+dl.glossary dd { margin: 2px 0 0 18px; }
 .fallback { font-size: 10.5px; font-weight: 700; color: var(--muted); border: 1px dashed var(--muted);
   border-radius: 4px; padding: 0 4px; margin-left: 4px; cursor: help; }
 code { background: var(--code); padding: 1px 5px; border-radius: 4px; font-size: 13px;
@@ -86,6 +112,8 @@ mark { background: #ffe58a; color: #000; border-radius: 2px; }
   aside { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); padding: 16px; }
   nav { max-height: 220px; overflow-y: auto; }
   main { padding: 20px 16px 60px; }
+  .slot { grid-template-columns: 1fr; gap: 0; }
+  .mbody { margin-left: 4px; }
 }
 </style>
 </head>
@@ -96,7 +124,7 @@ mark { background: #ffe58a; color: #000; border-radius: 2px; }
   <div class="controls">
     <select id="lang" aria-label="Language">{{LANG_OPTIONS}}</select>
     <input type="search" id="q" data-ui-placeholder="search">
-    <label><input type="checkbox" data-g="book"> <span class="badge book" data-ui-grade="book"></span></label>
+    <label><input type="checkbox" data-g="book" checked> <span class="badge book" data-ui-grade="book"></span></label>
     <label><input type="checkbox" data-g="good" checked> <span class="badge good" data-ui-grade="good"></span></label>
     <label><input type="checkbox" data-g="brilliant" checked> <span class="badge brilliant" data-ui-grade="brilliant"></span></label>
     <label><input type="checkbox" id="expand"> <span data-ui="expand"></span></label>
@@ -157,9 +185,20 @@ mark { background: #ffe58a; color: #000; border-radius: 2px; }
     var m = location.hash.match(/^#([a-z]+)-(.+)$/);
     if (m && UI[m[1]]) {
       var target = document.getElementById(l + "-" + m[2]);
-      if (target) { history.replaceState(null, "", "#" + target.id); target.scrollIntoView(); }
+      if (target) { history.replaceState(null, "", "#" + target.id); reveal(target); }
     }
   }
+
+  // Open (and un-filter) a method that a link points to, then scroll to it.
+  function reveal(target) {
+    var method = target.classList.contains("method") ? target : null;
+    if (method) { method.dataset.user = "open"; method.dataset.force = "1"; apply(); }
+    target.scrollIntoView();
+  }
+  window.addEventListener("hashchange", function () {
+    var target = document.getElementById(location.hash.slice(1));
+    if (target) reveal(target);
+  });
 
   function clearMarks(node) {
     node.querySelectorAll("mark").forEach(function (m) {
@@ -188,8 +227,14 @@ mark { background: #ffe58a; color: #000; border-radius: 2px; }
     var items = document.querySelectorAll('main .pane[data-lang="' + lang + '"] .method');
     items.forEach(function (el) {
       clearMarks(el);
-      var ok = on[el.dataset.grade] && (!term || el.textContent.toLowerCase().indexOf(term) !== -1);
+      var match = !term || el.textContent.toLowerCase().indexOf(term) !== -1;
+      var ok = (on[el.dataset.grade] || el.dataset.force) && match;
+      // BOOK starts collapsed; a click overrides; "expand everything" and search matches open everything
+      var open = expand.checked || (term && match) ||
+        (el.dataset.user ? el.dataset.user === "open" : el.dataset.grade !== "book");
       el.classList.toggle("hidden", !ok);
+      el.classList.toggle("collapsed", !open);
+      el.firstChild.setAttribute("aria-expanded", open ? "true" : "false");
       if (ok) { shown++; if (term) highlight(el, term); }
     });
     document.getElementById("count").textContent = shown + " / " + items.length + " " + UI[lang].methods;
@@ -199,7 +244,31 @@ mark { background: #ffe58a; color: #000; border-radius: 2px; }
     apply();
   }
 
-  boxes.forEach(function (b) { b.onchange = apply; });
+  function toggle(head) {
+    var el = head.parentNode;
+    el.dataset.user = el.classList.contains("collapsed") ? "open" : "closed";
+    el.classList.toggle("collapsed", el.dataset.user === "closed");
+    head.setAttribute("aria-expanded", el.dataset.user === "open" ? "true" : "false");
+  }
+  document.querySelectorAll(".mhead").forEach(function (head) {
+    head.addEventListener("click", function (e) { if (!e.target.closest("a")) toggle(head); });
+    head.addEventListener("keydown", function (e) {
+      if ((e.key === "Enter" || e.key === " ") && e.target === head) { e.preventDefault(); toggle(head); }
+    });
+  });
+
+  // Definitions open to the left when there is no room on the right.
+  function placeTip(e) {
+    var term = e.target.closest && e.target.closest(".term");
+    if (term) term.classList.toggle("flip", term.getBoundingClientRect().left + 350 > window.innerWidth);
+  }
+  document.addEventListener("mouseover", placeTip);
+  document.addEventListener("focusin", placeTip);
+
+  boxes.forEach(function (b) { b.onchange = function () {
+    document.querySelectorAll(".method[data-force]").forEach(function (el) { delete el.dataset.force; });
+    apply();
+  }; });
   expand.onchange = applyExpand;
   q.oninput = apply;
   langSel.onchange = function () { setLang(langSel.value); };

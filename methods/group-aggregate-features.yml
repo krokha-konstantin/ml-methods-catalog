@@ -3,17 +3,21 @@ subsection: features
 order: 20
 grade: book
 name: Group aggregates and shares
-description: >-
-  Lagged averages over a higher-level group (region, city) and an entity's share of its group's total.
-  They give each series context about its neighbours and about its relative position.
+when: Series belong to higher-level groups (region, city).
+do: Add lagged averages over the group and each series' share of its group's total.
+why: They give each series context about its neighbours and its relative position.
+see_also:
+- lag-and-rolling-features
+- within-group-normalisation
 code: |
-  agg = df.groupby([geo, 't'])['rto'].mean().reset_index()
-  tmp = agg.copy(); tmp['t_join'] = tmp['t'] + lag           # region mean, lagged
-  df = df.merge(tmp, left_on=[geo, 't'], right_on=[geo, 't_join'], how='left')
-  df["city_share_trend"] = g["store_city_rto_share"].shift(1) - g["store_city_rto_share"].shift(3)
+  # lagged group mean and the change of a series' share in its group
+  agg = df.groupby(['region', 't'])['sales'].mean().rename('region_mean').reset_index()
+  agg['t'] += lag                                           # value known `lag` periods ago
+  df = df.merge(agg, on=['region', 't'], how='left')
+  df['share_trend'] = g['city_share'].shift(1) - g['city_share'].shift(3)
 translations:
   ru:
     name: Агрегаты по группам и доли
-    description: >-
-      Лаговые средние по группе более высокого уровня (регион, город) и доля объекта в итоге его группы.
-      Они дают каждому ряду контекст о соседях и о его относительном положении.
+    when: Ряды входят в группы более высокого уровня (регион, город).
+    do: Добавьте лаговые средние по группе и долю каждого ряда в итоге его группы.
+    why: Они дают каждому ряду контекст о соседях и о его относительном положении.

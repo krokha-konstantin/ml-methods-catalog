@@ -3,18 +3,23 @@ subsection: validation
 order: 20
 grade: book
 name: Group K-fold
-description: >-
-  When rows come in groups that share information (all readings of one session, consecutive video frames),
-  keep each group entirely on one side of the split. Choose the group as the unit of correlation, not
-  the row: if neighbouring groups are still near-duplicates, use a coarser unit such as a day. Otherwise
-  the model is scored on near-copies of its own training rows.
+when: >-
+  Rows come in groups that share information (all readings of one session, consecutive video frames).
+do: >-
+  Keep each group entirely on one side of the split. Choose the group as the unit of correlation: if neighbouring
+  groups are still near-duplicates, use a coarser unit such as a day.
+why: Otherwise the model is scored on near-copies of its own training rows.
+see_also:
+- cold-start-stress-test
+- ranking-split-by-query
 code: |
+  # split by group (session); a coarser unit (day) when neighbouring groups are near-duplicates
   gkf = GroupKFold(n_splits=5)
-  for tr_idx, va_idx in gkf.split(Wtr, y, groups):   # groups = session_id
+  for tr_idx, va_idx in gkf.split(X, y, groups):   # groups = session_id
       m = lgb.LGBMClassifier(**lgbm_params)
-      m.fit(Wtr.iloc[tr_idx], y[tr_idx], eval_set=[(Wtr.iloc[va_idx], y[va_idx])],
+      m.fit(X.iloc[tr_idx], y[tr_idx], eval_set=[(X.iloc[va_idx], y[va_idx])],
             callbacks=[lgb.early_stopping(150, verbose=False)])
-      oof_lgb[va_idx] = m.predict_proba(Wtr.iloc[va_idx])[:, 1]
+      oof_lgb[va_idx] = m.predict_proba(X.iloc[va_idx])[:, 1]
 
   days = sorted(set(p.name[:10] for p in imgs))      # file names start with the date
   random.Random(1).shuffle(days)
@@ -24,8 +29,9 @@ code: |
 translations:
   ru:
     name: Group K-fold
-    description: >-
-      Если строки образуют группы с общей информацией (все замеры одной сессии, последовательные кадры
-      видео), каждая группа целиком попадает по одну сторону разбиения. Группу выбирают по единице корреляции,
-      а не по строке: если соседние группы всё ещё почти дублируют друг друга, берут более крупную единицу,
-      например день. Иначе модель оценивается на почти-копиях собственных обучающих строк.
+    when: >-
+      Строки образуют группы с общей информацией (все замеры одной сессии, последовательные кадры видео).
+    do: >-
+      Каждая группа целиком попадает по одну сторону разбиения. Группу выбирают по единице корреляции:
+      если соседние группы всё ещё почти дублируют друг друга, берут более крупную единицу, например день.
+    why: Иначе модель оценивается на почти-копиях собственных обучающих строк.

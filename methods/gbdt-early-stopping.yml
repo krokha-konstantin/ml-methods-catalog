@@ -3,15 +3,19 @@ subsection: models
 order: 10
 grade: book
 name: Gradient boosting with early stopping
-description: >-
-  Gradient-boosted trees with many boosting rounds, stopped when the validation metric stops improving.
-  This is the default strong baseline for tabular data.
+do: >-
+  Train gradient-boosted trees with many rounds and stop when the validation metric stops improving.
+why: This is the default strong baseline for tabular data.
+see_also:
+- fix-boosting-rounds-then-refit
 code: |
-  cbs = CatBoostClassifier(cat_features=cat_features, early_stopping_rounds=100, use_best_model=True, eval_metric='F1')
-  cbs.fit(X_train, y_train, eval_set=(X_valid, y_valid))
+  # boosting with early stopping on the validation metric
+  model = CatBoostClassifier(cat_features=cat_features, early_stopping_rounds=100, use_best_model=True, eval_metric='F1')
+  model.fit(X_train, y_train, eval_set=(X_valid, y_valid))
 translations:
   ru:
     name: Градиентный бустинг с ранней остановкой
-    description: >-
-      Градиентный бустинг над деревьями с большим числом раундов, остановленный, когда метрика на валидации
-      перестаёт улучшаться. Это стандартный сильный бейзлайн для табличных данных.
+    do: >-
+      Обучайте градиентный бустинг над деревьями с большим числом раундов и останавливайтесь, когда метрика
+      на валидации перестаёт улучшаться.
+    why: Это стандартный сильный бейзлайн для табличных данных.

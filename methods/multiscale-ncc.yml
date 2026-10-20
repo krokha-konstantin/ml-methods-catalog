@@ -2,11 +2,16 @@ section: tracking
 order: 30
 grade: book
 name: Multi-scale normalised cross-correlation
-description: >-
-  Find where a window of the signal best matches a reference by normalised cross-correlation, at several
-  window sizes, and combine the scales weighted by match quality. Normalisation makes the match insensitive
-  to gain and offset.
+when: A window of a signal has to be located in a reference.
+do: >-
+  Compute normalised cross-correlation at several window sizes and combine the scales weighted by match
+  quality.
+why: >-
+  Normalisation makes the match insensitive to gain and offset; several scales trade precision for robustness.
+see_also:
+- sequence-alignment
 code: |
+  # NCC of query windows against reference windows, scales blended by match quality
   Cn = (C - C.mean(1, keepdims=True)) / (C.std(1, keepdims=True) + 1e-6)   # reference windows
   Hn = (H - H.mean(1, keepdims=True)) / (H.std(1, keepdims=True) + 1e-6)   # query windows
   ncc = Hn @ Cn.T / win; best = ncc.argmax(1); score = ncc.max(1)
@@ -14,7 +19,10 @@ code: |
 translations:
   ru:
     name: Многомасштабная нормированная взаимная корреляция
-    description: >-
-      Находите, где окно сигнала лучше всего совпадает с эталоном, по нормированной взаимной корреляции
-      на нескольких размерах окна, и объединяйте масштабы с весами по качеству совпадения. Нормировка
-      делает сопоставление нечувствительным к усилению и смещению.
+    when: Окно сигнала нужно найти в эталоне.
+    do: >-
+      Посчитайте нормированную взаимную корреляцию на нескольких размерах окна и объедините масштабы с
+      весами по качеству совпадения.
+    why: >-
+      Нормировка делает сопоставление нечувствительным к усилению и смещению; несколько масштабов уравновешивают
+      точность и устойчивость.

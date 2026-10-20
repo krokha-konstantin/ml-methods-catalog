@@ -2,17 +2,21 @@ section: nlp
 order: 80
 grade: book
 name: Strip boilerplate from long documents
-description: >-
-  Remove repetitive structured parts (tables, templates, signatures) before vectorising, so the narrative
-  that carries the signal isn't drowned by tokens that appear everywhere.
+when: Long documents contain repetitive structured parts (tables, templates, signatures).
+do: Remove them before vectorising.
+why: >-
+  The narrative that carries the signal is no longer drowned by tokens that appear everywhere.
 code: |
+  # drop table rows before vectorising
   for line in str(text).splitlines():
       normalized = normalize_text(line)
-      if normalized and not normalized.startswith("показатель:"):   # lab-table rows
+      if normalized and not normalized.startswith(TABLE_ROW_PREFIX):
           useful.append(normalized)
 translations:
   ru:
     name: Удаляйте шаблонный текст из длинных документов
-    description: >-
-      Удалите повторяющиеся структурированные части (таблицы, шаблоны, подписи) до векторизации, чтобы
-      содержательный текст, несущий сигнал, не тонул в токенах, которые встречаются везде.
+    when: >-
+      Длинные документы содержат повторяющиеся структурированные части (таблицы, шаблоны, подписи).
+    do: Удалите их до векторизации.
+    why: >-
+      Содержательный текст, несущий сигнал, больше не тонет в токенах, которые встречаются везде.
