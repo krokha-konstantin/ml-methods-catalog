@@ -229,9 +229,8 @@ mark { background: #ffe58a; color: #000; border-radius: 2px; }
       clearMarks(el);
       var match = !term || el.textContent.toLowerCase().indexOf(term) !== -1;
       var ok = (on[el.dataset.grade] || el.dataset.force) && match;
-      // BOOK starts collapsed; a click overrides; "expand everything" and search matches open everything
-      var open = expand.checked || (term && match) ||
-        (el.dataset.user ? el.dataset.user === "open" : el.dataset.grade !== "book");
+      // collapsed by default; a click overrides; "expand everything" and search matches open everything
+      var open = expand.checked || (term && match) || el.dataset.user === "open";
       el.classList.toggle("hidden", !ok);
       el.classList.toggle("collapsed", !open);
       el.firstChild.setAttribute("aria-expanded", open ? "true" : "false");

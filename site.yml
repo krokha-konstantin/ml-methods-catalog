@@ -14,11 +14,11 @@ intro:
   en: >-
     A catalog of methods used in ML competition solutions, grouped by task type. Each method says when it
     applies, what to do and why, with a short code snippet; snippets marked *sketch* are minimal illustrations
-    rather than code lifted from a solution. BOOK methods are collapsed: click a name to open it.
+    rather than code lifted from a solution. Methods are collapsed: click a name to open it.
   ru: >-
     Каталог методов из решений ML-соревнований, сгруппированных по типу задачи. Для каждого метода сказано,
     когда он применим, что делать и зачем, и приведён короткий фрагмент кода; фрагменты с пометкой *набросок* —
-    минимальные иллюстрации, а не код из решения. Методы КЛАССИКА свёрнуты: нажмите на название, чтобы открыть.
+    минимальные иллюстрации, а не код из решения. Методы свёрнуты: нажмите на название, чтобы открыть.
 
 grades_heading:
   en: Grades (they rate the idea, not whether it worked)
