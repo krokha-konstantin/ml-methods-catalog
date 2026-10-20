@@ -1,0 +1,24 @@
+section: planning
+subsection: model-based
+order: 50
+grade: good
+name: Coordinate ascent with cached prefixes
+description: >-
+  Improve a plan one step at a time, trying every action at that step while keeping the rest. Cache the
+  simulated state before each step, so changing step i only re-simulates from i onward.
+example: telescope scheduling, 100-step plans over thousands of scenarios
+code: |
+  for i in range(100):                              # one step at a time
+      for k in [REST] + candidates[i]:
+          pl = plan.copy(); pl[i] = k
+          v = value(simulate(pl, start=i, cache=hist))  # resume from the cached state at step i
+          if v > bv + 1e-9: bv, best = v, k
+      plan[i] = best; hist = simulate(plan, start=i, cache=hist)
+translations:
+  ru:
+    name: Покоординатный подъём с кешированием префиксов
+    description: >-
+      Улучшайте план по одному шагу, пробуя на этом шаге каждое действие при неизменном остальном. Кешируйте
+      смоделированное состояние перед каждым шагом, чтобы изменение шага i требовало пересчёта только
+      начиная с i.
+    example: планирование наблюдений телескопа, планы на 100 шагов по тысячам сценариев

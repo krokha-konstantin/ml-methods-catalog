@@ -1,0 +1,25 @@
+section: planning
+subsection: model-based
+order: 10
+grade: good
+name: Learn a simulator of the environment
+description: >-
+  When the environment is a black box and only logged trajectories are available, fit a dynamics model
+  and outcome classifiers on the logs, and add noise sampled from the empirical residuals (per regime,
+  slightly inflated). Planning can then be done by Monte Carlo inside the learned simulator.
+example: telescope scheduling, temperature dynamics + success classifiers per object class
+code: |
+  dyn = HistGradientBoostingRegressor(max_iter=200, learning_rate=0.05).fit(a[DYN].values, a.dT)
+  r = (a.dT - dyn.predict(a[DYN].values)).values
+  b = np.digitize(a.ds, DS_BINS)                         # bins of sun-altitude change
+  resid = [r[b == i] * 1.15 for i in range(5)]           # sampled as noise in the simulator
+  q[c] = HistGradientBoostingClassifier(max_depth=3, min_samples_leaf=30).fit(o[o.cls == c][QF], o[o.cls == c].result)
+translations:
+  ru:
+    name: Выучите симулятор среды
+    description: >-
+      Когда среда — чёрный ящик и доступны только записанные траектории, обучите на логах модель динамики
+      и классификаторы исходов и добавьте шум, сэмплируемый из эмпирических остатков (по режимам, слегка
+      увеличенный). Тогда планировать можно методом Монте-Карло внутри выученного симулятора.
+    example: >-
+      планирование наблюдений телескопа, динамика температуры + классификаторы успеха по классам объектов

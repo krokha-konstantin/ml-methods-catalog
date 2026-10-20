@@ -1,0 +1,23 @@
+section: universal
+subsection: validation
+order: 60
+grade: good
+name: Check the public test for leakage before trusting local scores
+description: >-
+  If public test rows are copies of training rows, every method looks near-perfect on them while the hidden
+  test behaves differently. Build a holdout that mimics the hidden test instead, for example by removing
+  the leaked source from the training/reference data.
+code: |
+  # share of public-test rows that have an (almost) identical row in train
+  nn = NearestNeighbors(n_neighbors=1).fit(train_features)
+  dist, _ = nn.kneighbors(public_test_features)
+  print((dist[:, 0] < 1e-6).mean())   # a large share → local scores on this test mean nothing
+  # then validate on a holdout that mimics the hidden test, e.g. without the leaked source
+sketch: true
+translations:
+  ru:
+    name: Проверка публичного теста на утечку до того, как доверять локальным оценкам
+    description: >-
+      Если строки публичного теста — копии обучающих, любой метод выглядит на них почти идеальным, а скрытый
+      тест ведёт себя иначе. Вместо этого соберите отложенную выборку, похожую на скрытый тест, например
+      убрав утёкший источник из обучающих/справочных данных.

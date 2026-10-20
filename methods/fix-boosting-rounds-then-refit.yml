@@ -1,0 +1,22 @@
+section: universal
+subsection: validation
+order: 100
+grade: book
+name: Fix the number of boosting rounds, then refit on all data
+description: >-
+  Early stopping needs held-out data, so find the best iteration on a held-out group, then retrain on
+  all data with that fixed count.
+example: telemetry anomaly detection
+code: |
+  es_val_sessions = rng.choice(sessions, size=6, replace=False)
+  es_va_mask = np.isin(groups, es_val_sessions)
+  probe.fit(Wtr[~es_va_mask], y[~es_va_mask], eval_set=[(Wtr[es_va_mask], y[es_va_mask])],
+            callbacks=[lgb.early_stopping(200, verbose=False)])
+  final_lgb = lgb.LGBMClassifier(**{**lgbm_params, "n_estimators": probe.best_iteration_}).fit(Wtr, y)
+translations:
+  ru:
+    name: Зафиксировать число итераций бустинга и переобучить на всех данных
+    description: >-
+      Ранней остановке нужны отложенные данные, поэтому лучшая итерация находится на отложенной группе,
+      а затем модель переобучается на всех данных с этим фиксированным числом итераций.
+    example: поиск аномалий в телеметрии

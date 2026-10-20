@@ -1,0 +1,19 @@
+section: vision
+subsection: detection-segmentation
+order: 30
+grade: book
+name: Mixed-resolution training
+description: >-
+  Train one model on images of several native sizes, feeding each batch at its own resolution, so the
+  model works on every resolution it will meet at test time.
+example: rain segmentation from satellite bands, 128 and 256 px patches
+code: |
+  if size_flag == 0:   # 128-px sample was upsampled to 256 in the dataset; restore native size
+      x = F.interpolate(x, size=(H // 2, W // 2), mode='nearest')
+translations:
+  ru:
+    name: Обучение на нескольких разрешениях
+    description: >-
+      Обучайте одну модель на изображениях нескольких исходных размеров, подавая каждый батч в его собственном
+      разрешении, чтобы модель работала на всех разрешениях, которые встретятся на тесте.
+    example: сегментация дождя по спутниковым каналам, патчи 128 и 256 px

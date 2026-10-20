@@ -1,0 +1,20 @@
+section: nlp
+order: 140
+grade: book
+name: Token-probability features for LLM answers
+description: >-
+  Summarise the generator's token probabilities over an answer (minimum, mean, spread, negative log-likelihood
+  per token). Low-confidence tokens are a strong signal that an answer is made up.
+example: LLM hallucination detection
+code: |
+  features[f'mtp_{idx}'] = np.min(p)
+  features[f'avgtp_{idx}'] = np.mean(p)
+  features[f'mpd_{idx}'] = np.max(p) - np.min(p)
+  features[f'g_nll_{idx}'] = -np.sum(np.log(p + 1e-12)) / len(p)
+translations:
+  ru:
+    name: Признаки из вероятностей токенов ответа LLM
+    description: >-
+      Суммируйте вероятности токенов, выданные генератором для ответа (минимум, среднее, разброс, отрицательное
+      лог-правдоподобие на токен). Токены с низкой уверенностью — сильный сигнал того, что ответ выдуман.
+    example: обнаружение галлюцинаций LLM

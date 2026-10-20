@@ -1,0 +1,25 @@
+section: vision
+subsection: detection-segmentation
+order: 40
+grade: good
+name: Shape-prior post-processing
+description: >-
+  If you know what a true object looks like (one object per image, a minimum width, typical elongation),
+  enforce it after prediction: keep the largest connected components, drop small or narrow ones, dilate
+  along the expected direction, clear the borders.
+example: >-
+  radar segmentation, keep components at least half as wide as the widest, dilate horizontally
+code: |
+  labeled_array, num_features = label(label1_mask[i])
+  widths = [np.ptp(np.where(labeled_array == k)[1]) + 1 for k in range(1, num_features + 1)]
+  remove = widths < 0.5 * max(widths)                     # drop narrow blobs
+  kernel = torch.zeros((1, 1, 3, 5)); kernel[0, 0, 1, :] = 1   # dilate 2 px sideways, 0 vertically
+translations:
+  ru:
+    name: Постобработка с априорной формой
+    description: >-
+      Если известно, как выглядит настоящий объект (один объект на изображение, минимальная ширина, типичная
+      вытянутость), навяжите это после предсказания: оставьте крупнейшие связные компоненты, уберите мелкие
+      или узкие, расширьте по ожидаемому направлению, очистите края.
+    example: >-
+      сегментация радарных данных, компоненты не уже половины самой широкой, расширение по горизонтали

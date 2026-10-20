@@ -1,0 +1,21 @@
+section: nlp
+order: 60
+grade: good
+name: Leave-one-out context features from related rows
+description: >-
+  When rows share an entity (the same patient appears with many questions), use the labels of the entity's
+  other rows as features, always excluding the row itself, with smoothing toward the global mean.
+example: clinical guideline matching, the patient's other labelled sections
+code: |
+  for title, coordinate in title_index.items():
+      item = observed_pairs.get((row.protocol_text, title))
+      if item is not None and item[0] != int(row.id):      # skip the row itself
+          values[coordinate] = item[1]; mask[coordinate] = 1.0
+  row_mean = (sum(row_labels) + 2 * global_mean) / (len(row_labels) + 2)   # smoothed
+translations:
+  ru:
+    name: Признаки контекста по связанным строкам с исключением своей
+    description: >-
+      Когда строки разделяют сущность (один пациент встречается со многими вопросами), используйте метки
+      других строк этой сущности как признаки, всегда исключая саму строку, со сглаживанием к общему среднему.
+    example: сопоставление клинических рекомендаций, другие размеченные разделы того же пациента

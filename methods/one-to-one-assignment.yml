@@ -1,0 +1,26 @@
+section: vision
+subsection: matching
+order: 20
+grade: good
+name: Enforce one-to-one matching
+description: >-
+  When each gallery item can be the answer for only one query, don't match queries independently: remove
+  an item once it is matched (greedy) or solve a global assignment (Hungarian). It also lets a hard query
+  be solved through a chain of easier matches.
+example: icon matching, crop → original, then original → its pair, without reusing gallery images
+code: |
+  for q_name, matched_crop in crop_matches.items():
+      sims = [(g, cos(gallery[matched_crop], f)) for g, f in gallery.items()
+              if g != matched_crop and g not in matched_galleries]
+      gender_match = max(sims, key=lambda s: s[1])[0]
+      matched_galleries.add(gender_match)
+translations:
+  ru:
+    name: Навяжите взаимно однозначное сопоставление
+    description: >-
+      Если каждый элемент галереи может быть ответом только для одного запроса, не сопоставляйте запросы
+      независимо: убирайте элемент после сопоставления (жадно) или решайте глобальную задачу о назначениях
+      (венгерский алгоритм). Это также позволяет решить трудный запрос через цепочку более лёгких сопоставлений.
+    example: >-
+      сопоставление иконок, кроп → оригинал, затем оригинал → его пара, без повторного использования изображений
+      галереи

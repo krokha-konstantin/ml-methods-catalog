@@ -1,0 +1,29 @@
+section: vision
+subsection: geometry
+order: 30
+grade: good
+name: Calibrate output conventions on training data
+description: >-
+  When a task's coordinate or sign conventions are ambiguous (which frame the translation is in, inverse
+  or forward rotation), try every combination on training data and keep the one that matches the ground
+  truth before tuning anything else.
+example: >-
+  visual odometry, four rotation/translation conventions compared by angle error and direction cosine
+code: |
+  def evaluate_convention(results, r_transform, t_transform):
+      for r, res in results:
+          q_pred = R_to_quat_wxyz(r_transform(res["R"]))
+          t_dir = t_transform(res["R"], res["t"])
+          angs.append(rotation_angle_deg(q_pred, true_q(r)))
+          cosines.append(np.dot(t_dir / np.linalg.norm(t_dir), true_t(r) / np.linalg.norm(true_t(r))))
+      return np.mean(angs), np.mean(cosines), np.median(cosines)
+translations:
+  ru:
+    name: Калибруйте соглашения о формате ответа на обучающих данных
+    description: >-
+      Если соглашения задачи о системе координат или знаках неоднозначны (в какой системе дана трансляция,
+      прямой или обратный поворот), переберите все комбинации на обучающих данных и оставьте совпадающую
+      с разметкой, прежде чем настраивать что-либо ещё.
+    example: >-
+      визуальная одометрия, четыре соглашения о повороте и трансляции, сравнённые по ошибке угла и косинусу
+      направления

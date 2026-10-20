@@ -1,0 +1,20 @@
+section: planning
+subsection: rl
+order: 30
+grade: book
+name: Export the normaliser with the weights
+description: >-
+  If the policy was trained on normalised observations, ship the normaliser's mean and variance with the
+  network weights, so a plain implementation of the network reproduces the trained behaviour.
+example: bipedal robot RL, weights submitted as arrays
+code: |
+  obs_mean = venv.obs_rms.mean; obs_std = np.sqrt(venv.obs_rms.var + venv.epsilon)
+  save_submission(args.out, W1, b1, W2, b2, W3, b3, obs_mean, obs_std)
+  # at inference: x = clip((obs - mean) / std, -10, 10)
+translations:
+  ru:
+    name: Экспортируйте нормализатор вместе с весами
+    description: >-
+      Если политика обучалась на нормализованных наблюдениях, передавайте среднее и дисперсию нормализатора
+      вместе с весами сети, чтобы простая реализация сети воспроизводила обученное поведение.
+    example: RL для двуногого робота, веса сдаются массивами

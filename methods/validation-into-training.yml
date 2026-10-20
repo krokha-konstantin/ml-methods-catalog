@@ -1,0 +1,20 @@
+section: universal
+subsection: validation
+order: 90
+grade: book
+name: Move most of a large validation set into training
+description: >-
+  When the provided validation split is big, train on most of it and keep only a small holdout for model
+  selection.
+example: image super-resolution
+code: |
+  HOLDOUT = val_ids[100:130]
+  EXTRA = val_ids[:100] + val_ids[130:]
+  train_lr = np.concatenate([read_stack(DATA / "train" / "lr", train_ids), read_stack(DATA / "val" / "lr", EXTRA)])
+translations:
+  ru:
+    name: Перенос большей части большой валидации в обучение
+    description: >-
+      Если выданная валидационная выборка велика, обучайтесь на большей её части и оставьте лишь небольшую
+      отложенную выборку для выбора модели.
+    example: повышение разрешения изображений

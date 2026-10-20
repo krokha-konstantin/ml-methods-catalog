@@ -1,0 +1,36 @@
+section: universal
+subsection: validation
+order: 20
+grade: book
+name: Group K-fold
+description: >-
+  When rows come in groups that share information (all readings of one session, consecutive video frames),
+  keep each group entirely on one side of the split. Choose the group as the unit of correlation, not
+  the row: if neighbouring groups are still near-duplicates, use a coarser unit such as a day. Otherwise
+  the model is scored on near-copies of its own training rows.
+example: >-
+  telemetry anomaly detection, grouped by session; tornado detection, frames grouped by observation day
+code: |
+  gkf = GroupKFold(n_splits=5)
+  for tr_idx, va_idx in gkf.split(Wtr, y, groups):   # groups = session_id
+      m = lgb.LGBMClassifier(**lgbm_params)
+      m.fit(Wtr.iloc[tr_idx], y[tr_idx], eval_set=[(Wtr.iloc[va_idx], y[va_idx])],
+            callbacks=[lgb.early_stopping(150, verbose=False)])
+      oof_lgb[va_idx] = m.predict_proba(Wtr.iloc[va_idx])[:, 1]
+
+  days = sorted(set(p.name[:10] for p in imgs))      # file names start with the date
+  random.Random(1).shuffle(days)
+  val_days = set(days[:20])
+  train_imgs = [p for p in imgs if p.name[:10] not in val_days]
+  val_imgs = [p for p in imgs if p.name[:10] in val_days]
+translations:
+  ru:
+    name: Group K-fold
+    description: >-
+      Если строки образуют группы с общей информацией (все замеры одной сессии, последовательные кадры
+      видео), каждая группа целиком попадает по одну сторону разбиения. Группу выбирают по единице корреляции,
+      а не по строке: если соседние группы всё ещё почти дублируют друг друга, берут более крупную единицу,
+      например день. Иначе модель оценивается на почти-копиях собственных обучающих строк.
+    example: >-
+      поиск аномалий в телеметрии, группировка по сессии; детекция торнадо, кадры сгруппированы по дню
+      наблюдений

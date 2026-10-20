@@ -1,0 +1,24 @@
+section: universal
+subsection: ensembling
+order: 40
+grade: book
+name: Rank averaging
+description: >-
+  When models output scores on different scales (probabilities, anomaly scores, hand-made formulas), convert
+  each to ranks before averaging. For ranking metrics such as ROC-AUC only the order matters, and ranks
+  make the weights comparable.
+example: >-
+  telemetry anomaly detection, LightGBM + logistic regression + hand-made formula + IsolationForest
+code: |
+  blend = (w_logreg * rankdata(smooth_within_session(oof_lr, groups))
+           + w_heur * rankdata(smooth_within_session(heur_tr, groups))
+           + w_lgbm * rankdata(smooth_within_session(oof_lgb, groups))
+           + w_iso * rankdata(smooth_within_session(iso_tr, groups)))
+translations:
+  ru:
+    name: Усреднение рангов
+    description: >-
+      Если модели выдают оценки в разных шкалах (вероятности, оценки аномальности, ручные формулы), перед
+      усреднением переведите каждую в ранги. Для метрик ранжирования вроде ROC-AUC важен только порядок,
+      а ранги делают веса сопоставимыми.
+    example: поиск аномалий в телеметрии, LightGBM + логрегрессия + ручная формула + IsolationForest

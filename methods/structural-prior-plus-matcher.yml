@@ -1,0 +1,27 @@
+section: tracking
+order: 50
+grade: good
+name: Smooth spatial prior + local matcher
+description: >-
+  Combine a coarse estimate from spatial neighbours (here a weighted plane fit through the same layer
+  in nearby wells) with a local signal matcher. The prior keeps the matcher from drifting; the matcher
+  corrects the prior's coarseness. Neither alone reaches the accuracy of both.
+example: wellbore geosteering, KNN plane fit of formation tops + gamma-ray trackers
+code: |
+  class FormationPlaneKNN:
+      def impute(self, xy_q, self_wid=None, k=PLANE_K):
+          dist, idx = self.tree.query(xy_q / self.scale, k=k + 5)
+          dist = np.where(idx == self.wmap.get(self_wid, -1), np.inf, dist)   # never use the well itself
+          w = 1. / (dk + 1e-3)                                               # inverse-distance weights
+          # weighted least squares for z = a·x + b·y + c per formation top
+          coef = np.linalg.solve(A, rhs)
+          return Xq[:, None] * coef[:, 0, :] + Yq[:, None] * coef[:, 1, :] + coef[:, 2, :]
+translations:
+  ru:
+    name: Гладкий пространственный априор + локальное сопоставление
+    description: >-
+      Сочетайте грубую оценку по пространственным соседям (здесь взвешенная плоскость через тот же пласт
+      в соседних скважинах) с локальным сопоставлением сигнала. Априор не даёт сопоставлению уплыть, а
+      сопоставление исправляет грубость априора. По отдельности ни один не достигает точности их сочетания.
+    example: >-
+      геонавигация скважин, плоскость по кровле пластов из K ближайших скважин + трекеры по гамма-каротажу

@@ -1,0 +1,24 @@
+section: physics
+order: 10
+grade: good
+name: Reconstruct the hidden environment from events
+description: >-
+  Detect events in observed trajectories (sharp changes of direction), infer the obstacle that caused
+  each one, and aggregate them on a grid into a map. Average orientations with an axial circular mean
+  (double the angle, average, halve), since θ and θ + π describe the same line.
+example: laser forecasting, wall positions and angles from bounce points
+code: |
+  step_angle = np.arctan2(np.diff(pts[:, 1]), np.diff(pts[:, 0]))
+  d_angle = (np.diff(step_angle) + np.pi) % (2 * np.pi) - np.pi
+  snap = np.where(np.abs(d_angle) > 0.15)[0] + 2              # bounce indices
+  wall_normal_dir = np.angle(np.exp(1j * out_dir) - np.exp(1j * in_dir))
+  wall_angle = (wall_normal_dir + np.pi / 2) % np.pi
+  mean_angle = np.angle(np.exp(2j * angles).mean()) / 2      # axial mean: θ and θ+π are the same wall
+translations:
+  ru:
+    name: Восстановление скрытой среды по событиям
+    description: >-
+      Находите события в наблюдаемых траекториях (резкие смены направления), восстанавливайте препятствие,
+      вызвавшее каждое, и собирайте их на сетке в карту. Ориентации усредняйте осевым круговым средним
+      (удвоить угол, усреднить, поделить пополам), поскольку θ и θ + π описывают одну и ту же прямую.
+    example: прогноз траектории лазера, положения и углы стенок по точкам отражения

@@ -1,0 +1,24 @@
+section: nlp
+order: 30
+grade: good
+name: Explicit overlap tokens for text pairs
+description: >-
+  For a pair of texts, emit tokens that describe their relation (term present in both, term absent from
+  the second, term negated nearby) and vectorise those. A linear model then sees the interaction between
+  the two texts, which two separate bags of words cannot express.
+example: clinical guideline matching, title terms checked against a patient protocol
+code: |
+  for token in sorted(title_tokens):
+      features.append(("match_" if token in protocol_tokens else "absent_") + token)
+      for occ in re.finditer(re.escape(token[:max(4, len(token) - 2)]), protocol_normalized):
+          if NEGATION_RE.search(protocol_normalized[max(0, occ.start() - 45):occ.start()]):
+              features.append("negated_" + token); break
+translations:
+  ru:
+    name: Явные токены пересечения для пар текстов
+    description: >-
+      Для пары текстов порождайте токены, описывающие их отношение (термин есть в обоих, термина нет во
+      втором, рядом с термином отрицание), и векторизуйте их. Тогда линейная модель видит взаимодействие
+      двух текстов, которое не выразить двумя отдельными мешками слов.
+    example: >-
+      сопоставление клинических рекомендаций, термины заголовка проверяются по протоколу пациента

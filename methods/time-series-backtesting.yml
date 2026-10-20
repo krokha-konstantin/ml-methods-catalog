@@ -1,0 +1,22 @@
+section: universal
+subsection: validation
+order: 80
+grade: book
+name: Time-series backtesting at several cut-offs
+description: >-
+  Train only on data before a cut-off and validate on the period right after it, repeated for several
+  cut-offs (including one in the same season as the test period), then average.
+example: monthly sales, validated on three different months
+code: |
+  VAL_TS = [14, 22, 25]
+  for t_val in VAL_TS:
+      val_df = panel[panel['t'] == t_val]           # one month as validation
+      train_df = panel[panel['t'] < t_val]          # only the past
+      model, pred = fit_lgb(train_df, val_df)
+translations:
+  ru:
+    name: Бэктестинг временного ряда на нескольких точках отсечения
+    description: >-
+      Обучайтесь только на данных до точки отсечения и валидируйтесь на периоде сразу после неё; повторите
+      для нескольких точек (включая одну в том же сезоне, что и тестовый период) и усредните.
+    example: месячные продажи, валидация на трёх разных месяцах

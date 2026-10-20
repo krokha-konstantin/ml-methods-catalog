@@ -1,0 +1,18 @@
+section: theory
+order: 30
+grade: book
+name: 'Absorbing Markov chain: expected hitting time'
+description: >-
+  Write one linear equation per state, E[x] = 1 + Σ p(x→y) E[y], with the absorbing transition removed,
+  and solve the system; check the result by Monte Carlo.
+example: olympiad theory problem, expected steps until a given substring appears
+code: |
+  # E_X = 1 + Σ_Y p(X→Y)·E_Y, with the absorbing transition M→L dropped
+  E = np.linalg.inv(A) @ b          # E_S = 173/12
+translations:
+  ru:
+    name: 'Поглощающая марковская цепь: ожидаемое время достижения'
+    description: >-
+      Запишите по одному линейному уравнению на состояние, E[x] = 1 + Σ p(x→y) E[y], без поглощающего
+      перехода, и решите систему; проверьте результат методом Монте-Карло.
+    example: олимпиадная задача, ожидаемое число шагов до появления заданной подстроки

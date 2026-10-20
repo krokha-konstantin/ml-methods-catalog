@@ -1,0 +1,23 @@
+section: universal
+subsection: ensembling
+order: 20
+grade: book
+name: Stacking with a constrained meta-model
+description: >-
+  Train a simple meta-model on the out-of-fold predictions of the base models. Constraining it (non-negative
+  weights, strong regularisation) keeps it from overfitting the few, highly correlated inputs it has.
+example: wellbore geosteering, positive-weight Ridge over LightGBM and CatBoost OOF predictions
+code: |
+  OOF = pd.DataFrame(oof_cols); TEST = pd.DataFrame(test_cols)   # one column per booster
+  rid = Ridge(alpha=1.66, positive=True, fit_intercept=True)
+  for tr, va in cv.split(OOF.values, y, groups=g):
+      rid.fit(OOF.values[tr], y[tr]); meta[va] = rid.predict(OOF.values[va])
+  rid.fit(OOF.values, y); meta_test = rid.predict(TEST.values)
+translations:
+  ru:
+    name: Стекинг с ограниченной мета-моделью
+    description: >-
+      Обучите простую мета-модель на out-of-fold предсказаниях базовых моделей. Ограничения (неотрицательные
+      веса, сильная регуляризация) не дают ей переобучиться на немногих сильно коррелированных входах.
+    example: >-
+      геонавигация скважин, Ridge с неотрицательными весами поверх OOF-предсказаний LightGBM и CatBoost

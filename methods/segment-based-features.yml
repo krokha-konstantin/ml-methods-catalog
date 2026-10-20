@@ -1,0 +1,24 @@
+section: signals
+order: 10
+grade: good
+name: Features from domain-defined segments
+description: >-
+  Locate the signal's landmark (e.g. the main peak) and compute features separately on the segments before
+  and after it, matching how an expert reads the signal. A few such features can beat hundreds of raw
+  samples with a small model.
+example: ECG classification, segments around the QRS complex
+code: |
+  center = (x.argmin(axis=1) + x.argmax(axis=1)) // 2
+  period = (1.5 * (x.argmax(axis=1) - x.argmin(axis=1))).astype(int)
+  pre = [x_[0:end] for x_, end in zip(x, center - period)]
+  post = [x_[start:] for x_, start in zip(x, center + period)]
+  sum_changes = np.array([np.abs(np.diff(ts)).sum() for ts in pre_post])      # AFib: jittery baseline
+  post_mean_diff = np.mean(p[:20]) - np.mean(p[20:40])                         # ST elevation
+translations:
+  ru:
+    name: Признаки по сегментам, заданным предметной областью
+    description: >-
+      Найдите опорную точку сигнала (например, главный пик) и считайте признаки отдельно на сегментах
+      до и после неё, так же как сигнал читает эксперт. Несколько таких признаков с небольшой моделью
+      могут превзойти сотни сырых отсчётов.
+    example: классификация ЭКГ, сегменты вокруг комплекса QRS

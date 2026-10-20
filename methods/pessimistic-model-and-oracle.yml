@@ -1,0 +1,26 @@
+section: planning
+subsection: model-based
+order: 60
+grade: good
+name: Pessimistic model and an oracle bound
+description: >-
+  Plan against a deliberately pessimistic version of the model (more noise, stricter limits, lower success
+  rates) to get robust plans, and compute a closed-loop oracle that sees the true state at every step
+  as an upper bound on what any fixed plan can achieve.
+example: telescope scheduling
+code: |
+  def pessimistic_model(dth=0.7, infl=1.35, qmul=0.92):
+      M = fit(train_data, noise_inflation=infl)                 # wider noise
+      M['th'] = {k: v - dth for k, v in TH.items()}              # overheat earlier
+      M['qmul'] = qmul                                           # lower success probability
+      return M
+  # oracle: per scenario, at every step pick the action with the best one-step value given the true state
+  v = VAL[ty[0]] * p - lam * (1 - p) * 3 * (1 + 3 * (left < 8))
+translations:
+  ru:
+    name: Пессимистичная модель и граница оракула
+    description: >-
+      Планируйте против намеренно пессимистичной версии модели (больше шума, строже ограничения, ниже
+      вероятность успеха), чтобы получить устойчивые планы, и посчитайте оракула с обратной связью, который
+      видит истинное состояние на каждом шаге, как верхнюю границу для любого фиксированного плана.
+    example: планирование наблюдений телескопа

@@ -1,0 +1,21 @@
+section: universal
+subsection: validation
+order: 10
+grade: book
+name: K-fold cross-validation with out-of-fold (OOF) predictions
+description: >-
+  Every training row is predicted by a model that never saw it, which gives an unbiased score and inputs
+  for stacking; test predictions are averaged over the fold models.
+example: rent price regression
+code: |
+  for fold, (tr_idx, val_idx) in enumerate(kf.split(X)):
+      model.fit(X.iloc[tr_idx], y.iloc[tr_idx], eval_set=(X.iloc[val_idx], y.iloc[val_idx]))
+      oof_preds[val_idx] = model.predict(X.iloc[val_idx])
+      test_preds += model.predict(X_test) / FOLDS
+translations:
+  ru:
+    name: K-fold кросс-валидация с out-of-fold (OOF) предсказаниями
+    description: >-
+      Каждая строка обучающей выборки предсказывается моделью, которая её не видела. Это даёт несмещённую
+      оценку и входы для стекинга; предсказания на тесте усредняются по моделям всех фолдов.
+    example: регрессия цены аренды

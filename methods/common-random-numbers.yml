@@ -1,0 +1,22 @@
+section: planning
+subsection: model-based
+order: 40
+grade: book
+name: Common random numbers
+description: >-
+  Evaluate all candidate plans on the same random draws. Their difference then reflects the plans, not
+  the luck of the draw, so far fewer simulations are needed to tell two plans apart.
+example: telescope scheduling, noise drawn once per model and reused for every plan
+code: |
+  E, U = draw_noise(n_scenarios, rng)    # drawn once...
+  for plan in candidate_plans:
+      score[plan] = simulate(plan, init_state, E, U).mean()   # ...reused for every plan → paired comparison
+translations:
+  ru:
+    name: Общие случайные числа
+    description: >-
+      Оценивайте все планы-кандидаты на одних и тех же случайных реализациях. Тогда их разница отражает
+      сами планы, а не удачу выборки, и для различения двух планов нужно гораздо меньше симуляций.
+    example: >-
+      планирование наблюдений телескопа, шум генерируется один раз на модель и переиспользуется для всех
+      планов

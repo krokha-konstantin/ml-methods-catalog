@@ -1,0 +1,27 @@
+section: time-series
+subsection: features
+order: 50
+grade: good
+name: Short-to-long volatility ratio
+description: >-
+  Divide a short-window rolling std by a long-window one: values well above 1 mark a change of regime
+  even when the level stays within normal bounds. With many sensors, aggregate the ratios across them
+  (sum, count above a threshold, max, top-k mean).
+example: telemetry anomaly detection, windows 10/150 over 15 sensors
+code: |
+  g = df.groupby("session_id")
+  for s in SENSORS:
+      long_std = g[s].transform(lambda c: c.rolling(150, min_periods=10).std())
+      short_std = g[s].transform(lambda c: c.rolling(10, min_periods=3).std())
+      R[s] = (short_std / (long_std + 1e-9)).fillna(1.0)
+  df["sum_ratio"] = R[SENSORS].sum(1)
+  df["vote_ratio"] = (R[SENSORS] > 1.3).sum(1)
+  df["top3_ratio"] = np.sort(R[SENSORS].values, 1)[:, -3:].mean(1)
+translations:
+  ru:
+    name: Отношение краткосрочной волатильности к долгосрочной
+    description: >-
+      Делите скользящее стандартное отклонение по короткому окну на отклонение по длинному: значения заметно
+      больше 1 отмечают смену режима, даже если уровень остаётся в норме. При многих датчиках агрегируйте
+      отношения по ним (сумма, число превышений порога, максимум, среднее топ-k).
+    example: поиск аномалий в телеметрии, окна 10/150 по 15 датчикам

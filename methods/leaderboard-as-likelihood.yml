@@ -1,0 +1,26 @@
+section: universal
+subsection: leaderboard
+order: 10
+grade: good
+name: Leaderboard scores as a likelihood
+description: >-
+  When the target is produced by a hidden stochastic system, simulate it many times and weight each simulated
+  world by how well it reproduces the real leaderboard scores of submissions already made. Optimising
+  the next submission under these weights uses the leaderboard as evidence about the hidden system.
+example: telescope scheduling, scenario weights from the scores of seven past plans
+code: |
+  obs = np.array(past_lb_scores, float)            # real LB scores of plans already submitted
+  sim = simulated_scores                           # (n_scenarios, n_past_plans), same plans in the simulator
+  ll = -((sim - obs) ** 2).sum(1) / (2 * SIG ** 2) # SIG = 25
+  w = np.exp(ll - ll.max()); w /= w.sum()          # posterior weight of each simulated scenario
+  ess = 1 / (w ** 2).sum()                         # effective sample size, sanity check
+  best_plan = max(candidates, key=lambda plan: (w * simulate(plan)).sum())
+translations:
+  ru:
+    name: Результаты лидерборда как правдоподобие
+    description: >-
+      Если целевая величина порождается скрытой стохастической системой, промоделируйте её много раз и
+      взвесьте каждый смоделированный мир по тому, насколько он воспроизводит реальные результаты уже
+      отправленных решений. Оптимизация следующей посылки с этими весами использует лидерборд как свидетельство
+      о скрытой системе.
+    example: планирование наблюдений телескопа, веса сценариев по результатам семи прошлых планов

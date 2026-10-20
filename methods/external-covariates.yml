@@ -1,0 +1,21 @@
+section: time-series
+subsection: features
+order: 40
+grade: book
+name: External covariates
+description: >-
+  Add external series that drive the target (inflation, wages, unemployment) at the time resolution of
+  the data. Use real published series: hand-typed approximations add noise, not signal.
+example: retail sales forecasting, monthly macroeconomic indicators
+code: |
+  if year == 2023:
+      df.at[period, "real_income_yoy"] = 105.4
+      df.at[period, "overall_cpi_yoy"] = round(2.5 + (month * 0.45), 2) if month < 8 else 7.42
+translations:
+  ru:
+    name: Внешние ковариаты
+    description: >-
+      Добавьте внешние ряды, влияющие на цель (инфляция, зарплаты, безработица), с тем же шагом по времени,
+      что и данные. Используйте настоящие опубликованные ряды: набранные вручную приближения добавляют
+      шум, а не сигнал.
+    example: прогноз продаж ритейла, месячные макроэкономические показатели

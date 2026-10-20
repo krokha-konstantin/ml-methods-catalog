@@ -1,0 +1,18 @@
+section: nlp
+order: 10
+grade: book
+name: Character n-gram TF-IDF + linear SVM
+description: >-
+  Character n-grams within word boundaries are robust to inflection and spelling variants, which matters
+  for morphologically rich languages and short texts; a linear SVM on them is a fast, strong baseline.
+example: clinical guideline matching, Russian section titles, n-grams of 3–6
+code: |
+  vectorizer = TfidfVectorizer(analyzer="char_wb", ngram_range=(3, 6), min_df=2, sublinear_tf=True, max_features=150_000)
+  model = LinearSVC(C=1.2).fit(vectorizer.fit_transform(fit_docs), labels[fit_index])
+translations:
+  ru:
+    name: TF-IDF по символьным n-граммам + линейный SVM
+    description: >-
+      Символьные n-граммы внутри границ слов устойчивы к словоизменению и вариантам написания, что важно
+      для языков с богатой морфологией и коротких текстов; линейный SVM на них — быстрый и сильный бейзлайн.
+    example: сопоставление клинических рекомендаций, русские заголовки разделов, n-граммы длиной 3–6

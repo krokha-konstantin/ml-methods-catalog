@@ -1,0 +1,20 @@
+section: weak-supervision
+order: 30
+grade: book
+name: Cluster-then-label
+description: >-
+  With few labels, cluster all data, give each cluster the majority label of its labelled points, then
+  train a classifier on the resulting pseudo-labels.
+example: semi-supervised classification, spectral clustering + SVM
+code: |
+  cluster_labels = SpectralClustering(n_clusters=2, affinity='rbf', gamma=10).fit_predict(X)
+  for cluster in range(2):
+      cluster_to_label[cluster] = Counter(y_labeled[cluster_labels[labeled_mask] == cluster]).most_common(1)[0][0]
+  svm = SVC(kernel='rbf').fit(X, [cluster_to_label[c] for c in cluster_labels])
+translations:
+  ru:
+    name: Кластеризация, затем разметка
+    description: >-
+      При малом числе меток кластеризуйте все данные, присвойте каждому кластеру метку большинства его
+      размеченных точек и обучите классификатор на полученных псевдометках.
+    example: классификация с частичным привлечением учителя, спектральная кластеризация + SVM

@@ -1,0 +1,22 @@
+section: theory
+order: 60
+grade: good
+name: Pair elements by symmetry
+description: >-
+  For a classifier constrained to lines through the centre, a cell and its mirror image always fall on
+  opposite sides: same-colour pairs contribute a fixed amount whatever the line, so only the other pairs
+  need to be optimised.
+example: olympiad theory problem, best accuracy of a line through a rectangle's centre
+code: |
+  # a cell and its mirror image through the centre always fall on opposite sides of the line:
+  # same colour → exactly one of the pair is right, whatever the line;
+  # different colours → both right or both wrong, depending on the line.
+  # Only the asymmetric pairs depend on the line, which bounds the best achievable accuracy.
+translations:
+  ru:
+    name: Разбивайте элементы на симметричные пары
+    description: >-
+      Для классификатора, ограниченного прямыми через центр, клетка и её зеркальный образ всегда оказываются
+      по разные стороны: одноцветные пары дают фиксированный вклад при любой прямой, так что оптимизировать
+      нужно только остальные пары.
+    example: олимпиадная задача, лучшая точность прямой через центр прямоугольника

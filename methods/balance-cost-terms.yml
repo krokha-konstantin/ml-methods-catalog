@@ -1,0 +1,22 @@
+section: tracking
+order: 60
+grade: good
+name: Keep the cost terms on comparable scales
+description: >-
+  In an alignment cost (mismatch + movement penalty), rescaling one term silently changes the trade-off.
+  Z-scoring the signal made the mismatch term tiny next to the movement term, so the optimal path never
+  moved. Check the magnitudes of both terms after any normalisation.
+example: wellbore geosteering, gamma-ray kept in raw API units
+sketch: true
+code: |
+  cost = (gr_obs_api[i] - tw_gr_api[state]) ** 2 / sigma + mu * abs(state - prev_state)
+  # z-scored GR: observation term ≈ 0.03 vs move term 4–35 → the optimum is "stay put"
+translations:
+  ru:
+    name: Держите слагаемые стоимости в сопоставимых масштабах
+    description: >-
+      В стоимости выравнивания (несовпадение + штраф за перемещение) масштабирование одного слагаемого
+      незаметно меняет компромисс. Z-нормировка сигнала сделала слагаемое несовпадения крошечным по сравнению
+      со штрафом, и оптимальный путь перестал двигаться. После любой нормировки проверяйте величины обоих
+      слагаемых.
+    example: геонавигация скважин, гамма-каротаж оставлен в исходных единицах API

@@ -1,0 +1,25 @@
+section: vision
+subsection: geometry
+order: 40
+grade: good
+name: Learn what geometry cannot observe
+description: >-
+  Two-view geometry gives the direction of motion but not its length. Predict the missing scale with a
+  small regressor on geometric cues (parallax left after removing rotation, raw pixel flow, a planarity
+  score), falling back to the best constant.
+example: visual odometry, a Huber regressor for the translation length
+code: |
+  def derot_flow(pts1, pts2, K, R):              # flow left after removing the rotation = parallax
+      rays = (np.linalg.inv(K) @ np.c_[pts1, np.ones(len(pts1))].T).T
+      rays_rot = (R @ rays.T).T; rays_rot /= rays_rot[:, 2:3]
+      return np.linalg.norm(pts2 - (K @ rays_rot.T).T[:, :2], axis=1)
+  planarity = mask_h.sum() / len(pts1)           # homography inliers / matches
+  model = HuberRegressor(max_iter=200).fit(features, true_scale)
+translations:
+  ru:
+    name: Выучите то, что геометрия не наблюдает
+    description: >-
+      Геометрия двух видов даёт направление движения, но не его длину. Предсказывайте недостающий масштаб
+      небольшим регрессором по геометрическим признакам (параллакс после удаления поворота, сырой поток
+      пикселей, оценка планарности), с запасным вариантом в виде лучшей константы.
+    example: визуальная одометрия, регрессор Хьюбера для длины трансляции

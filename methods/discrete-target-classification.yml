@@ -1,0 +1,21 @@
+section: signals
+order: 30
+grade: good
+name: Treat a few-valued target as classes
+description: >-
+  If a regression target takes only a handful of distinct values, predict it as a class. A classifier
+  can't output impossible in-between values, and its probabilities can still give an expected value if
+  the metric needs one.
+example: binary sequence regression, a target with 8 possible values
+code: |
+  self.possible_values = possible_values            # φ(S) takes 8 values
+  self.fc = nn.Linear(hidden_size * seq_length, len(possible_values))   # all hidden states → 8 classes
+  self.label_to_index = {val: idx for idx, val in enumerate(possible_values)}
+translations:
+  ru:
+    name: Цель с немногими значениями — это классы
+    description: >-
+      Если целевая переменная регрессии принимает лишь несколько различных значений, предсказывайте её
+      как класс. Классификатор не может выдать невозможное промежуточное значение, а его вероятности всё
+      равно дают ожидаемое значение, если оно нужно метрике.
+    example: регрессия по бинарной последовательности, цель с 8 возможными значениями

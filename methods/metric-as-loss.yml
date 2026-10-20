@@ -1,0 +1,23 @@
+section: vision
+subsection: super-resolution
+order: 20
+grade: good
+name: Use a differentiable copy of the metric as the loss
+description: >-
+  If the metric is a weighted sum of differentiable terms, implement the same terms with the official
+  weights in the training framework and train on them directly, often with an extra plain L1 term for
+  stability.
+example: super-resolution, SSIM + MAE + Sobel gradient + Laplacian terms
+code: |
+  def metric_loss(out, y):
+      nmae = (out - y).abs().mean()
+      grad_err = (grad_mag(out) - grad_mag(y)).abs().mean() / (2 * math.sqrt(2))
+      lap_err = (filt(out, lap_k, 1) - filt(y, lap_k, 1)).abs().mean() / 4
+      return 0.33 * (1 - ssim_t(out, y)) + 1.27 * nmae + 0.16 * grad_err + 0.22 * lap_err
+translations:
+  ru:
+    name: Используйте дифференцируемую копию метрики как функцию потерь
+    description: >-
+      Если метрика — взвешенная сумма дифференцируемых слагаемых, реализуйте те же слагаемые с официальными
+      весами во фреймворке обучения и учитесь прямо на них, часто с добавочным L1 для устойчивости.
+    example: повышение разрешения, слагаемые SSIM + MAE + градиент Собеля + лапласиан

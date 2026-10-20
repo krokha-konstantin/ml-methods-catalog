@@ -1,0 +1,29 @@
+section: universal
+subsection: leaderboard
+order: 30
+grade: brilliant
+name: Per-row leaderboard inversion
+description: >-
+  Each submission's leaderboard score is one equation about the hidden targets. Undo the score transform
+  to get an error, then for every row fit how the error changes with that row's predicted value across
+  all submissions, and take the value at the minimum. It needs many, varied submissions: with far fewer
+  submissions than rows the fit is heavily underdetermined.
+example: retail sales forecasting, about 11 submissions for 18,657 stores
+code: |
+  # subs: (n_submissions, n_rows) predictions; lb: their leaderboard scores
+  err = 100 * (1 - (lb / 100) ** 0.5)               # undo the score transform → error
+  for j in range(subs.shape[1]):                    # one row (store) at a time
+      a, b, c = np.polyfit(subs[:, j], err, 2)      # how the total error moves with this row's value
+      if a > 0:
+          best[j] = np.clip(-b / (2 * a), subs[:, j].min(), subs[:, j].max())   # vertex = best value
+      else:
+          best[j] = subs[:, j].mean()
+translations:
+  ru:
+    name: Построчное обращение лидерборда
+    description: >-
+      Каждый результат на лидерборде — одно уравнение относительно скрытых целей. Обратите преобразование
+      метрики, чтобы получить ошибку, затем для каждой строки по всем посылкам подберите, как ошибка зависит
+      от предсказанного для этой строки значения, и возьмите значение в минимуме. Нужно много разнообразных
+      посылок: когда посылок намного меньше, чем строк, задача сильно недоопределена.
+    example: прогноз продаж ритейла, около 11 посылок на 18 657 магазинов

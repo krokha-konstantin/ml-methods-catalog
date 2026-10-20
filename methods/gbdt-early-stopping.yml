@@ -1,0 +1,19 @@
+section: tabular
+subsection: models
+order: 10
+grade: book
+name: Gradient boosting with early stopping
+description: >-
+  CatBoost or LightGBM with many boosting rounds, stopped when the validation metric stops improving.
+  This is the default strong baseline for tabular data.
+example: 3D-print failure, CatBoost with F1 early stopping
+code: |
+  cbs = CatBoostClassifier(cat_features=cat_features, early_stopping_rounds=100, use_best_model=True, eval_metric='F1')
+  cbs.fit(X_train, y_train, eval_set=(X_valid, y_valid))
+translations:
+  ru:
+    name: Градиентный бустинг с ранней остановкой
+    description: >-
+      CatBoost или LightGBM с большим числом итераций, которые останавливаются, когда метрика на валидации
+      перестаёт улучшаться. Это стандартный сильный бейзлайн для табличных данных.
+    example: брак 3D-печати, CatBoost с ранней остановкой по F1

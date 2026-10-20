@@ -1,0 +1,23 @@
+section: vision
+subsection: geometry
+order: 20
+grade: good
+name: Recover unknown camera intrinsics by inlier count
+description: >-
+  If the focal length is unknown, estimate the geometry for a range of candidate values and keep the one
+  with the most RANSAC inliers. The correct intrinsics make the most matches geometrically consistent.
+example: visual odometry, 12 focal lengths from 150 to 600 px
+code: |
+  for f in [150, 175, 200, 230, 260, 300, 340, 380, 430, 480, 540, 600]:
+      K = build_K(f, w, h)
+      E, mask = cv2.findEssentialMat(pts1, pts2, K, method=cv2.USAC_MAGSAC, prob=0.999, threshold=0.5)
+      if best is None or int(mask.sum()) > best[-1]:
+          best = (f, K, E, mask, int(mask.sum()))
+translations:
+  ru:
+    name: Восстановление неизвестных параметров камеры по числу инлаеров
+    description: >-
+      Если фокусное расстояние неизвестно, оцените геометрию для набора возможных значений и оставьте
+      то, при котором больше всего инлаеров RANSAC. При правильных параметрах геометрически согласованными
+      оказываются больше всего сопоставлений.
+    example: визуальная одометрия, 12 фокусных расстояний от 150 до 600 px

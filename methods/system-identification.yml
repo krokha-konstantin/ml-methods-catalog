@@ -1,0 +1,28 @@
+section: physics
+order: 40
+grade: good
+name: System identification of the data generator
+description: >-
+  Guess the generator's rule (here the collision law between two particles) from the observed transitions
+  and fit its parameters by minimising simulation error. Extend the horizon progressively so the fit becomes
+  ever more precise.
+example: laser forecasting, restitution and radius found by ternary search
+code: |
+  def apply_coll(p1, v1, p2, v2):
+      n = (p1 - p2) / np.linalg.norm(p1 - p2); vrn = np.dot(v1 - v2, n)
+      if vrn >= 0: return v1.copy(), v2.copy()
+      return v1 - (1 - ALPHA) * vrn * n, v2 + (1 + ALPHA) * vrn * n
+  def ternary_search_alpha(D, N, lo, hi, iters=60):
+      for _ in range(iters):
+          m1 = lo + (hi - lo) / 3; m2 = hi - (hi - lo) / 3
+          if run_n(m1, D, N) < run_n(m2, D, N): hi = m2
+          else: lo = m1
+      return (lo + hi) / 2
+translations:
+  ru:
+    name: Идентификация системы, порождающей данные
+    description: >-
+      Угадайте правило генератора (здесь закон столкновения двух частиц) по наблюдаемым переходам и подберите
+      его параметры, минимизируя ошибку симуляции. Постепенно увеличивайте горизонт, чтобы подбор становился
+      всё точнее.
+    example: прогноз траектории лазера, коэффициент восстановления и радиус найдены тернарным поиском

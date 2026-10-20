@@ -1,0 +1,22 @@
+section: tabular
+subsection: features
+order: 20
+grade: book
+name: Out-of-fold target encoding
+description: >-
+  Replace a category by statistics of the target for that category (mean, median, std), computed on the
+  other folds. Computing them on the same rows leaks each row's own target into its feature.
+example: rent price regression, district statistics
+code: |
+  for tr_idx, val_idx in kf.split(train):
+      mapping = train.iloc[tr_idx].groupby('district')['rent_price'].agg(func)
+      train.loc[train.index[val_idx], col] = train.iloc[val_idx]['district'].map(mapping)
+  test[col] = test['district'].map(train.groupby('district')['rent_price'].agg(func))
+translations:
+  ru:
+    name: Out-of-fold target encoding
+    description: >-
+      Замените категорию статистиками целевой переменной по этой категории (среднее, медиана, стандартное
+      отклонение), посчитанными на других фолдах. Если считать их на тех же строках, целевое значение
+      строки протекает в её собственный признак.
+    example: регрессия цены аренды, статистики по районам

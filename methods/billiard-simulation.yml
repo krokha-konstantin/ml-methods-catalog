@@ -1,0 +1,21 @@
+section: physics
+order: 30
+grade: book
+name: Vectorised ray–segment collision simulation
+description: >-
+  Step a particle forward, intersect its path with all wall segments at once (vectorised), and reflect
+  it specularly off the nearest hit.
+example: laser forecasting
+code: |
+  denom = d[0] * seg_E[:, 1] - d[1] * seg_E[:, 0]
+  t_arr = (fx * seg_E[:, 1] - fy * seg_E[:, 0]) * inv_d
+  s_arr = (fx * d[1] - fy * d[0]) * inv_d
+  hit = safe & (t_arr > 1e-6) & (t_arr <= speed) & (s_arr >= 0) & (s_arr <= 1)
+  d = d - 2 * np.dot(d, n) * n                       # reflect off the nearest hit
+translations:
+  ru:
+    name: Векторизованная симуляция столкновений луча с отрезками
+    description: >-
+      Продвигайте частицу на шаг, пересекайте её путь сразу со всеми отрезками стенок (векторизованно)
+      и отражайте зеркально от ближайшего пересечения.
+    example: прогноз траектории лазера

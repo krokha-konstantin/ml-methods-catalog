@@ -1,0 +1,21 @@
+section: vision
+subsection: super-resolution
+order: 30
+grade: book
+name: Standard image-to-image training recipe
+description: >-
+  Random crops, the 8 rotations/flips (D4) as augmentation, cosine learning-rate decay, mixed precision,
+  gradient clipping, and flip test-time augmentation (TTA) averaged at inference.
+example: super-resolution
+code: |
+  r = np.random.randint(4); lo, hi = np.rot90(lo, r), np.rot90(hi, r)
+  if np.random.rand() < 0.5: lo, hi = lo[:, ::-1], hi[:, ::-1]
+  y = model(x) + model(x.flip(3)).flip(3) + model(x.flip(2)).flip(2) + model(x.flip(2, 3)).flip(2, 3)
+  y = y / 4
+translations:
+  ru:
+    name: Стандартный рецепт обучения image-to-image
+    description: >-
+      Случайные кропы, 8 поворотов/отражений (D4) как аугментация, косинусное затухание шага обучения,
+      смешанная точность, обрезка градиента и TTA с отражениями, усредняемая при инференсе.
+    example: повышение разрешения

@@ -1,0 +1,23 @@
+section: universal
+subsection: ensembling
+order: 50
+grade: good
+name: Random search of blend weights on the simplex
+description: >-
+  Sample candidate weight vectors from a Dirichlet distribution (non-negative, summing to 1) and score
+  each blend on saved OOF predictions. It handles any metric, including non-differentiable ones, and needs
+  no re-training.
+example: clinical guideline matching, macro-F2 of a five-branch blend
+code: |
+  trials = rng.dirichlet(np.ones(len(names)), size=n_trials)
+  for trial in trials:
+      blend = sum(weight * components[name] for weight, name in zip(trial, names))
+      trial_rows.append({**dict(zip(names, trial)), "macro_fbeta": score_branch(labels, blend, beta=beta)})
+translations:
+  ru:
+    name: Случайный поиск весов бленда на симплексе
+    description: >-
+      Сэмплируйте векторы весов из распределения Дирихле (неотрицательные, сумма 1) и оценивайте каждый
+      бленд на сохранённых OOF-предсказаниях. Подходит для любой метрики, в том числе недифференцируемой,
+      и не требует переобучения.
+    example: сопоставление клинических рекомендаций, macro-F2 бленда из пяти ветвей

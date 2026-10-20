@@ -1,0 +1,21 @@
+section: planning
+subsection: model-based
+order: 20
+grade: good
+name: Recover hard rules from the data
+description: >-
+  Look for deterministic rules in the logs (an outcome that always fails above a threshold) and hard-code
+  them in the simulator instead of letting a smooth model blur them.
+example: telescope scheduling, an observation always fails above a class-specific temperature
+code: |
+  TH = {'A': 28.0, 'B': 31.0, 'C': 34.0}   # nT >= threshold → observation always fails
+  ok = (Tn < TH[ty[0]]) & (U < q)
+translations:
+  ru:
+    name: Восстановите жёсткие правила по данным
+    description: >-
+      Ищите в логах детерминированные правила (исход, который всегда неудачен выше порога) и зашивайте
+      их в симулятор, а не позволяйте гладкой модели их размывать.
+    example: >-
+      планирование наблюдений телескопа, наблюдение всегда неудачно выше температуры, своей для каждого
+      класса

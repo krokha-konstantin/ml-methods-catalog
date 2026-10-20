@@ -1,0 +1,23 @@
+section: universal
+subsection: thresholds
+order: 30
+grade: good
+name: Transfer the positive share, not the score threshold
+description: >-
+  Find how many positives are optimal on OOF predictions and label the same share of test rows as positive
+  (top-N by score). A share survives a shift in score calibration between OOF and test models; a raw score
+  threshold does not.
+example: clinical guideline matching, 427 of 690 OOF rows → 107 of 173 test rows
+code: |
+  positive_count, _, _ = best_oof_rank(labels, oof_scores, beta=2.0)          # 427 of 690
+  n_test = int(round(positive_count / len(train) * len(test_scores)))      # -> 107 of 173
+  order = np.argsort(-test_scores, kind="mergesort")
+  predictions[order[:n_test]] = 1
+translations:
+  ru:
+    name: Переносите долю положительных, а не порог оценки
+    description: >-
+      Найдите оптимальное число положительных ответов на OOF-предсказаниях и отметьте ту же долю тестовых
+      строк (top-N по оценке). Доля переживает сдвиг калибровки между OOF-моделями и моделью для теста,
+      а сырой порог по оценке — нет.
+    example: сопоставление клинических рекомендаций, 427 из 690 строк OOF → 107 из 173 строк теста

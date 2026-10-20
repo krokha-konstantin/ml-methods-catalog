@@ -1,0 +1,22 @@
+section: vision
+subsection: detection-segmentation
+order: 70
+grade: good
+name: Fuse several 2-D projections of a 3-D signal
+description: >-
+  Encode each projection with its own network, then bring them onto the target plane: sum over the axes
+  a view doesn't share with the target and broadcast along the missing one, then concatenate and decode.
+example: >-
+  radar scene segmentation, range–azimuth, range–elevation and range–Doppler maps fused onto range–azimuth
+code: |
+  feas_sre = torch.sum(feas_sre, 3, keepdim=True).expand(-1, -1, -1, azimuth_size)   # range-elevation → range-azimuth
+  feas_ra = torch.cat((feas_sra, feas_dra, feas_sre, feas_dre, feas_srd, feas_drd), 1)
+translations:
+  ru:
+    name: Объединение нескольких 2-D проекций 3-D сигнала
+    description: >-
+      Кодируйте каждую проекцию своей сетью, затем переносите их на целевую плоскость: суммируйте по осям,
+      которых нет у целевой плоскости, и размножайте вдоль недостающей, после чего склейте и декодируйте.
+    example: >-
+      сегментация радарной сцены, карты дальность–азимут, дальность–угол места и дальность–Доплер объединены
+      на плоскости дальность–азимут

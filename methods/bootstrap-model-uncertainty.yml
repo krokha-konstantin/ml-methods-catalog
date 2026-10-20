@@ -1,0 +1,20 @@
+section: planning
+subsection: model-based
+order: 30
+grade: book
+name: Bootstrap for model uncertainty
+description: >-
+  Refit the learned models on bootstrap resamples of whole series and plan against all of them, so the
+  plan is robust to the uncertainty in the models themselves, not only to the noise inside one model.
+example: telescope scheduling, 8 bootstrap simulators
+code: |
+  s = rng.choice(ids, len(ids))
+  tr = pd.concat([df[df.series_id == i].assign(series_id=f'{i}_{j}') for j, i in enumerate(s)])
+  out.append(fit(tr))
+translations:
+  ru:
+    name: Бутстрэп для неопределённости модели
+    description: >-
+      Переобучайте выученные модели на бутстрэп-выборках целых рядов и планируйте сразу по всем, чтобы
+      план был устойчив к неопределённости самих моделей, а не только к шуму внутри одной модели.
+    example: планирование наблюдений телескопа, 8 бутстрэп-симуляторов

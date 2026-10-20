@@ -1,0 +1,19 @@
+section: tabular
+subsection: features
+order: 40
+grade: book
+name: Missingness indicators
+description: >-
+  Add a flag per column that has missing values, plus the number of missing values per row. Whether a
+  value is missing is often informative in itself.
+example: crowdfunding success
+code: |
+  X[f'{col}_is_missing'] = X[col].isna().astype(int)
+  df['n_missing'] = df.isna().sum(axis=1)
+translations:
+  ru:
+    name: Индикаторы пропусков
+    description: >-
+      Добавьте флаг для каждого столбца с пропусками и число пропусков в строке. Сам факт пропуска часто
+      несёт информацию.
+    example: успех краудфандинга

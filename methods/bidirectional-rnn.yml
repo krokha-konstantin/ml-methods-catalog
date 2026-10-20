@@ -1,0 +1,26 @@
+section: time-series
+subsection: models
+order: 10
+grade: book
+name: Bidirectional RNN for per-step labels
+description: >-
+  When every step of a sequence needs a label and the whole sequence is available, a bidirectional GRU
+  or LSTM uses both past and future context; mask the padding in the loss.
+example: >-
+  telemetry anomaly detection, per-timestep scores; compound word segmentation, per-character boundaries
+code: |
+  self.gru = nn.GRU(n_feat, hidden, num_layers=layers, batch_first=True, bidirectional=True, dropout=dropout)
+  self.head = nn.Sequential(nn.Linear(hidden * 2, 64), nn.ReLU(), nn.Dropout(dropout), nn.Linear(64, 1))
+
+  self.lstm = nn.LSTM(vocab_size + 1, hidden_dim, num_layers=2, bidirectional=True, batch_first=True)
+  mask = torch.arange(inputs.shape[1])[None, :] < torch.tensor(lengths)[:, None]
+  loss = criterion(outputs[mask], targets[mask])
+translations:
+  ru:
+    name: Двунаправленная RNN для меток на каждом шаге
+    description: >-
+      Когда метка нужна на каждом шаге последовательности и вся последовательность доступна, двунаправленная
+      GRU или LSTM использует и прошлый, и будущий контекст; паддинг исключается из функции потерь маской.
+    example: >-
+      поиск аномалий в телеметрии, оценки на каждом шаге; разбиение составных слов, границы на каждом
+      символе

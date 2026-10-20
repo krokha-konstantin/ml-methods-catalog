@@ -1,0 +1,81 @@
+# Section and subsection order and titles.
+# A method's `section` / `subsection` fields must match an `id` below.
+# Numbers (1, 1.1, ...) are assigned from the order of this list.
+# Titles: `en` is required; any other language falls back to `en` when missing.
+
+- id: universal
+  title: {en: "Universal (any task type)", ru: "Универсальные приёмы (любой тип задачи)"}
+  subsections:
+    - id: validation
+      title: {en: "Validation", ru: "Валидация"}
+    - id: ensembling
+      title: {en: "Ensembling", ru: "Ансамблирование"}
+    - id: thresholds
+      title: {en: "Thresholds and operating points", ru: "Пороги и рабочие точки"}
+    - id: hyperparameters
+      title: {en: "Hyperparameter search", ru: "Подбор гиперпараметров"}
+    - id: leaderboard
+      title: {en: "Leaderboard and competition meta", ru: "Лидерборд и метаигра соревнования"}
+
+- id: tabular
+  title: {en: "Tabular (classification / regression)", ru: "Табличные данные (классификация / регрессия)"}
+  subsections:
+    - id: features
+      title: {en: "Feature engineering", ru: "Генерация признаков"}
+    - id: models
+      title: {en: "Models and training", ru: "Модели и обучение"}
+
+- id: time-series
+  title: {en: "Time series, sequences and anomaly detection", ru: "Временные ряды, последовательности и поиск аномалий"}
+  subsections:
+    - id: target
+      title: {en: "Target design", ru: "Выбор целевой переменной"}
+    - id: features
+      title: {en: "Features", ru: "Признаки"}
+    - id: models
+      title: {en: "Models", ru: "Модели"}
+    - id: postprocessing
+      title: {en: "Post-processing", ru: "Постобработка"}
+
+- id: tracking
+  title: {en: "State estimation, tracking and signal alignment", ru: "Оценка состояния, трекинг и выравнивание сигналов"}
+
+- id: vision
+  title: {en: "Computer vision", ru: "Компьютерное зрение"}
+  subsections:
+    - id: super-resolution
+      title: {en: "Super-resolution", ru: "Повышение разрешения"}
+    - id: detection-segmentation
+      title: {en: "Detection and segmentation", ru: "Детекция и сегментация"}
+    - id: matching
+      title: {en: "Matching, retrieval and zero-shot", ru: "Сопоставление, поиск и zero-shot"}
+    - id: geometry
+      title: {en: "Geometric vision", ru: "Геометрическое зрение"}
+
+- id: nlp
+  title: {en: "NLP and text", ru: "NLP и тексты"}
+
+- id: signals
+  title: {en: "Signals (1-D)", ru: "Сигналы (1-D)"}
+
+- id: retrieval
+  title: {en: "Retrieval and ranking in a scientific domain", ru: "Поиск и ранжирование в научной области"}
+
+- id: planning
+  title: {en: "Planning, control, RL and games", ru: "Планирование, управление, RL и игры"}
+  subsections:
+    - id: model-based
+      title: {en: "Model-based planning with a learned simulator", ru: "Планирование по обученному симулятору"}
+    - id: rl
+      title: {en: "Reinforcement learning", ru: "Обучение с подкреплением"}
+    - id: games
+      title: {en: "Game strategy", ru: "Игровые стратегии"}
+
+- id: weak-supervision
+  title: {en: "Unsupervised and weak supervision", ru: "Обучение без учителя и слабая разметка"}
+
+- id: physics
+  title: {en: "Physics / reverse-engineering the generator", ru: "Физика / восстановление генератора данных"}
+
+- id: theory
+  title: {en: "Math / theory problems", ru: "Математика / теоретические задачи"}

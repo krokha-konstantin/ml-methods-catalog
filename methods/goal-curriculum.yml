@@ -1,0 +1,26 @@
+section: planning
+subsection: rl
+order: 20
+grade: good
+name: Curriculum by goal resampling
+description: >-
+  In goal-conditioned tasks, oversample the hard goals during training only (re-draw the goal from the
+  hard range with some probability). The policy gets more practice where it fails without changing the
+  evaluation distribution.
+example: bipedal robot RL, target speeds 2.5–5 m/s drawn half of the time
+code: |
+  def reset(self, **kwargs):
+      obs, info = self.env.reset(**kwargs)
+      if self.env.unwrapped.np_random.uniform() < self.high_prob:
+          new_target = float(self.env.unwrapped.np_random.uniform(2.5, 5.0))
+          self.env.v_target = new_target
+          obs = np.append(obs[:-1], new_target)
+      return obs, info
+translations:
+  ru:
+    name: Учебный план через пересэмплирование целей
+    description: >-
+      В задачах с заданной целью только во время обучения чаще выбирайте трудные цели (с некоторой вероятностью
+      пересэмплируйте цель из трудного диапазона). Политика больше тренируется там, где ошибается, а распределение
+      при оценке не меняется.
+    example: RL для двуногого робота, целевые скорости 2.5–5 м/с в половине эпизодов

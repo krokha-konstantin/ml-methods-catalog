@@ -1,0 +1,22 @@
+section: universal
+subsection: ensembling
+order: 60
+grade: book
+name: Leave-one-model-out ablation
+description: >-
+  Remove each model from the ensemble in turn, renormalise the remaining weights and re-score. A model
+  whose removal costs nothing adds complexity without signal and can be dropped.
+example: clinical guideline matching, a branch with exactly zero contribution was dropped
+code: |
+  for name in STAGE2_WEIGHTS:
+      remaining = [c for c in STAGE2_WEIGHTS if c != name]
+      total = sum(STAGE2_WEIGHTS[c] for c in remaining)
+      without = sum(STAGE2_WEIGHTS[c] / total * components[c] for c in remaining)
+      rows.append({"branch": name, "drop_delta": score_branch(y_true, without, beta=2.0) - blend_metric})
+translations:
+  ru:
+    name: Абляция с исключением одной модели
+    description: >-
+      По очереди убирайте каждую модель из ансамбля, перенормируйте оставшиеся веса и пересчитывайте метрику.
+      Модель, удаление которой ничего не стоит, добавляет сложность без сигнала, и её можно убрать.
+    example: сопоставление клинических рекомендаций, ветвь с нулевым вкладом была удалена

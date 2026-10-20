@@ -1,0 +1,32 @@
+section: tracking
+order: 40
+grade: good
+name: Hand-built trackers as features for a learned model
+description: >-
+  Run several trackers with different assumptions (many filter seeds and noise scales, alignment from
+  stiff to loose) and give their estimates, together with their disagreement, to a gradient-boosting model.
+  The model learns when to trust which tracker; the spread between them is a direct uncertainty signal.
+example: wellbore geosteering, 128-seed particle filters at 4 noise scales and 7 alignment settings
+code: |
+  preds, liks = _pf_lik_allseeds(..., n_particles, n_seeds, ...)   # 128 seeds
+  ln = liks - liks.max()
+  for sc in scales:                                                # (3, 5, 8, 12)
+      wts = np.exp(ln / float(sc)); wts /= wts.sum()
+      out[f"pf_scale_{sc:g}"] = (wts[:, None] * preds).sum(0)
+
+  BEAMS = [(10, 20., 144., 2, "cons"), (10, 8., 64., 2, "loose"), (8, 35., 220., 1, "vcons"),
+           (10, 14., 90., 5, "sm5"), (20, 4., 36., 3, "vloose"), (12, 12., 100., 3, "mid"), (15, 25., 180., 2, "stiff")]
+  "beam_std_d": np.stack([(p - last_tvt) for p in bpaths.values()], 1).std(1)
+
+  sig_mat = np.stack(all_sigs, 1); sig_std = sig_mat.std(1)
+  form_std_d = fs.std(1); form_rng_d = fs.max(1) - fs.min(1)
+  "pf_ancc_std": std_use, "dense_std": d_std
+translations:
+  ru:
+    name: Ручные трекеры как признаки для обучаемой модели
+    description: >-
+      Запустите несколько трекеров с разными допущениями (много сидов и масштабов шума у фильтров, выравнивание
+      от жёсткого к мягкому) и подайте их оценки вместе с их расхождением в градиентный бустинг. Модель
+      учится, когда какому трекеру верить, а разброс между ними — прямой сигнал неопределённости.
+    example: >-
+      геонавигация скважин, фильтры частиц со 128 сидами при 4 масштабах шума и 7 настроек выравнивания

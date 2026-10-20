@@ -1,0 +1,31 @@
+section: tracking
+order: 10
+grade: book
+name: Particle filter
+description: >-
+  Track a hidden state (position and rate) with a set of weighted samples: move them by a motion model,
+  re-weight them by how well each explains the next observation, then resample. Systematic resampling
+  with a little added noise (roughening) keeps the particles diverse.
+example: >-
+  wellbore geosteering, the depth in the rock layer as the hidden state, gamma-ray readings as observations
+code: |
+  @njit(cache=True)
+  def _resamp(pos, aux, w, N, rp, rv):
+      cum = np.zeros(N + 1)
+      for j in range(N): cum[j + 1] = cum[j] + w[j]
+      u0 = np.random.uniform(0., 1. / N); np2 = np.empty(N); na = np.empty(N); ci = 0
+      for j in range(N):
+          u = u0 + j / N
+          while ci < N - 1 and cum[ci + 1] < u: ci += 1
+          np2[j] = pos[ci] + rp * np.random.randn(); na[j] = aux[ci] + rv * np.random.randn()
+      return np2, na
+translations:
+  ru:
+    name: Фильтр частиц
+    description: >-
+      Отслеживайте скрытое состояние (положение и скорость) набором взвешенных сэмплов: сдвигайте их по
+      модели движения, перевзвешивайте по тому, насколько каждый объясняет следующее наблюдение, затем
+      делайте ресэмплинг. Систематический ресэмплинг с небольшим добавленным шумом (roughening) сохраняет
+      разнообразие частиц.
+    example: >-
+      геонавигация скважин, глубина в пласте как скрытое состояние, показания гамма-каротажа как наблюдения

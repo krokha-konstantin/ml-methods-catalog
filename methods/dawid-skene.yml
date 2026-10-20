@@ -1,0 +1,25 @@
+section: weak-supervision
+order: 10
+grade: book
+name: Dawid–Skene label aggregation
+description: >-
+  With several noisy annotators and no ground truth, estimate each annotator's sensitivity and specificity
+  and the posterior of each true label jointly with EM. Reliable annotators get more weight than in a
+  majority vote, and missing answers simply drop out.
+example: label aggregation, 15 sources
+sketch: true
+code: |
+  for _ in range(100):
+      sens = ((p[:, None] * V * obs).sum(0) + 1) / ((p[:, None] * obs).sum(0) + 2)
+      spec = (((1 - p)[:, None] * (1 - V) * obs).sum(0) + 1) / (((1 - p)[:, None] * obs).sum(0) + 2)
+      l1 = np.log(p.mean()) + (obs * (V * np.log(sens) + (1 - V) * np.log(1 - sens))).sum(1)
+      l0 = np.log(1 - p.mean()) + (obs * (V * np.log(1 - spec) + (1 - V) * np.log(spec))).sum(1)
+      p = 1 / (1 + np.exp(l0 - l1))          # missing cells (obs = 0) just drop out of the sums
+translations:
+  ru:
+    name: Агрегация разметки методом Дэвида–Скина
+    description: >-
+      При нескольких шумных разметчиках и отсутствии эталона совместно оценивайте EM-алгоритмом чувствительность
+      и специфичность каждого разметчика и апостериорную вероятность каждой истинной метки. Надёжные разметчики
+      получают больший вес, чем при голосовании большинством, а пропущенные ответы просто выпадают.
+    example: агрегация разметки, 15 источников

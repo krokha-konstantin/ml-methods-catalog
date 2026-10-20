@@ -1,0 +1,19 @@
+section: nlp
+order: 20
+grade: book
+name: Blend a linear model with nearest neighbours
+description: >-
+  Add a cosine k-nearest-neighbour score over known examples to the linear model's score. The kNN part
+  captures local similarity to specific known items that a single linear boundary misses.
+example: clinical guideline matching, 3-NN over TF-IDF vectors
+code: |
+  neighbour_model = NearestNeighbors(n_neighbors=3, metric="cosine").fit(fit_matrix)
+  distances, indices = neighbour_model.kneighbors(valid_matrix)
+translations:
+  ru:
+    name: Смешайте линейную модель с ближайшими соседями
+    description: >-
+      Добавьте к оценке линейной модели оценку k ближайших соседей по косинусной мере среди известных
+      примеров. Часть kNN улавливает локальное сходство с конкретными известными элементами, которое одна
+      линейная граница упускает.
+    example: сопоставление клинических рекомендаций, 3-NN по векторам TF-IDF
