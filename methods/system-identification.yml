@@ -1,12 +1,11 @@
 section: physics
 order: 40
-grade: good
+grade: book
 name: System identification of the data generator
 description: >-
-  Guess the generator's rule (here the collision law between two particles) from the observed transitions
-  and fit its parameters by minimising simulation error. Extend the horizon progressively so the fit becomes
-  ever more precise.
-example: laser forecasting, restitution and radius found by ternary search
+  Guess the rule that generates the data from the observed transitions and fit its parameters by minimising
+  simulation error. Extend the simulated horizon progressively, so errors that only show up over many
+  steps refine the fit.
 code: |
   def apply_coll(p1, v1, p2, v2):
       n = (p1 - p2) / np.linalg.norm(p1 - p2); vrn = np.dot(v1 - v2, n)
@@ -22,7 +21,6 @@ translations:
   ru:
     name: Идентификация системы, порождающей данные
     description: >-
-      Угадайте правило генератора (здесь закон столкновения двух частиц) по наблюдаемым переходам и подберите
-      его параметры, минимизируя ошибку симуляции. Постепенно увеличивайте горизонт, чтобы подбор становился
-      всё точнее.
-    example: прогноз траектории лазера, коэффициент восстановления и радиус найдены тернарным поиском
+      Угадайте по наблюдаемым переходам правило, которое порождает данные, и подберите его параметры,
+      минимизируя ошибку симуляции. Постепенно увеличивайте горизонт симуляции, чтобы ошибки, заметные
+      только на многих шагах, уточняли подгонку.

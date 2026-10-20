@@ -1,12 +1,11 @@
 section: time-series
 subsection: features
 order: 30
-grade: good
+grade: book
 name: Domain-specific calendar features
 description: >-
-  Count, for each period, the days that matter for this domain and region rather than generic holidays:
-  religious fasts and moveable feasts computed from their formulas, paydays, long weekends.
-example: retail sales forecasting, Orthodox Easter, Lent days, paydays
+  Count, for each period, the days that matter for this domain and region (local holidays, including moveable
+  ones computed from their rules, paydays, long weekends) rather than a generic holiday list.
 code: |
   def _easter(y):                                   # Orthodox Easter (Gregorian date)
       a, b, c = y % 4, y % 7, y % 19
@@ -22,6 +21,5 @@ translations:
   ru:
     name: Календарные признаки предметной области
     description: >-
-      Для каждого периода считайте дни, важные именно для этой области и региона, а не общие праздники:
-      религиозные посты и переходящие праздники, вычисленные по их формулам, дни зарплаты, длинные выходные.
-    example: прогноз продаж ритейла, православная Пасха, дни Великого поста, дни зарплаты
+      Считайте для каждого периода дни, важные именно для этой области и региона (местные праздники, включая
+      переходящие, вычисленные по их правилам, дни зарплаты, длинные выходные), а не общий список праздников.

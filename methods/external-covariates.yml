@@ -4,9 +4,8 @@ order: 40
 grade: book
 name: External covariates
 description: >-
-  Add external series that drive the target (inflation, wages, unemployment) at the time resolution of
-  the data. Use real published series: hand-typed approximations add noise, not signal.
-example: retail sales forecasting, monthly macroeconomic indicators
+  Add external series that drive the target (macroeconomic indicators, weather) at the time resolution
+  of the data. Use the actual published series: approximations add noise, not signal.
 code: |
   if year == 2023:
       df.at[period, "real_income_yoy"] = 105.4
@@ -15,7 +14,6 @@ translations:
   ru:
     name: Внешние ковариаты
     description: >-
-      Добавьте внешние ряды, влияющие на цель (инфляция, зарплаты, безработица), с тем же шагом по времени,
-      что и данные. Используйте настоящие опубликованные ряды: набранные вручную приближения добавляют
-      шум, а не сигнал.
-    example: прогноз продаж ритейла, месячные макроэкономические показатели
+      Добавьте внешние ряды, влияющие на целевую переменную (макроэкономические показатели, погода), в
+      временном разрешении данных. Используйте реальные опубликованные ряды: приближения добавляют шум,
+      а не сигнал.

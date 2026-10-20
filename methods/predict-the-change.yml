@@ -7,7 +7,6 @@ description: >-
   Use the difference (or log-ratio) between the target and its last known value as the training target,
   and add the last value back at prediction time. The model then learns dynamics shared across series
   instead of each series' level.
-example: retail sales forecasting, log ratio to last month's turnover
 code: |
   res["target"] = ev.TVT.to_numpy(np.float32) - np.float32(last_tvt)     # depth: delta from the last known depth
   y_tr = np.log(train_df['rto'].values / train_df['rto_lag_1'].values)   # sales: log ratio to last month
@@ -19,4 +18,3 @@ translations:
       Берите в качестве цели разность (или логарифм отношения) между целевой величиной и её последним
       известным значением, а при предсказании прибавляйте последнее значение обратно. Модель учит общую
       для рядов динамику, а не уровень каждого ряда.
-    example: прогноз продаж ритейла, логарифм отношения к обороту прошлого месяца

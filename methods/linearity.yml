@@ -5,7 +5,6 @@ name: A network without nonlinearities is linear
 description: >-
   Stacked linear layers without activations or biases collapse into one matrix, so outputs at new inputs
   follow from known outputs by linearity.
-example: olympiad theory problem, the colour at a new point from two known ones
 code: |
   # (-7, 6) = 3·(-2, 3) − (1, 3)  ⇒  T(-7, 6) = 3·T(-2, 3) − T(1, 3) = (-20, 70, 220) → clip → (0, 70, 220)
 translations:
@@ -14,4 +13,3 @@ translations:
     description: >-
       Последовательные линейные слои без активаций и смещений сворачиваются в одну матрицу, поэтому выходы
       на новых входах получаются из известных по линейности.
-    example: олимпиадная задача, цвет в новой точке по двум известным

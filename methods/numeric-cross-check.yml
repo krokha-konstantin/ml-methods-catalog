@@ -5,7 +5,6 @@ name: Numeric cross-check of an analytic answer
 description: >-
   Confirm an analytic bound by constrained optimisation (SLSQP) from many random starting points; agreement
   between the two is strong evidence that both are right.
-example: olympiad theory problem, maximum gap between mean and median
 code: |
   for _ in range(300):
       x0 = np.sort(np.clip(np.linspace(0, 1, N) + rng.normal(0, 0.03, N), 0, 1))
@@ -16,4 +15,3 @@ translations:
     description: >-
       Подтвердите аналитическую оценку условной оптимизацией (SLSQP) из многих случайных начальных точек;
       совпадение двух ответов — сильное свидетельство, что оба верны.
-    example: олимпиадная задача, максимальная разница между средним и медианой

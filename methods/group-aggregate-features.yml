@@ -6,7 +6,6 @@ name: Group aggregates and shares
 description: >-
   Lagged averages over a higher-level group (region, city) and an entity's share of its group's total.
   They give each series context about its neighbours and about its relative position.
-example: retail sales forecasting, regional mean turnover and a store's share of its city
 code: |
   agg = df.groupby([geo, 't'])['rto'].mean().reset_index()
   tmp = agg.copy(); tmp['t_join'] = tmp['t'] + lag           # region mean, lagged
@@ -18,4 +17,3 @@ translations:
     description: >-
       Лаговые средние по группе более высокого уровня (регион, город) и доля объекта в итоге его группы.
       Они дают каждому ряду контекст о соседях и о его относительном положении.
-    example: прогноз продаж ритейла, средний оборот региона и доля магазина в городе

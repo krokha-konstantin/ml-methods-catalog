@@ -7,7 +7,6 @@ description: >-
   To use an RGB-pretrained CNN on a one-channel input (a spectrogram, a radar map), replace the first
   convolution with a one-channel version whose weights are the mean of the original RGB weights. The rest
   of the pretrained network stays usable.
-example: synthetic speech detection, ResNet-34 on spectrograms
 code: |
   base = resnet34(weights=ResNet34_Weights.DEFAULT)
   self.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3, bias=False)
@@ -19,4 +18,3 @@ translations:
       Чтобы использовать предобученную на RGB свёрточную сеть на одноканальном входе (спектрограмма, радарная
       карта), замените первую свёртку одноканальной, веса которой — среднее исходных весов по RGB. Остальная
       предобученная сеть остаётся пригодной.
-    example: обнаружение синтезированной речи, ResNet-34 на спектрограммах

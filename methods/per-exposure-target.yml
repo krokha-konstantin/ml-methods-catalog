@@ -1,22 +1,20 @@
 section: time-series
 subsection: target
 order: 30
-grade: good
+grade: book
 name: Normalise the target by exposure
 description: >-
-  Divide the target by the amount of opportunity behind it (days in the month, opening hours, number of
-  users) and multiply back after predicting. The model no longer has to learn the arithmetic of month
+  Divide the target by the amount of opportunity behind it (days in the period, opening hours, number
+  of users) and multiply back after predicting. The model no longer has to learn the arithmetic of period
   lengths or calendar quirks.
-example: retail sales forecasting, turnover per day
 code: |
   df["month_days"] = df["month"].map(DAYS_IN_MONTH)
   df.loc[df["n"] == LEAP_MONTH_N, "month_days"] = LEAP_FEB_DAYS
   df["rto"] /= df["month_days"]
 translations:
   ru:
-    name: Нормируйте цель на экспозицию
+    name: Нормируйте целевую переменную на экспозицию
     description: >-
-      Делите целевую величину на объём возможностей, стоящий за ней (дни в месяце, часы работы, число
-      пользователей), и умножайте обратно после предсказания. Модели больше не нужно выучивать арифметику
-      длины месяцев и особенности календаря.
-    example: прогноз продаж ритейла, оборот в день
+      Разделите целевую переменную на объём возможностей за ней (дни в периоде, часы работы, число пользователей)
+      и умножьте обратно после предсказания. Модели больше не нужно выучивать арифметику длины периодов
+      и календарных особенностей.

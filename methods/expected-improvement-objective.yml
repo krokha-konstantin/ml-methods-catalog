@@ -7,7 +7,6 @@ description: >-
   If only your best submission counts, the mean score is the wrong objective: optimise E[max(score − best,
   0)] instead. It deliberately prefers high-variance submissions that have a real chance of beating the
   current best.
-example: telescope scheduling, plans optimised for improvement over a banked score of 335
 code: |
   BANK = 335.0                                       # best LB score already achieved
   def ei(scenario_scores): return np.maximum(scenario_scores - BANK, 0).mean()
@@ -19,5 +18,3 @@ translations:
       Если засчитывается только лучшая посылка, средний результат — неправильная цель: оптимизируйте E[max(результат
       − лучший, 0)]. Такая цель сознательно выбирает посылки с большим разбросом, у которых есть реальный
       шанс превзойти текущий лучший результат.
-    example: >-
-      планирование наблюдений телескопа, планы, оптимизированные на улучшение над уже набранными 335 баллами

@@ -6,7 +6,6 @@ name: Learn the residual over a simple baseline
 description: >-
   Let the network predict only the correction to a cheap baseline (bicubic upscaling) and add the two.
   It starts from a good solution and spends capacity on the missing detail.
-example: super-resolution, EDSR-style network over bicubic ×4 with pixel-shuffle upsampling
 code: |
   def forward(self, x):
       base = F.interpolate(x, scale_factor=4, mode="bicubic", align_corners=False)
@@ -19,4 +18,3 @@ translations:
     description: >-
       Пусть сеть предсказывает только поправку к дешёвому бейзлайну (бикубическому увеличению), и складывайте
       их. Сеть начинает с хорошего решения и тратит ёмкость на недостающие детали.
-    example: повышение разрешения, сеть в стиле EDSR поверх бикубического ×4 с pixel-shuffle

@@ -6,7 +6,6 @@ name: Safe fallback for failed cases
 description: >-
   When the pipeline fails on an input (too few matches), output the answer that minimises the expected
   error, such as the mean direction with the median scale, instead of a crash or an arbitrary value.
-example: visual odometry, identity rotation with mean translation direction
 code: |
   def fallback():   # identity rotation, mean translation direction × median scale
       return np.array([1, 0, 0, 0]), mean_dir * median_scale
@@ -17,4 +16,3 @@ translations:
       Когда пайплайн не справляется с входом (слишком мало сопоставлений), выдавайте ответ, минимизирующий
       ожидаемую ошибку, например среднее направление с медианным масштабом, а не падение или произвольное
       значение.
-    example: визуальная одометрия, нулевой поворот со средним направлением трансляции

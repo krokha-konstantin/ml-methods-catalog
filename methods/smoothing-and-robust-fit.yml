@@ -6,7 +6,6 @@ name: Smoothing and a robust trend fit
 description: >-
   Smooth a predicted trajectory with a Savitzky–Golay filter, then fit a low-degree polynomial with iteratively
   reweighted least squares (IRLS), which down-weights outliers, and blend it with the prediction.
-example: wellbore geosteering, per-well smoothing and a degree-4 robust fit
 code: |
   out[pos] = savgol_filter(v, wl, 3)
   def _robfit(s, y, deg=5):
@@ -22,5 +21,3 @@ translations:
     description: >-
       Сгладьте предсказанную траекторию фильтром Савицкого–Голея, затем подберите полином низкой степени
       итеративно перевзвешенным МНК (IRLS), который уменьшает вес выбросов, и смешайте его с предсказанием.
-    example: >-
-      геонавигация скважин, сглаживание по каждой скважине и робастная аппроксимация полиномом 4-й степени

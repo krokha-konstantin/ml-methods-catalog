@@ -3,9 +3,8 @@ order: 80
 grade: book
 name: Strip boilerplate from long documents
 description: >-
-  Remove repetitive structured parts (lab tables, templates) before vectorising, so the narrative that
-  carries the signal isn't drowned by tokens that appear everywhere.
-example: clinical guideline matching, lab-table rows removed from patient protocols
+  Remove repetitive structured parts (tables, templates, signatures) before vectorising, so the narrative
+  that carries the signal isn't drowned by tokens that appear everywhere.
 code: |
   for line in str(text).splitlines():
       normalized = normalize_text(line)
@@ -13,9 +12,7 @@ code: |
           useful.append(normalized)
 translations:
   ru:
-    name: Убирайте шаблонный текст из длинных документов
+    name: Удаляйте шаблонный текст из длинных документов
     description: >-
-      Удаляйте повторяющиеся структурированные части (таблицы анализов, шаблоны) перед векторизацией,
-      чтобы несущий сигнал текст не тонул в токенах, которые встречаются везде.
-    example: >-
-      сопоставление клинических рекомендаций, строки таблиц анализов удалены из протоколов пациентов
+      Удалите повторяющиеся структурированные части (таблицы, шаблоны, подписи) до векторизации, чтобы
+      содержательный текст, несущий сигнал, не тонул в токенах, которые встречаются везде.

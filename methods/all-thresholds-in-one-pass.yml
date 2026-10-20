@@ -7,8 +7,6 @@ description: >-
   Sort by score once; cumulative sums of the labels then give TP and FP for every possible cut-off, so
   F1 (or a cost) for all thresholds costs O(n log n). Constraints such as "recall ≥ 90% in every group"
   become a feasible range of cut-offs found with binary search.
-example: >-
-  satellite risk analytics, choosing an ensemble and threshold under per-orbit recall and alert-rate limits
 code: |
   order = np.argsort(-ri, kind='stable')
   tp_cum = np.cumsum(y[order])
@@ -25,6 +23,3 @@ translations:
       Отсортируйте объекты по оценке один раз; кумулятивные суммы меток дают TP и FP для каждого возможного
       порога, так что F1 (или стоимость) для всех порогов считается за O(n log n). Ограничения вроде «полнота
       ≥ 90% в каждой группе» превращаются в допустимый диапазон порогов, который находится бинарным поиском.
-    example: >-
-      анализ рисков спутников, выбор ансамбля и порога при ограничениях на полноту и долю тревог по каждой
-      орбите

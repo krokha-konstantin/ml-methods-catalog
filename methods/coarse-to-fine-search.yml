@@ -7,7 +7,6 @@ description: >-
   Search a coarse grid first, then refine repeatedly around the best few points with a finer step. It
   finds a near-exact optimum of a low-dimensional, non-smooth objective at a tiny fraction of the cost
   of a full fine grid.
-example: satellite risk analytics, ensemble weights on grids of 1/20 → 1/2000 → 1/20000
 code: |
   L1, _ = run(jobs, 20)                                   # weights on a 1/20 grid, all model triples
   top = np.argsort(L1.min(1))[:5]
@@ -23,4 +22,3 @@ translations:
       Сначала перебирайте грубую сетку, затем многократно уточняйте вокруг нескольких лучших точек с меньшим
       шагом. Так находится почти точный оптимум маломерной негладкой функции за малую долю стоимости полного
       перебора по мелкой сетке.
-    example: анализ рисков спутников, веса ансамбля на сетках 1/20 → 1/2000 → 1/20000

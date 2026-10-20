@@ -5,7 +5,6 @@ name: Align word labels to subword tokens
 description: >-
   For token classification with a transformer, give each word's label to its first subword and mask the
   remaining subwords (label −100) so each word is scored exactly once.
-example: text normalisation tagging, XLM-R with BIO labels
 code: |
   for wid in tokenized.word_ids(batch_index=i):
       if wid is None: label_ids.append(-100)
@@ -18,4 +17,3 @@ translations:
     description: >-
       При классификации токенов трансформером отдавайте метку слова его первому подслову, а остальные
       подслова маскируйте (метка −100), чтобы каждое слово оценивалось ровно один раз.
-    example: разметка для нормализации текста, XLM-R с метками BIO

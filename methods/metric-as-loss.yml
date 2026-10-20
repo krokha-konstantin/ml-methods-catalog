@@ -7,7 +7,6 @@ description: >-
   If the metric is a weighted sum of differentiable terms, implement the same terms with the official
   weights in the training framework and train on them directly, often with an extra plain L1 term for
   stability.
-example: super-resolution, SSIM + MAE + Sobel gradient + Laplacian terms
 code: |
   def metric_loss(out, y):
       nmae = (out - y).abs().mean()
@@ -20,4 +19,3 @@ translations:
     description: >-
       Если метрика — взвешенная сумма дифференцируемых слагаемых, реализуйте те же слагаемые с официальными
       весами во фреймворке обучения и учитесь прямо на них, часто с добавочным L1 для устойчивости.
-    example: повышение разрешения, слагаемые SSIM + MAE + градиент Собеля + лапласиан

@@ -1,13 +1,12 @@
 section: tabular
 subsection: features
 order: 60
-grade: good
+grade: book
 name: Within-group normalisation
 description: >-
   Express a value relative to its own group: a z-score against the group's mean and std. "Unusual for
-  this material" or "unusual for this session" is often more predictive than the raw value, which mixes
-  the group's baseline with the deviation. Fit the group statistics on training data only.
-example: 3D-print failure, temperature z-scores per material and per printer
+  this group" is often more predictive than the raw value, which mixes the group's baseline with the deviation.
+  Fit the group statistics on training data only.
 code: |
   def add_group_zscore(X, stats, group_col, cols, prefix):
       for col in cols:
@@ -25,7 +24,5 @@ translations:
     name: Нормализация внутри группы
     description: >-
       Выражайте значение относительно его группы: z-оценка относительно среднего и стандартного отклонения
-      группы. «Необычно для этого материала» или «необычно для этой сессии» часто предсказывает лучше,
-      чем сырое значение, в котором смешаны базовый уровень группы и отклонение. Статистики групп считайте
-      только на обучающих данных.
-    example: брак 3D-печати, z-оценки температуры по материалу и по принтеру
+      группы. «Необычно для этой группы» часто предсказывает лучше, чем сырое значение, в котором смешаны
+      базовый уровень группы и отклонение от него. Статистики групп считайте только на обучающих данных.

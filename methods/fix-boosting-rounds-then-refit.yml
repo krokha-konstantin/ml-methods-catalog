@@ -6,7 +6,6 @@ name: Fix the number of boosting rounds, then refit on all data
 description: >-
   Early stopping needs held-out data, so find the best iteration on a held-out group, then retrain on
   all data with that fixed count.
-example: telemetry anomaly detection
 code: |
   es_val_sessions = rng.choice(sessions, size=6, replace=False)
   es_va_mask = np.isin(groups, es_val_sessions)
@@ -19,4 +18,3 @@ translations:
     description: >-
       Ранней остановке нужны отложенные данные, поэтому лучшая итерация находится на отложенной группе,
       а затем модель переобучается на всех данных с этим фиксированным числом итераций.
-    example: поиск аномалий в телеметрии

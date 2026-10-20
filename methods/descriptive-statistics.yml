@@ -4,9 +4,7 @@ grade: book
 name: Partial and lagged correlation
 description: >-
   Partial correlation removes the effect of a third variable; lagged cross-correlation, computed per entity
-  and then averaged, shows which series leads; average precision and anomaly rates can be computed directly
-  from sorted scores.
-example: satellite risk analytics
+  and then averaged, shows which of two series leads the other.
 code: |
   def partial_corr(x, y, z):
       r_xy, r_xz, r_yz = x.corr(y), x.corr(z), y.corr(z)
@@ -17,6 +15,4 @@ translations:
     name: Частная и лаговая корреляция
     description: >-
       Частная корреляция убирает влияние третьей переменной; лаговая взаимная корреляция, посчитанная
-      по каждому объекту и затем усреднённая, показывает, какой ряд опережает; average precision и доли
-      аномалий считаются прямо по отсортированным оценкам.
-    example: анализ рисков спутников
+      по каждой сущности и затем усреднённая, показывает, какой из двух рядов опережает другой.

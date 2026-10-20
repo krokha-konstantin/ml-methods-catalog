@@ -5,7 +5,6 @@ name: Co-teaching for noisy labels
 description: >-
   Train two networks at once; each selects its low-loss samples (likely correctly labelled) and the other
   network trains on them. Because the two make different mistakes, they filter each other's noise.
-example: noisy-label training
 code: |
   for i in range(2):
       t = losses[1 - i].clone()                      # the OTHER model's losses
@@ -19,4 +18,3 @@ translations:
       Обучайте две сети одновременно; каждая отбирает свои примеры с малой ошибкой (вероятно, правильно
       размеченные), и на них обучается другая сеть. Поскольку сети ошибаются по-разному, они отфильтровывают
       шум друг друга.
-    example: обучение на шумных метках

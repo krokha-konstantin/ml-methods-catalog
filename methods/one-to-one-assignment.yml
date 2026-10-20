@@ -7,7 +7,6 @@ description: >-
   When each gallery item can be the answer for only one query, don't match queries independently: remove
   an item once it is matched (greedy) or solve a global assignment (Hungarian). It also lets a hard query
   be solved through a chain of easier matches.
-example: icon matching, crop → original, then original → its pair, without reusing gallery images
 code: |
   for q_name, matched_crop in crop_matches.items():
       sims = [(g, cos(gallery[matched_crop], f)) for g, f in gallery.items()
@@ -21,6 +20,3 @@ translations:
       Если каждый элемент галереи может быть ответом только для одного запроса, не сопоставляйте запросы
       независимо: убирайте элемент после сопоставления (жадно) или решайте глобальную задачу о назначениях
       (венгерский алгоритм). Это также позволяет решить трудный запрос через цепочку более лёгких сопоставлений.
-    example: >-
-      сопоставление иконок, кроп → оригинал, затем оригинал → его пара, без повторного использования изображений
-      галереи

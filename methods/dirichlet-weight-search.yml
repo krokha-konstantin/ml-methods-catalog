@@ -7,7 +7,6 @@ description: >-
   Sample candidate weight vectors from a Dirichlet distribution (non-negative, summing to 1) and score
   each blend on saved OOF predictions. It handles any metric, including non-differentiable ones, and needs
   no re-training.
-example: clinical guideline matching, macro-F2 of a five-branch blend
 code: |
   trials = rng.dirichlet(np.ones(len(names)), size=n_trials)
   for trial in trials:
@@ -20,4 +19,3 @@ translations:
       Сэмплируйте векторы весов из распределения Дирихле (неотрицательные, сумма 1) и оценивайте каждый
       бленд на сохранённых OOF-предсказаниях. Подходит для любой метрики, в том числе недифференцируемой,
       и не требует переобучения.
-    example: сопоставление клинических рекомендаций, macro-F2 бленда из пяти ветвей

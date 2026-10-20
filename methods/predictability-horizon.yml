@@ -6,7 +6,6 @@ description: >-
   A simulation of a chaotic system diverges from reality after a while. Measure on held-out data when
   its error exceeds that of the best constant prediction (the mean position), and switch to the constant
   from that step on.
-example: laser forecasting, the box centre after the cutoff
 code: |
   cumsum_sim = np.cumsum(avg_errs)
   cumsum_center_rev = np.cumsum(center_errs[::-1])[::-1]
@@ -20,4 +19,3 @@ translations:
       Симуляция хаотической системы со временем расходится с реальностью. Измерьте на отложенных данных,
       когда её ошибка превышает ошибку лучшего константного предсказания (среднего положения), и с этого
       шага переходите на константу.
-    example: прогноз траектории лазера, центр коробки после отсечки

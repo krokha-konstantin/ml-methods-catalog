@@ -6,7 +6,6 @@ name: PPO with normalisation
 description: >-
   Proximal Policy Optimization with running normalisation of observations and rewards and a linearly decaying
   learning rate: a robust default for continuous control.
-example: bipedal robot RL, Walker2d
 code: |
   venv = VecNormalize(venv, norm_obs=True, norm_reward=True, clip_obs=10.0, gamma=args.gamma)
   model = PPO("MlpPolicy", venv, learning_rate=linear_schedule(lr), gamma=0.99, gae_lambda=0.95, clip_range=0.2)
@@ -16,4 +15,3 @@ translations:
     description: >-
       Proximal Policy Optimization с бегущей нормализацией наблюдений и наград и линейно убывающим шагом
       обучения: надёжный выбор по умолчанию для непрерывного управления.
-    example: RL для двуногого робота, Walker2d

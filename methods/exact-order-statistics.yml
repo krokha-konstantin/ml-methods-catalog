@@ -6,7 +6,6 @@ name: Exact expected order statistics instead of simulation
 description: >-
   When future outcomes depend on how a known pool of values will be grouped at random, compute the expected
   minimum, median and maximum per group exactly with combinatorics rather than estimating them by simulation.
-example: two-player number game, expected values of future triples
 code: |
   vals = sorted(pool.elements()); N = len(vals); denom = _comb2(N - 1)
   sum_min = sum(vals[k] * _comb2(N - 1 - k) for k in range(N)) / denom
@@ -20,4 +19,3 @@ translations:
       Когда будущие исходы зависят от того, как известный набор значений случайно разобьётся на группы,
       считайте ожидаемые минимум, медиану и максимум по группе точно, комбинаторикой, а не оценивайте
       симуляцией.
-    example: игра двух игроков с числами, ожидаемые значения будущих троек

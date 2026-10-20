@@ -6,7 +6,6 @@ name: Per-series SARIMAX
 description: >-
   A seasonal ARIMA with exogenous regressors, fitted per series. It is a strong classical baseline when
   series are long and regular.
-example: retail sales forecasting, SARIMAX(1,1,1)(1,0,0,12) on log turnover
 code: |
   model = SARIMAX(ts, exog=exog_tr, order=(1, 1, 1), seasonal_order=(1, 0, 0, 12))   # log-RTO per store
 translations:
@@ -15,4 +14,3 @@ translations:
     description: >-
       Сезонная ARIMA с внешними регрессорами, обучаемая отдельно для каждого ряда. Сильный классический
       бейзлайн, когда ряды длинные и регулярные.
-    example: прогноз продаж ритейла, SARIMAX(1,1,1)(1,0,0,12) на логарифме оборота

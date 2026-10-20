@@ -6,7 +6,6 @@ description: >-
   With several noisy annotators and no ground truth, estimate each annotator's sensitivity and specificity
   and the posterior of each true label jointly with EM. Reliable annotators get more weight than in a
   majority vote, and missing answers simply drop out.
-example: label aggregation, 15 sources
 sketch: true
 code: |
   for _ in range(100):
@@ -22,4 +21,3 @@ translations:
       При нескольких шумных разметчиках и отсутствии эталона совместно оценивайте EM-алгоритмом чувствительность
       и специфичность каждого разметчика и апостериорную вероятность каждой истинной метки. Надёжные разметчики
       получают больший вес, чем при голосовании большинством, а пропущенные ответы просто выпадают.
-    example: агрегация разметки, 15 источников

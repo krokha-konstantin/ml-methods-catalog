@@ -6,7 +6,6 @@ name: Classic two-view pose estimation
 description: >-
   Contrast enhancement (CLAHE), SIFT keypoints, mutual nearest-neighbour matches with the ratio test,
   RANSAC estimation of the essential matrix and pose recovery.
-example: visual odometry
 code: |
   _sift = cv2.SIFT_create(nfeatures=6000, contrastThreshold=0.003, edgeThreshold=20)
   knn12 = _bf.knnMatch(des1, des2, k=2)
@@ -20,4 +19,3 @@ translations:
     description: >-
       Повышение контраста (CLAHE), ключевые точки SIFT, взаимные сопоставления ближайших соседей с тестом
       отношения, оценка существенной матрицы RANSAC и восстановление позы.
-    example: визуальная одометрия

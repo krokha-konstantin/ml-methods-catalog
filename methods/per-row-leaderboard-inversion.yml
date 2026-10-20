@@ -8,7 +8,6 @@ description: >-
   to get an error, then for every row fit how the error changes with that row's predicted value across
   all submissions, and take the value at the minimum. It needs many, varied submissions: with far fewer
   submissions than rows the fit is heavily underdetermined.
-example: retail sales forecasting, about 11 submissions for 18,657 stores
 code: |
   # subs: (n_submissions, n_rows) predictions; lb: their leaderboard scores
   err = 100 * (1 - (lb / 100) ** 0.5)               # undo the score transform → error
@@ -26,4 +25,3 @@ translations:
       метрики, чтобы получить ошибку, затем для каждой строки по всем посылкам подберите, как ошибка зависит
       от предсказанного для этой строки значения, и возьмите значение в минимуме. Нужно много разнообразных
       посылок: когда посылок намного меньше, чем строк, задача сильно недоопределена.
-    example: прогноз продаж ритейла, около 11 посылок на 18 657 магазинов

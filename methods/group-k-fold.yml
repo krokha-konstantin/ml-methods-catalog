@@ -8,8 +8,6 @@ description: >-
   keep each group entirely on one side of the split. Choose the group as the unit of correlation, not
   the row: if neighbouring groups are still near-duplicates, use a coarser unit such as a day. Otherwise
   the model is scored on near-copies of its own training rows.
-example: >-
-  telemetry anomaly detection, grouped by session; tornado detection, frames grouped by observation day
 code: |
   gkf = GroupKFold(n_splits=5)
   for tr_idx, va_idx in gkf.split(Wtr, y, groups):   # groups = session_id
@@ -31,6 +29,3 @@ translations:
       видео), каждая группа целиком попадает по одну сторону разбиения. Группу выбирают по единице корреляции,
       а не по строке: если соседние группы всё ещё почти дублируют друг друга, берут более крупную единицу,
       например день. Иначе модель оценивается на почти-копиях собственных обучающих строк.
-    example: >-
-      поиск аномалий в телеметрии, группировка по сессии; детекция торнадо, кадры сгруппированы по дню
-      наблюдений

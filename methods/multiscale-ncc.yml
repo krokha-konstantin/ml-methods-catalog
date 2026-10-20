@@ -6,7 +6,6 @@ description: >-
   Find where a window of the signal best matches a reference by normalised cross-correlation, at several
   window sizes, and combine the scales weighted by match quality. Normalisation makes the match insensitive
   to gain and offset.
-example: wellbore geosteering, windows of 8, 15 and 25 samples
 code: |
   Cn = (C - C.mean(1, keepdims=True)) / (C.std(1, keepdims=True) + 1e-6)   # reference windows
   Hn = (H - H.mean(1, keepdims=True)) / (H.std(1, keepdims=True) + 1e-6)   # query windows
@@ -19,4 +18,3 @@ translations:
       Находите, где окно сигнала лучше всего совпадает с эталоном, по нормированной взаимной корреляции
       на нескольких размерах окна, и объединяйте масштабы с весами по качеству совпадения. Нормировка
       делает сопоставление нечувствительным к усилению и смещению.
-    example: геонавигация скважин, окна по 8, 15 и 25 отсчётов

@@ -6,7 +6,6 @@ name: Isolation Forest as an unsupervised component
 description: >-
   An unsupervised anomaly score adds a view that does not depend on the (few, possibly incomplete) labels.
   Blend it with supervised models rather than using it alone.
-example: telemetry anomaly detection
 code: |
   iso = IsolationForest(n_estimators=300, max_samples=0.5, contamination=0.05).fit(Wtr)
   iso_tr = -iso.score_samples(Wtr)
@@ -16,4 +15,3 @@ translations:
     description: >-
       Оценка аномальности без учителя добавляет взгляд, не зависящий от (немногочисленных, возможно неполных)
       меток. Смешивайте её с моделями с учителем, а не используйте отдельно.
-    example: поиск аномалий в телеметрии

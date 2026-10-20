@@ -1,12 +1,11 @@
 section: theory
 order: 60
 grade: good
-name: Pair elements by symmetry
+name: Exploit symmetry to shrink the search
 description: >-
-  For a classifier constrained to lines through the centre, a cell and its mirror image always fall on
-  opposite sides: same-colour pairs contribute a fixed amount whatever the line, so only the other pairs
-  need to be optimised.
-example: olympiad theory problem, best accuracy of a line through a rectangle's centre
+  If the data and the model class share a symmetry (separating lines through the centre of a point-symmetric
+  set), points and their mirror images always land on opposite sides. Pairs whose contribution is the
+  same for every model can be dropped, and only the rest needs optimising.
 code: |
   # a cell and its mirror image through the centre always fall on opposite sides of the line:
   # same colour → exactly one of the pair is right, whatever the line;
@@ -14,9 +13,8 @@ code: |
   # Only the asymmetric pairs depend on the line, which bounds the best achievable accuracy.
 translations:
   ru:
-    name: Разбивайте элементы на симметричные пары
+    name: Используйте симметрию, чтобы сократить перебор
     description: >-
-      Для классификатора, ограниченного прямыми через центр, клетка и её зеркальный образ всегда оказываются
-      по разные стороны: одноцветные пары дают фиксированный вклад при любой прямой, так что оптимизировать
-      нужно только остальные пары.
-    example: олимпиадная задача, лучшая точность прямой через центр прямоугольника
+      Если у данных и класса моделей общая симметрия (разделяющие прямые через центр центрально-симметричного
+      множества), точка и её зеркальное отражение всегда оказываются по разные стороны. Пары, вклад которых
+      одинаков для любой модели, можно отбросить и оптимизировать только остальные.

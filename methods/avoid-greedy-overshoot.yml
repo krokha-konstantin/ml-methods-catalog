@@ -2,11 +2,11 @@ section: planning
 subsection: games
 order: 30
 grade: good
-name: Avoid greedy overshoot when values grow
+name: Avoid greedy overshoot when options grow
 description: >-
-  If the options get larger over time, taking the locally best option each round creeps past the target.
-  Take less now when larger opportunities (or the opponent's gifts) are expected later.
-example: two-player number game, hitting a third of the total
+  When the goal is to reach a target without exceeding it and the available options grow over time, taking
+  the locally best option every round overshoots. Take less early and leave room for the larger options
+  that are expected later.
 code: |
   if max(t) <= ideal and avg_rank >= 0.7 and opp_ranks:
       take_i = min(range(3), key=lambda i: t[i])
@@ -14,8 +14,8 @@ code: |
       take_i = min(range(3), key=lambda i: abs(t[i] - ideal))
 translations:
   ru:
-    name: Не перескакивайте цель жадным выбором при растущих значениях
+    name: Не перескакивайте цель жадным выбором при растущих вариантах
     description: >-
-      Если варианты со временем растут, выбор локально лучшего в каждом раунде постепенно уводит за цель.
-      Берите меньше сейчас, когда позже ожидаются большие возможности (или подарки соперника).
-    example: игра двух игроков с числами, цель — треть общей суммы
+      Если нужно дойти до цели, не превысив её, а доступные варианты со временем растут, выбор локально
+      лучшего варианта на каждом ходу приводит к перебору. Берите меньше в начале и оставляйте место для
+      более крупных вариантов, которые ожидаются позже.

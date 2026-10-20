@@ -5,7 +5,6 @@ name: Remove baseline drift
 description: >-
   Subtract the slow drift of the signal before extracting features, so amplitude features measure the
   waveform itself and not where the baseline happened to be.
-example: ECG classification
 code: |
   def baseline_correction(x):
       baseline = 0.5 * np.sin(np.arange(x.shape[1]) / 45)
@@ -16,4 +15,3 @@ translations:
     description: >-
       Вычитайте медленный дрейф сигнала перед извлечением признаков, чтобы амплитудные признаки измеряли
       саму форму волны, а не случайное положение базовой линии.
-    example: классификация ЭКГ

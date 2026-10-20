@@ -7,8 +7,6 @@ description: >-
   Before submitting, compute aggregate quantities the predictions imply (median growth, positive rate,
   mean level) and compare them with history and with a known-good submission. A systematic bias shows
   up there long before the leaderboard does.
-example: >-
-  retail sales forecasting, implied month-over-month growth +9.4% vs +11.5% for a strong reference
 sketch: true
 code: |
   implied_mom = (pred / feb_2025_rto).median() - 1      # this submission +9.4% vs a strong reference +11.5%
@@ -20,5 +18,3 @@ translations:
       Перед отправкой посчитайте агрегаты, которые следуют из предсказаний (медианный рост, доля положительных,
       средний уровень), и сравните их с историей и с заведомо хорошей посылкой. Систематическое смещение
       видно там задолго до лидерборда.
-    example: >-
-      прогноз продаж ритейла, подразумеваемый рост месяц к месяцу +9.4% против +11.5% у сильного эталона

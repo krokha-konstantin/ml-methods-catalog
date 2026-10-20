@@ -6,8 +6,6 @@ description: >-
   Track a hidden state (position and rate) with a set of weighted samples: move them by a motion model,
   re-weight them by how well each explains the next observation, then resample. Systematic resampling
   with a little added noise (roughening) keeps the particles diverse.
-example: >-
-  wellbore geosteering, the depth in the rock layer as the hidden state, gamma-ray readings as observations
 code: |
   @njit(cache=True)
   def _resamp(pos, aux, w, N, rp, rv):
@@ -27,5 +25,3 @@ translations:
       модели движения, перевзвешивайте по тому, насколько каждый объясняет следующее наблюдение, затем
       делайте ресэмплинг. Систематический ресэмплинг с небольшим добавленным шумом (roughening) сохраняет
       разнообразие частиц.
-    example: >-
-      геонавигация скважин, глубина в пласте как скрытое состояние, показания гамма-каротажа как наблюдения

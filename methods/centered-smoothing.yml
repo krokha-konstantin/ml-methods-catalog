@@ -7,7 +7,6 @@ description: >-
   If the task is to label a past sequence rather than forecast, future context is allowed: smooth the
   scores with a centred window. Events that come in contiguous runs become more distinct from isolated
   noise.
-example: telemetry anomaly detection, centred rolling mean of 19 steps within each session
 code: |
   def smooth_within_session(x, session_ids, window=19):
       return (pd.Series(x).groupby(session_ids)
@@ -19,4 +18,3 @@ translations:
       Если задача — разметить прошлую последовательность, а не прогнозировать, будущий контекст разрешён:
       сглаживайте оценки центрированным окном. События, идущие сплошными участками, сильнее отделяются
       от одиночного шума.
-    example: поиск аномалий в телеметрии, центрированное скользящее среднее по 19 шагам внутри сессии

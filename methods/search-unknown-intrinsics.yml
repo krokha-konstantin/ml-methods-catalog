@@ -6,7 +6,6 @@ name: Recover unknown camera intrinsics by inlier count
 description: >-
   If the focal length is unknown, estimate the geometry for a range of candidate values and keep the one
   with the most RANSAC inliers. The correct intrinsics make the most matches geometrically consistent.
-example: visual odometry, 12 focal lengths from 150 to 600 px
 code: |
   for f in [150, 175, 200, 230, 260, 300, 340, 380, 430, 480, 540, 600]:
       K = build_K(f, w, h)
@@ -20,4 +19,3 @@ translations:
       Если фокусное расстояние неизвестно, оцените геометрию для набора возможных значений и оставьте
       то, при котором больше всего инлаеров RANSAC. При правильных параметрах геометрически согласованными
       оказываются больше всего сопоставлений.
-    example: визуальная одометрия, 12 фокусных расстояний от 150 до 600 px

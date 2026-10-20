@@ -7,7 +7,6 @@ description: >-
   A threshold or cut-off chosen on the same OOF predictions it is scored on gives an optimistic score.
   Choose it on the other folds and apply it to the held-out fold. If this optimism is larger than the
   gain from a new idea, OOF "improvements" will not reproduce on the leaderboard.
-example: guideline matching, choosing the number of positives
 code: |
   def honest_rank_metric(labels, scores, folds, beta=2.0):
       for fold in sorted(np.unique(folds)):
@@ -25,4 +24,3 @@ translations:
       Порог или отсечка, подобранные на тех же OOF-предсказаниях, на которых их оценивают, дают завышенную
       оценку. Подбирайте их на остальных фолдах и применяйте к отложенному. Если это завышение больше
       выигрыша от новой идеи, «улучшения» на OOF не повторятся на лидерборде.
-    example: сопоставление клинических рекомендаций, выбор числа положительных ответов

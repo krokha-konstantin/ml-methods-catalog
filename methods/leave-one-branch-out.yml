@@ -6,7 +6,6 @@ name: Leave-one-model-out ablation
 description: >-
   Remove each model from the ensemble in turn, renormalise the remaining weights and re-score. A model
   whose removal costs nothing adds complexity without signal and can be dropped.
-example: clinical guideline matching, a branch with exactly zero contribution was dropped
 code: |
   for name in STAGE2_WEIGHTS:
       remaining = [c for c in STAGE2_WEIGHTS if c != name]
@@ -19,4 +18,3 @@ translations:
     description: >-
       По очереди убирайте каждую модель из ансамбля, перенормируйте оставшиеся веса и пересчитывайте метрику.
       Модель, удаление которой ничего не стоит, добавляет сложность без сигнала, и её можно убрать.
-    example: сопоставление клинических рекомендаций, ветвь с нулевым вкладом была удалена

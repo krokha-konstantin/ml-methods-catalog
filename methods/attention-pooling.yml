@@ -5,7 +5,6 @@ name: Attention pooling over a recurrent network
 description: >-
   Instead of using only the last hidden state, learn a weight for every time step and pool the weighted
   states, so information from anywhere in the sequence reaches the output.
-example: binary sequence regression, LSTM + attention
 code: |
   energy = torch.tanh(self.attn_weights(lstm_output)).squeeze(2)
   attention_scores = torch.softmax(energy, dim=1)
@@ -16,4 +15,3 @@ translations:
     description: >-
       Вместо использования только последнего скрытого состояния выучите вес для каждого шага и объединяйте
       взвешенные состояния, чтобы информация из любой части последовательности доходила до выхода.
-    example: регрессия по бинарной последовательности, LSTM + внимание

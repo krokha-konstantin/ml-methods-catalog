@@ -4,10 +4,9 @@ order: 90
 grade: good
 name: Consistency features
 description: >-
-  When several fields should agree (a rating and a stated preference), encode whether they do: agreement
-  flags, contradictions and the joint combination as one category. How a person or process breaks the
-  rules is often a strong signature of who or what produced the row.
-example: annotator identification, rating difference vs stated preference
+  When several fields should agree (two answers to the same question, a total and its parts), encode whether
+  they do: agreement flags, contradictions and the joint combination as one category. How a person or
+  process breaks the rules is often a strong signature of who or what produced the row.
 code: |
   expected = np.select([pref == "a", pref == "b"], [1, -1], default=0)
   df["is_consistent"] = (np.sign(df["rating_diff"]) == expected).astype(int)
@@ -17,7 +16,6 @@ translations:
   ru:
     name: Признаки согласованности
     description: >-
-      Если несколько полей должны согласовываться (оценка и заявленное предпочтение), закодируйте, согласуются
-      ли они: флаги согласия, противоречия и совместную комбинацию как одну категорию. То, как человек
-      или процесс нарушает правила, часто служит сильной подписью того, кто или что породил строку.
-    example: определение аннотатора, разница оценок против заявленного предпочтения
+      Когда несколько полей должны согласовываться (два ответа на один вопрос, итог и его слагаемые),
+      закодируйте, согласуются ли они: флаги совпадения, противоречия и их совместная комбинация как одна
+      категория. То, как человек или процесс нарушает правила, часто выдаёт, кто или что породило строку.

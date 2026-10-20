@@ -6,7 +6,6 @@ name: Log-transform a skewed target
 description: >-
   Train on log(1 + y) and invert the predictions. Errors become relative instead of absolute, so a few
   very large targets no longer dominate the loss.
-example: rent price regression
 code: |
   y = np.log1p(train['rent_price'])
   preds = np.expm1(test_preds)
@@ -16,4 +15,3 @@ translations:
     description: >-
       Обучайтесь на log(1 + y) и обращайте предсказания. Ошибки становятся относительными, а не абсолютными,
       и несколько очень больших значений перестают доминировать в функции потерь.
-    example: регрессия цены аренды

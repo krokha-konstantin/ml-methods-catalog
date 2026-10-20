@@ -7,9 +7,6 @@ description: >-
   Average the predictions of models that differ only by random seed, CV fold, bootstrap sample or hyperparameters.
   Their errors are partly independent, so the average has lower variance than any single model; it also
   makes the score less dependent on a lucky seed.
-example: >-
-  crowdfunding success, 3 seeds × 5 folds of LightGBM; annotator identification, 25 bootstrap logistic
-  regressions
 code: |
   for s in range(SEEDS):
       for a, b in StratifiedKFold(FOLDS, shuffle=True, random_state=s).split(X, y):
@@ -32,5 +29,3 @@ translations:
       Усредняйте предсказания моделей, которые отличаются только сидом, фолдом CV, бутстрэп-выборкой или
       гиперпараметрами. Их ошибки частично независимы, поэтому среднее имеет меньшую дисперсию, чем любая
       отдельная модель, и оценка меньше зависит от удачного сида.
-    example: >-
-      успех краудфандинга, 3 сида × 5 фолдов LightGBM; определение аннотатора, 25 бутстрэп-логрегрессий

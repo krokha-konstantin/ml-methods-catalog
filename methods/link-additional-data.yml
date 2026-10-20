@@ -1,0 +1,32 @@
+section: tabular
+subsection: features
+order: 80
+grade: good
+name: Link additional data to the training rows
+description: >-
+  If additional data is given that describes the same objects as the training set (with extra columns,
+  or noisier values), match each training row to its counterpart by nearest neighbour on the shared, scaled
+  columns (record linkage) and add the extra columns as features. If rows can't be matched reliably, train
+  a model that predicts the extra columns from the shared ones and use its predictions instead.
+code: |
+  common_cols = list(set(data_train.columns) & set(data_extra.columns))
+  target_cols = [c for c in data_extra.columns if c not in data_train.columns]
+  model = CatBoostRegressor(objective='MultiRMSE')
+  model.fit(data_extra[common_cols], data_extra[target_cols])
+  data_train[target_cols] = model.predict(data_train[common_cols])
+
+  common = sorted(set(data_train.columns) & set(data_extra.columns) - {'variable'})
+  scale = data_extra[common].std()
+  nn = NearestNeighbors(n_neighbors=1).fit(data_extra[common] / scale)
+  dist, idx = nn.kneighbors(data_train[common] / scale)
+  data_train[target_cols] = data_extra.iloc[idx[:, 0]][target_cols].to_numpy()
+  # check the dist histogram: true matches sit at the noise level, far below the next neighbour
+translations:
+  ru:
+    name: Свяжите дополнительные данные со строками обучающей выборки
+    description: >-
+      Если даны дополнительные данные о тех же объектах, что и в обучающей выборке (с лишними столбцами
+      или более шумными значениями), сопоставьте каждой обучающей строке её пару ближайшим соседом по
+      общим отмасштабированным столбцам (record linkage) и добавьте лишние столбцы как признаки. Если
+      строки нельзя надёжно сопоставить, обучите модель, предсказывающую лишние столбцы по общим, и используйте
+      её предсказания.

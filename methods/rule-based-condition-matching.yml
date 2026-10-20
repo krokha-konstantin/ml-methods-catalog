@@ -1,12 +1,11 @@
 section: nlp
 order: 40
 grade: good
-name: Rule-based condition extraction and matching
+name: Rule-based attribute extraction and matching
 description: >-
-  Extract a small set of structured conditions (sex, age group, pregnancy, severity, …) from each text
-  with regular expressions, including nearby negation, and add match / missing / contradicted flags as
-  features.
-example: clinical guideline matching, 17 condition rules
+  Extract a few structured attributes from each text with regular expressions, taking nearby negation
+  into account. For text pairs, add flags for whether each attribute matches, is missing, or contradicts.
+  Exact constraints that a bag of words dilutes become explicit features.
 code: |
   for title_pattern, protocol_pattern in CONCEPT_PATTERNS.values():   # sex, age, pregnancy, severity...
       title_has = bool(re.search(title_pattern, title))
@@ -15,9 +14,8 @@ code: |
       values += [title_has, m is not None, title_has and m and not negated, title_has and not m, title_has and m and negated]
 translations:
   ru:
-    name: Извлечение и сопоставление условий правилами
+    name: Извлечение и сопоставление атрибутов правилами
     description: >-
-      Извлекайте небольшой набор структурированных условий (пол, возрастная группа, беременность, тяжесть,
-      …) из каждого текста регулярными выражениями с учётом отрицания поблизости и добавляйте флаги совпадения
-      / отсутствия / противоречия как признаки.
-    example: сопоставление клинических рекомендаций, 17 правил для условий
+      Извлеките из каждого текста несколько структурированных атрибутов регулярными выражениями с учётом
+      отрицания рядом. Для пар текстов добавьте флаги: атрибут совпадает, отсутствует или противоречит.
+      Точные ограничения, которые размываются в мешке слов, становятся явными признаками.

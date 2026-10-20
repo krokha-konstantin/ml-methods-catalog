@@ -5,7 +5,6 @@ name: Expand abbreviations
 description: >-
   Replace domain abbreviations with their full forms from a dictionary before vectorising, so both spellings
   map to the same tokens.
-example: clinical guideline matching, medical abbreviations
 code: |
   return SYNONYM_RE.sub(lambda m: MKB10_SYNONYMS[m.group(1)], normalize_text(text))   # ИБС → ишемическая болезнь сердца
 translations:
@@ -14,4 +13,3 @@ translations:
     description: >-
       Заменяйте сокращения предметной области полными формами из словаря перед векторизацией, чтобы оба
       написания давали одни и те же токены.
-    example: сопоставление клинических рекомендаций, медицинские сокращения

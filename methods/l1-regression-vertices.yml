@@ -5,7 +5,6 @@ name: The L1 regression optimum passes through data points
 description: >-
   Least-absolute-deviation regression is a linear program, so an optimal line passes through at least
   two data points: enumerating all pairs finds the exact optimum.
-example: olympiad theory problem, minimum MAE of a line
 code: |
   for i in range(n):
       for j in range(i + 1, n):
@@ -19,4 +18,3 @@ translations:
     description: >-
       Регрессия по наименьшим абсолютным отклонениям — задача линейного программирования, поэтому оптимальная
       прямая проходит хотя бы через две точки данных: перебор всех пар находит точный оптимум.
-    example: олимпиадная задача, минимальная MAE прямой

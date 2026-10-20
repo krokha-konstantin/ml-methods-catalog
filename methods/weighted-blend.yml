@@ -7,7 +7,6 @@ description: >-
   Blend the final predictions of separately built pipelines with a weight. When the weight can't be validated
   reliably, sweep a few values and report how far each blend moves from the stronger pipeline, so the
   risk of each choice is visible.
-example: wellbore geosteering, two pipelines blended at weights 0.50–0.60
 code: |
   for w in [0.50, 0.52, 0.55, 0.58, 0.60]:
       out = w * pred_a + (1 - w) * pred_b
@@ -21,4 +20,3 @@ translations:
       Смешайте итоговые предсказания отдельно построенных пайплайнов с весом. Если вес нельзя надёжно
       провалидировать, переберите несколько значений и посмотрите, насколько каждый бленд отходит от более
       сильного пайплайна: так виден риск каждого выбора.
-    example: геонавигация скважин, два пайплайна в пропорциях от 0.50 до 0.60

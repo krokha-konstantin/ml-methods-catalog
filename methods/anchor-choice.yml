@@ -7,7 +7,6 @@ description: >-
   A target relative to the same period last year handles seasonality but inherits every structural break
   since then; relative to last period, it tracks the newest level and keeps more training rows. Compare
   both on time-based folds and blend them by validation.
-example: retail sales forecasting, 0.9 × month-over-month + 0.1 × year-over-year
 code: |
   base = 'rto_lag_1' if target == 'mom' else 'rto_lag_12'
   for w in np.arange(0, 1.01, 0.05):
@@ -20,4 +19,3 @@ translations:
       Цель относительно того же периода прошлого года учитывает сезонность, но наследует все структурные
       сдвиги с тех пор; относительно прошлого периода она следует за новейшим уровнем и сохраняет больше
       обучающих строк. Сравните оба варианта на временных фолдах и смешайте их по валидации.
-    example: прогноз продаж ритейла, 0.9 × месяц к месяцу + 0.1 × год к году

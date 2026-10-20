@@ -6,7 +6,6 @@ name: Tune the decision threshold on OOF predictions
 description: >-
   For metrics such as F1 the best probability cut-off is rarely 0.5, especially with class imbalance.
   Choose it on out-of-fold predictions and apply it to the test predictions.
-example: crowdfunding success, macro-F1 threshold ≈ 0.39
 code: |
   ths = np.arange(0.15, 0.7, 0.01)
   scores = [f1_score(y, oof > t, average='macro') for t in ths]
@@ -17,4 +16,3 @@ translations:
     description: >-
       Для метрик вроде F1 лучший порог вероятности редко равен 0.5, особенно при дисбалансе классов. Подбирайте
       его на out-of-fold предсказаниях и применяйте к тесту.
-    example: успех краудфандинга, порог для macro-F1 ≈ 0.39

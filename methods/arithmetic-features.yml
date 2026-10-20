@@ -7,7 +7,6 @@ description: >-
   Add ratios, differences and products of related columns, and encode cyclic values (month, hour) as sine
   and cosine. Trees split one feature at a time, so such combinations are hard for them to learn on their
   own.
-example: 3D-print failure, temperature differences and mass per contact area
 code: |
   X['nozzle_bed_diff'] = X['nozzle_temp_c'] - X['bed_temp_c']
   X['mass_per_area'] = X['model_mass_g'] / X['contact_area_cm2']
@@ -20,4 +19,3 @@ translations:
       Добавьте отношения, разности и произведения связанных столбцов, а циклические величины (месяц, час)
       закодируйте синусом и косинусом. Деревья делят по одному признаку за раз, поэтому такие комбинации
       им трудно выучить самостоятельно.
-    example: брак 3D-печати, разности температур и масса на площадь контакта

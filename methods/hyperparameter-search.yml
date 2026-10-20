@@ -4,9 +4,8 @@ order: 10
 grade: book
 name: Hyperparameter search against the CV score
 description: >-
-  Search hyperparameters with Bayesian optimisation (e.g. Optuna's TPE) or a grid, scoring every candidate
-  with the same cross-validation as the final model.
-example: retail sales forecasting, Optuna over boosting parameters
+  Search hyperparameters with Bayesian optimisation (e.g. TPE) or a grid, scoring every candidate with
+  the same cross-validation as the final model.
 sketch: true
 code: |
   def objective(trial):
@@ -15,8 +14,7 @@ code: |
   optuna.create_study(direction="minimize").optimize(objective, n_trials=100)
 translations:
   ru:
-    name: Подбор гиперпараметров по оценке CV
+    name: Подбор гиперпараметров по CV
     description: >-
-      Ищите гиперпараметры байесовской оптимизацией (например, TPE в Optuna) или по сетке, оценивая каждого
-      кандидата той же кросс-валидацией, что и итоговую модель.
-    example: прогноз продаж ритейла, Optuna по параметрам бустинга
+      Подбирайте гиперпараметры байесовской оптимизацией (например, TPE) или по сетке, оценивая каждого
+      кандидата той же кросс-валидацией, что и финальную модель.

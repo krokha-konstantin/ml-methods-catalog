@@ -7,9 +7,6 @@ description: >-
   Re-implement the official metric locally, including its edge cases (how predictions are matched to targets,
   how malformed spans are decoded). Every threshold sweep and model comparison is then made on the number
   that is actually scored, not on a convenient proxy.
-example: >-
-  tornado detection, F1 with Hungarian matching at IoU ≥ 0.5; span tagging, span-F1 with the contest's
-  rule for an I-tag without a B-tag
 code: |
   def count_tp(pred, gt):
       m = np.array([[iou(p, g) >= 0.5 for g in gt] for p in pred], dtype=float)
@@ -30,6 +27,3 @@ translations:
       Реализуйте официальную метрику локально со всеми её крайними случаями (как предсказания сопоставляются
       с целями, как разбираются некорректные спаны). Тогда подбор порогов и сравнение моделей идут по
       той величине, которая реально оценивается, а не по удобному заменителю.
-    example: >-
-      детекция торнадо, F1 с венгерским сопоставлением при IoU ≥ 0.5; разметка спанов, span-F1 с правилом
-      соревнования для I-тега без B-тега

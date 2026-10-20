@@ -6,7 +6,6 @@ description: >-
   Use embeddings from a domain-specific pretrained encoder (frozen, or fine-tuned for retrieval) as an
   additional model in the ensemble. Check the tokenizer first: an encoder whose vocabulary barely covers
   the language splits words into characters and adds nothing.
-example: clinical guideline matching, medical encoders compared against the TF-IDF models
 sketch: true
 code: |
   emb = mean_pooled(encoder(**tokenizer(texts, padding=True, truncation=True, return_tensors="pt")))
@@ -18,5 +17,3 @@ translations:
       Используйте эмбеддинги доменного предобученного энкодера (замороженного или дообученного для поиска)
       как дополнительную модель в ансамбле. Сначала проверьте токенизатор: энкодер, словарь которого почти
       не покрывает язык, разбивает слова на символы и ничего не добавляет.
-    example: >-
-      сопоставление клинических рекомендаций, медицинские энкодеры в сравнении с моделями на TF-IDF

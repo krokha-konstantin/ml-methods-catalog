@@ -7,7 +7,6 @@ description: >-
   Add one extra token per candidate region to a vision transformer and restrict its attention to the patches
   of that region. One forward pass then yields an embedding for every candidate, which can be compared
   with text embeddings for zero-shot localisation (MaskCLIP).
-example: zero-shot localisation, every rectangle covering about 6% of the image scored at once
 code: |
   attention_mask[:N+1, N+1:] = True                 # patches never see mask tokens
   attention_mask[N+1:, 1:N+1] = True                # mask tokens see nothing...
@@ -21,5 +20,3 @@ translations:
       Добавьте в визуальный трансформер по дополнительному токену на каждую область-кандидат и ограничьте
       его внимание патчами этой области. Один прямой проход даёт эмбеддинг для каждого кандидата, который
       можно сравнить с текстовыми эмбеддингами для локализации без обучения (MaskCLIP).
-    example: >-
-      локализация без обучения, все прямоугольники площадью около 6% изображения оцениваются сразу

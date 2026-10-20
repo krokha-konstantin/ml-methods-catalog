@@ -6,7 +6,6 @@ name: Huber loss
 description: >-
   Quadratic for small errors and linear for large ones, so a few outlier periods (closures, one-off events)
   don't dominate training.
-example: retail sales forecasting, LightGBM with the Huber objective
 code: |
   LGB_HUBER = dict(objective='huber', metric='mae', alpha=0.9, learning_rate=0.03, num_leaves=255, min_data_in_leaf=200)
 translations:
@@ -15,4 +14,3 @@ translations:
     description: >-
       Квадратичная для малых ошибок и линейная для больших, поэтому несколько выбросов (закрытия, разовые
       события) не доминируют в обучении.
-    example: прогноз продаж ритейла, LightGBM с функцией Хьюбера

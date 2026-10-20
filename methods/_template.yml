@@ -6,13 +6,12 @@ subsection: validation        # required if the section has subsections, omitted
 order: 110                    # position inside the subsection (lower = earlier); steps of 10 leave room
 grade: good                   # book | good | brilliant — rate the idea, not whether it worked
 
-# English is required. Write the name as the general technique in standard ML terms,
-# the description as the principle + why it matters; task specifics go only into `example`.
+# English is required. Follow WRITING.md: the name is the general technique in standard ML terms,
+# the description is the principle + why it matters, with no task specifics.
 # Inline markdown (**bold**, `code`, *italic*) is allowed.
 name: Short name of the technique
 description: >-
   What to do, in general terms. Then the failure mode it prevents or the payoff.
-example: task type, concrete instance          # rendered as "Example: ...". Optional.
 
 sketch: false                 # true = the code is a minimal illustration, not from a real solution
 code: |
@@ -26,5 +25,4 @@ translations:
     name: Короткое название приёма
     description: >-
       Что делать в общем виде и почему это важно.
-    example: тип задачи, конкретный пример
     # code: |          # optional, only if the snippet itself needs translated comments

@@ -6,7 +6,6 @@ name: Univariate AUC filter
 description: >-
   Drop features whose single-feature ROC-AUC (taken as max(AUC, 1 − AUC)) is close to 0.5. It is a cheap
   first cut on a large generated feature set.
-example: telemetry anomaly detection, keep features with AUC > 0.52
 code: |
   for c in Xtr_mw.columns:
       a = roc_auc_score(y, Xtr_mw[c].values)
@@ -18,4 +17,3 @@ translations:
     description: >-
       Убирайте признаки, у которых ROC-AUC по одному признаку (берётся max(AUC, 1 − AUC)) близок к 0.5.
       Это дешёвый первый отсев большого сгенерированного набора признаков.
-    example: поиск аномалий в телеметрии, оставлены признаки с AUC > 0.52

@@ -6,7 +6,6 @@ name: Reproducible submission with a checksum
 description: >-
   Rebuild the submission from code and assert that its hash equals the file that was scored. This proves
   the final notebook really produces the submitted result.
-example: clinical guideline matching, SHA-256 checked at the end of the notebook
 code: |
   digest = hashlib.sha256()
   with path.open("rb") as stream:
@@ -19,4 +18,3 @@ translations:
     description: >-
       Пересоберите посылку из кода и проверьте, что её хэш совпадает с оценённым файлом. Это доказывает,
       что итоговый ноутбук действительно даёт отправленный результат.
-    example: сопоставление клинических рекомендаций, проверка SHA-256 в конце ноутбука

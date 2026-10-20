@@ -7,7 +7,6 @@ description: >-
   When the target is produced by a hidden stochastic system, simulate it many times and weight each simulated
   world by how well it reproduces the real leaderboard scores of submissions already made. Optimising
   the next submission under these weights uses the leaderboard as evidence about the hidden system.
-example: telescope scheduling, scenario weights from the scores of seven past plans
 code: |
   obs = np.array(past_lb_scores, float)            # real LB scores of plans already submitted
   sim = simulated_scores                           # (n_scenarios, n_past_plans), same plans in the simulator
@@ -23,4 +22,3 @@ translations:
       взвесьте каждый смоделированный мир по тому, насколько он воспроизводит реальные результаты уже
       отправленных решений. Оптимизация следующей посылки с этими весами использует лидерборд как свидетельство
       о скрытой системе.
-    example: планирование наблюдений телескопа, веса сценариев по результатам семи прошлых планов

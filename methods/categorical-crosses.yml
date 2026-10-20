@@ -6,7 +6,6 @@ name: Categorical crosses
 description: >-
   Concatenate two categorical columns into a new category, so a model can learn effects that exist only
   for specific combinations.
-example: 3D-print failure, material × printer model
 code: |
   X['material_bed_surface'] = X['material'].astype(str) + '_' + X['bed_surface'].astype(str)
   X['material_printer_model'] = X['material'].astype(str) + '_' + X['printer_model'].astype(str)
@@ -16,4 +15,3 @@ translations:
     description: >-
       Склейте два категориальных столбца в новую категорию, чтобы модель могла выучить эффекты, которые
       есть только у конкретных сочетаний.
-    example: брак 3D-печати, материал × модель принтера

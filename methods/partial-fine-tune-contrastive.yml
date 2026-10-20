@@ -7,7 +7,6 @@ description: >-
   Freeze a pretrained encoder except its last few blocks and train it with a symmetric InfoNCE loss on
   positive pairs, using the other items in the batch as negatives. Little data suffices because most of
   the representation is kept.
-example: icon matching, CLIP ViT-B/32 with the last 6 blocks trainable
 code: |
   for p in self.clip_model.parameters(): p.requires_grad = False
   for i in range(total_blocks - unfreeze_last_n_layers, total_blocks):
@@ -21,4 +20,3 @@ translations:
       Заморозьте предобученный энкодер, кроме нескольких последних блоков, и обучайте его симметричной
       функцией InfoNCE на положительных парах, используя остальные элементы батча как отрицательные. Хватает
       немного данных, потому что большая часть представления сохраняется.
-    example: сопоставление иконок, CLIP ViT-B/32 с 6 обучаемыми последними блоками

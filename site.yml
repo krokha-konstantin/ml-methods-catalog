@@ -1,7 +1,6 @@
 # Page-level texts. Every string is a {lang: text} map; `en` is required,
 # other languages fall back to `en` when a key is missing.
-# Markdown is allowed in `intro`, `grades.*` and `tasks[*].what`.
-# A task row with `private: true` is shown only in local `build.py --private` builds.
+# Markdown is allowed in `intro` and `grades.*`.
 
 languages:            # order = order in the language switcher; first = default
   en: English
@@ -20,8 +19,8 @@ intro:
     короткий фрагмент кода; фрагменты с пометкой *набросок* — минимальные иллюстрации, а не код из решения.
 
 grades_heading:
-  en: Grades (they rate the idea, not whether it worked in that task)
-  ru: Оценки (оценивается идея, а не то, сработала ли она в конкретной задаче)
+  en: Grades (they rate the idea, not whether it worked)
+  ru: Оценки (оценивается идея, а не то, сработала ли она)
 
 grades:
   book:
@@ -39,43 +38,6 @@ grade_labels:
   good: {en: GOOD, ru: ХОРОШО}
   brilliant: {en: BRILLIANT, ru: БЛЕСТЯЩЕ}
 
-tasks_heading:
-  en: Example tasks (each method names the task it was used in)
-  ru: Примеры задач (у каждого метода указана задача, в которой он применялся)
-
-tasks_columns:
-  task: {en: task, ru: задача}
-  what: {en: what it is, ru: суть}
-
-tasks:
-  - task: {en: tabular regression, ru: табличная регрессия}
-    what: {en: "predict a number per row of a table (rent price, sales)", ru: "предсказать число для каждой строки таблицы (цена аренды, продажи)"}
-  - task: {en: tabular classification, ru: табличная классификация}
-    what: {en: "predict a class per row (3D-print failure, crowdfunding success, star variability)", ru: "предсказать класс для каждой строки (брак 3D-печати, успех краудфандинга, переменность звёзд)"}
-  - task: {en: telemetry anomaly detection, ru: поиск аномалий в телеметрии}
-    what: {en: "score each time step of multi-sensor sessions, ROC-AUC", ru: "оценить каждый момент времени в многосенсорных сессиях, ROC-AUC"}
-  - task: {en: retail sales forecasting, ru: прогноз продаж ритейла}
-    what: {en: "next-month turnover for ~18k stores from a monthly panel, MAPE", ru: "оборот ~18 тыс. магазинов на следующий месяц по месячной панели, MAPE"}
-  - task: {en: wellbore geosteering, ru: геонавигация скважин}
-    what: {en: "predict the depth inside a rock layer along a horizontal well from a gamma-ray log and neighbouring wells, RMSE", ru: "предсказать положение внутри пласта вдоль горизонтальной скважины по гамма-каротажу и соседним скважинам, RMSE"}
-  - task: {en: clinical guideline matching, ru: сопоставление клинических рекомендаций}
-    what: {en: "classify guideline section titles, then decide whether a section applies to a patient protocol, macro-F", ru: "классифицировать заголовки разделов рекомендаций, затем решить, применим ли раздел к протоколу пациента, macro-F"}
-  - task: {en: mass-spectrum retrieval, ru: поиск молекул по масс-спектру}
-    private: true             # competition still running: shown only in `build.py --private`
-    what: {en: "rank candidate molecules for an MS/MS spectrum, MRR@25", ru: "ранжировать молекулы-кандидаты для спектра MS/MS, MRR@25"}
-  - task: {en: telescope scheduling, ru: планирование наблюдений телескопа}
-    what: {en: "plan 100 steps of observations on a hidden simulator that overheats", ru: "спланировать 100 шагов наблюдений на скрытом симуляторе, который перегревается"}
-  - task: {en: super-resolution, ru: повышение разрешения}
-    what: {en: "×4 satellite image upscaling with a custom SSIM/gradient metric", ru: "увеличение спутниковых снимков в 4 раза с собственной метрикой на основе SSIM и градиентов"}
-  - task: {en: visual odometry, ru: визуальная одометрия}
-    what: {en: "relative camera pose from two images, unknown intrinsics", ru: "относительная поза камеры по двум снимкам при неизвестных внутренних параметрах"}
-  - task: {en: label aggregation, ru: агрегация разметки}
-    what: {en: "15 noisy sources, no ground truth at all, recover the true binary label", ru: "15 шумных источников и никакой эталонной разметки; восстановить истинную бинарную метку"}
-  - task: {en: laser forecasting, ru: прогноз траектории лазера}
-    what: {en: "two laser dots bouncing in a box with hidden walls, forecast future positions", ru: "две лазерные точки отражаются в коробке со скрытыми стенками; спрогнозировать их положения"}
-  - task: {en: others, ru: другие}
-    what: {en: "detection, segmentation, counting, retrieval, RL, a two-player game, theory problems", ru: "детекция, сегментация, подсчёт объектов, поиск, RL, игра двух игроков, теоретические задачи"}
-
 brilliant_heading:
   en: Brilliant moves
   ru: Блестящие ходы
@@ -88,6 +50,5 @@ ui:
   code: {en: Code, ru: Код}
   sketch: {en: Sketch, ru: Набросок}
   sketch_note: {en: minimal illustration, ru: минимальная иллюстрация}
-  example: {en: Example, ru: Пример}
   untranslated: {en: not translated yet, ru: ещё не переведено}
   language: {en: Language, ru: Язык}

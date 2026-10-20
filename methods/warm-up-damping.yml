@@ -6,7 +6,6 @@ name: Damp predicted changes near the forecast start
 description: >-
   Right after the last observation, the true change is small and the model's predicted change is mostly
   noise. Multiply it by a factor that rises from 0 to 1 with the distance from the start.
-example: wellbore geosteering, 1 − exp(−distance / τ)
 code: |
   def warmup(md_since, tau): return 1. - np.exp(-np.maximum(md_since, 0.) / tau)
   sub1 = PP.alpha * warmup(df["md_since"].values, PP.tau) * model_delta
@@ -16,4 +15,3 @@ translations:
     description: >-
       Сразу после последнего наблюдения истинное изменение мало, и предсказанное моделью изменение — в
       основном шум. Умножайте его на множитель, растущий от 0 до 1 с удалением от начала.
-    example: геонавигация скважин, 1 − exp(−расстояние / τ)

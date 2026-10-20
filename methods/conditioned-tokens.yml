@@ -5,7 +5,6 @@ name: Context-conditioned tokens
 description: >-
   Prefix each token with its context (the document category, the question it answers), so a linear model
   can give the same word different weights in different contexts. It is a feature cross for bag-of-words.
-example: clinical guideline matching, guideline × token and title × token
 code: |
   tokens = TOKEN_RE.findall(compact_protocol(row.protocol_text))
   documents.append(" ".join(f"g{guideline_id}_{token}" for token in tokens))
@@ -16,4 +15,3 @@ translations:
       Добавляйте к каждому токену префикс его контекста (категория документа, вопрос, на который он отвечает),
       чтобы линейная модель могла давать одному и тому же слову разные веса в разных контекстах. Это пересечение
       признаков для мешка слов.
-    example: сопоставление клинических рекомендаций, рекомендация × токен и заголовок × токен

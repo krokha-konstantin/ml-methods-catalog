@@ -3,10 +3,9 @@ order: 40
 grade: good
 name: Hand-built trackers as features for a learned model
 description: >-
-  Run several trackers with different assumptions (many filter seeds and noise scales, alignment from
-  stiff to loose) and give their estimates, together with their disagreement, to a gradient-boosting model.
-  The model learns when to trust which tracker; the spread between them is a direct uncertainty signal.
-example: wellbore geosteering, 128-seed particle filters at 4 noise scales and 7 alignment settings
+  Run several trackers with different assumptions (seeds, noise scales, stiffness) and give their estimates,
+  together with their disagreement, to a gradient-boosting model. The model learns when to trust which
+  tracker; the spread between them is a direct uncertainty signal.
 code: |
   preds, liks = _pf_lik_allseeds(..., n_particles, n_seeds, ...)   # 128 seeds
   ln = liks - liks.max()
@@ -25,8 +24,6 @@ translations:
   ru:
     name: Ручные трекеры как признаки для обучаемой модели
     description: >-
-      Запустите несколько трекеров с разными допущениями (много сидов и масштабов шума у фильтров, выравнивание
-      от жёсткого к мягкому) и подайте их оценки вместе с их расхождением в градиентный бустинг. Модель
-      учится, когда какому трекеру верить, а разброс между ними — прямой сигнал неопределённости.
-    example: >-
-      геонавигация скважин, фильтры частиц со 128 сидами при 4 масштабах шума и 7 настроек выравнивания
+      Запустите несколько трекеров с разными допущениями (сиды, масштаб шума, жёсткость) и передайте их
+      оценки вместе с их расхождением модели градиентного бустинга. Модель учится, когда какому трекеру
+      доверять; разброс между ними — прямой сигнал неопределённости.

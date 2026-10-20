@@ -6,7 +6,6 @@ description: >-
   EM for latent labels has local optima and a label-flip symmetry. Use the pairwise correlation matrix
   of the sources to find the cluster that agrees with each other (and copycat or noise groups), start
   EM from that cluster's majority vote, pick restarts by log-likelihood and fix the flip explicitly.
-example: label aggregation, a 4-source quality clique
 sketch: true
 code: |
   corr = whispers[cols].corr(min_periods=500)           # pairwise, co-filled cells only
@@ -21,4 +20,3 @@ translations:
       корреляций источников найдите кластер, согласующийся внутри себя (а также группы копирующих и шумных),
       начните EM с голосования большинством этого кластера, выбирайте перезапуски по лог-правдоподобию
       и явно фиксируйте перестановку.
-    example: агрегация разметки, надёжная клика из 4 источников

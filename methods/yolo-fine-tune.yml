@@ -4,9 +4,8 @@ order: 10
 grade: book
 name: Fine-tune a pretrained detector
 description: >-
-  Start from a pretrained YOLO and fine-tune it with mosaic and flip augmentation, switching mosaic off
-  for the last epochs so the model sees realistic images before training ends.
-example: tornado detection, YOLOv11-s at 768 px
+  Start from a pretrained detector (such as YOLO) and fine-tune it with mosaic and flip augmentation,
+  switching mosaic off for the last epochs so the model sees realistic images before training ends.
 code: |
   model = YOLO('yolo11s.pt')
   model.train(data=str(DATA_YAML), epochs=25, imgsz=768, mosaic=1.0, fliplr=0.5, close_mosaic=5)
@@ -14,6 +13,5 @@ translations:
   ru:
     name: Дообучение предобученного детектора
     description: >-
-      Начните с предобученного YOLO и дообучите его с мозаичной аугментацией и отражениями, выключив мозаику
-      на последних эпохах, чтобы перед концом обучения модель видела реалистичные изображения.
-    example: детекция торнадо, YOLOv11-s при 768 px
+      Начните с предобученного детектора (например, YOLO) и дообучите его с аугментациями mosaic и отражением,
+      отключив mosaic на последних эпохах, чтобы перед концом обучения модель видела реалистичные изображения.

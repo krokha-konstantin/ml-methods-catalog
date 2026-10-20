@@ -6,7 +6,6 @@ description: >-
   Let a large model generate synthetic training examples, fine-tune a small model on them with LoRA, and
   at inference restrict decoding to a JSON schema whose fields only allow valid values. The small model
   inherits the behaviour, and its outputs are always valid.
-example: clue generation, GPT-4.1 → Qwen3-0.6B with an enum of allowed hints
 code: |
   ValidHint = Literal[*valid_hints]
   class Hints(BaseModel):
@@ -21,4 +20,3 @@ translations:
       Пусть большая модель сгенерирует синтетические обучающие примеры, дообучите на них маленькую модель
       с LoRA, а при инференсе ограничьте декодирование JSON-схемой, поля которой допускают только корректные
       значения. Маленькая модель наследует поведение, а её ответы всегда корректны.
-    example: генерация подсказок, GPT-4.1 → Qwen3-0.6B с перечислением допустимых подсказок

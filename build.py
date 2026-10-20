@@ -3,7 +3,7 @@
     python build.py            # validate, report translation coverage, write the page
     python build.py --check    # validate only
     python build.py --out _site/index.html   # write somewhere else (used by the GitHub Action)
-    python build.py --private  # local only: also include private/methods/ and private task rows
+    python build.py --private  # local only: also include private/methods/
 
 One YAML file per method in methods/ (files starting with "_" are ignored, e.g. _template.yml).
 private/ is git-ignored: content that must not be public yet (e.g. from a competition that is still
@@ -25,8 +25,8 @@ ROOT = Path(__file__).resolve().parent
 OUT = ROOT / "methods_catalog.html"
 PRIVATE = "--private" in sys.argv
 GRADES = ("book", "good", "brilliant")
-METHOD_KEYS = {"section", "subsection", "order", "grade", "name", "description", "example", "sketch", "code", "translations"}
-TRANSLATABLE = {"name", "description", "example", "code"}
+METHOD_KEYS = {"section", "subsection", "order", "grade", "name", "description", "sketch", "code", "translations"}
+TRANSLATABLE = {"name", "description", "code"}
 
 
 def load_yaml(path):
@@ -119,8 +119,6 @@ def render_method(m, lang, site, ids):
     name = inline_md(f["name"]).rstrip(".")
     parts = [f'<span class="badge {m["grade"]}">{html.escape(label)}</span> <strong>{name}</strong>']
     parts.append(". " + inline_md(f["description"]) if f["description"] else ".")
-    if f["example"]:
-        parts.append(f' <em class="ex">{html.escape(t(ui["example"], lang))}: {inline_md(f["example"])}.</em>')
     if f["fallback"]:
         parts.append(f' <span class="fallback" title="{html.escape(t(ui["untranslated"], lang))}">EN</span>')
     out = [f'<div class="method" data-grade="{m["grade"]}" id="{ids(m["id"])}"><p>{"".join(parts)}</p>']
@@ -144,14 +142,6 @@ def render_lang(lang, site, sections, methods):
         body.append(f'<li><span class="badge {g}">{html.escape(t(site["grade_labels"][g], lang))}</span>: '
                     f"{inline_md(t(site['grades'][g], lang))}</li>")
     body.append("</ul>")
-    body.append(f"<p><strong>{html.escape(t(site['tasks_heading'], lang))}</strong></p><table><thead><tr>"
-                f"<th>{html.escape(t(site['tasks_columns']['task'], lang))}</th>"
-                f"<th>{html.escape(t(site['tasks_columns']['what'], lang))}</th></tr></thead><tbody>")
-    for row in site["tasks"]:
-        if row.get("private") and not PRIVATE:
-            continue
-        body.append(f"<tr><td>{html.escape(t(row['task'], lang))}</td><td>{inline_md(t(row['what'], lang))}</td></tr>")
-    body.append("</tbody></table>")
 
     # drop empty sections/subsections so numbering stays continuous
     used = {(m["section"], m.get("subsection")) for m in methods}

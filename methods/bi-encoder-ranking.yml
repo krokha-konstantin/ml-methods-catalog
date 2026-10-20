@@ -5,7 +5,6 @@ name: Fine-tuned bi-encoder for ranking
 description: >-
   Encode queries and candidates separately with a sentence encoder fine-tuned on positive pairs, and rank
   candidates by cosine similarity. Candidates can be embedded once and reused.
-example: word guessing from hints, sentence-T5 with a cosine loss
 code: |
   train_examples.append(InputExample(texts=[hints_to_sentence(val['hints']), val['label']], label=1))
   model.fit(train_objectives=[(DataLoader(train_examples, batch_size=2), losses.CosineSimilarityLoss(model))], epochs=80)
@@ -16,4 +15,3 @@ translations:
       Кодируйте запросы и кандидатов по отдельности энкодером предложений, дообученным на положительных
       парах, и ранжируйте кандидатов по косинусному сходству. Кандидатов можно закодировать один раз и
       переиспользовать.
-    example: угадывание слова по подсказкам, sentence-T5 с косинусной функцией потерь

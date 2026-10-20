@@ -1,0 +1,27 @@
+section: tabular
+subsection: features
+order: 70
+grade: book
+name: Domain-knowledge features
+description: >-
+  Compute the quantities practitioners of the domain already use: physical laws, standard indices, derived
+  rates. A known formula costs one line to add, while a model would need far more data to rediscover it.
+code: |
+  X['flow_rate'] = X['print_speed_mm_s'] * X['layer_height_mm'] * X['nozzle_diameter_mm']
+  X['layer_nozzle_ratio'] = X['layer_height_mm'] / X['nozzle_diameter_mm']
+  df['B-V'] = df['Bmag'] - df['Vmag']
+  df['Vmag_SNR'] = df['Vmag'] / df['e_Vmag']
+
+  decl = 23.44 * math.sin(math.radians(360 / 365 * (N - 81)))
+  H = math.radians(15 * (local_time - 12))
+  sin_h = math.sin(phi) * math.sin(delta) + math.cos(phi) * math.cos(delta) * math.cos(H)
+  # in the U-Net:
+  m = self.mid(self.pool(e4))
+  m = m * a.view(-1, 1, 1, 1)
+translations:
+  ru:
+    name: Признаки из знаний о предметной области
+    description: >-
+      Вычислите величины, которыми уже пользуются специалисты предметной области: физические законы, стандартные
+      индексы, производные показатели. Известная формула добавляется одной строкой, а модели понадобилось
+      бы гораздо больше данных, чтобы открыть её заново.

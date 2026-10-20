@@ -7,8 +7,6 @@ description: >-
   If you know what a true object looks like (one object per image, a minimum width, typical elongation),
   enforce it after prediction: keep the largest connected components, drop small or narrow ones, dilate
   along the expected direction, clear the borders.
-example: >-
-  radar segmentation, keep components at least half as wide as the widest, dilate horizontally
 code: |
   labeled_array, num_features = label(label1_mask[i])
   widths = [np.ptp(np.where(labeled_array == k)[1]) + 1 for k in range(1, num_features + 1)]
@@ -21,5 +19,3 @@ translations:
       Если известно, как выглядит настоящий объект (один объект на изображение, минимальная ширина, типичная
       вытянутость), навяжите это после предсказания: оставьте крупнейшие связные компоненты, уберите мелкие
       или узкие, расширьте по ожидаемому направлению, очистите края.
-    example: >-
-      сегментация радарных данных, компоненты не уже половины самой широкой, расширение по горизонтали

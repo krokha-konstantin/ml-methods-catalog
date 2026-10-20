@@ -4,9 +4,8 @@ order: 40
 grade: book
 name: Brute-force the endgame, exactly
 description: >-
-  When few moves remain, enumerate them all instead of using heuristics, and compare in integers (3A vs
-  S rather than A vs S/3) so ties and boundaries are decided exactly.
-example: two-player number game, all 6 assignments in the last round
+  When few moves remain, enumerate them all instead of using heuristics, and compare in integers (cross-multiply
+  instead of dividing) so ties and boundaries are decided exactly.
 code: |
   def _key(A_final, B_final):
       dist_a = abs(3 * A_final - S); dist_b = abs(3 * B_final - S)
@@ -14,8 +13,7 @@ code: |
   # last round: try all 6 (take, give) assignments, pick the min key
 translations:
   ru:
-    name: Точный перебор в эндшпиле
+    name: Полный перебор в эндшпиле, без погрешностей
     description: >-
-      Когда ходов осталось мало, перебирайте их все вместо эвристик и сравнивайте в целых числах (3A и
-      S, а не A и S/3), чтобы ничьи и границы решались точно.
-    example: игра двух игроков с числами, все 6 распределений в последнем раунде
+      Когда ходов осталось мало, переберите их все вместо эвристик и сравнивайте в целых числах (умножайте
+      крест-накрест вместо деления), чтобы ничьи и граничные случаи решались точно.

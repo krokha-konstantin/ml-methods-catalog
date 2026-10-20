@@ -5,7 +5,6 @@ name: Pool observations across agents
 description: >-
   When several agents move through the same environment, merge what each of them reveals. Parts seen by
   only one agent still constrain the others' predictions.
-example: laser forecasting, the wall maps of both lasers combined
 code: |
   combined = pd.concat([interior1, interior2])
   for _, row in combined.iterrows():
@@ -16,4 +15,3 @@ translations:
     description: >-
       Когда несколько агентов движутся в одной среде, объединяйте то, что открывает каждый. Части, увиденные
       только одним агентом, всё равно ограничивают предсказания для остальных.
-    example: прогноз траектории лазера, карты стенок обоих лазеров объединены

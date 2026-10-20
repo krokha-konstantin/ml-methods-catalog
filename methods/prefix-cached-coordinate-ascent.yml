@@ -6,7 +6,6 @@ name: Coordinate ascent with cached prefixes
 description: >-
   Improve a plan one step at a time, trying every action at that step while keeping the rest. Cache the
   simulated state before each step, so changing step i only re-simulates from i onward.
-example: telescope scheduling, 100-step plans over thousands of scenarios
 code: |
   for i in range(100):                              # one step at a time
       for k in [REST] + candidates[i]:
@@ -21,4 +20,3 @@ translations:
       Улучшайте план по одному шагу, пробуя на этом шаге каждое действие при неизменном остальном. Кешируйте
       смоделированное состояние перед каждым шагом, чтобы изменение шага i требовало пересчёта только
       начиная с i.
-    example: планирование наблюдений телескопа, планы на 100 шагов по тысячам сценариев

@@ -5,7 +5,6 @@ name: Sequence alignment by dynamic programming
 description: >-
   Align a measured signal to a reference signal by minimising a cost of mismatch plus a penalty for moving
   along the reference (dynamic time warping / Viterbi; beam search for a cheaper approximation).
-example: wellbore geosteering, a well's gamma-ray log aligned to a reference well's log
 code: |
   for step in range(n):
       for bi in range(bn):
@@ -19,4 +18,3 @@ translations:
     description: >-
       Выравнивайте измеренный сигнал по эталонному, минимизируя стоимость несовпадения плюс штраф за перемещение
       по эталону (динамическая трансформация времени / Витерби; лучевой поиск как более дешёвое приближение).
-    example: геонавигация скважин, гамма-каротаж скважины выравнивается по каротажу опорной скважины

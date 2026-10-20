@@ -6,7 +6,6 @@ name: Select checkpoints by the real metric
 description: >-
   Choose the checkpoint by the competition metric on a holdout, not by training loss or a proxy such as
   PSNR, which can rank checkpoints differently.
-example: super-resolution, normalised score relative to bicubic
 code: |
   scores = [final_score(raw_score(upscale(model, lo), hi)[0], b) for (lo, hi), b in zip(holdout, holdout_base)]
   if np.mean(scores) > best: best, best_state = np.mean(scores), copy.deepcopy(model.state_dict())
@@ -16,4 +15,3 @@ translations:
     description: >-
       Выбирайте чекпойнт по метрике соревнования на отложенной выборке, а не по функции потерь или заменителю
       вроде PSNR, который может упорядочить чекпойнты иначе.
-    example: повышение разрешения, нормированная оценка относительно бикубического увеличения

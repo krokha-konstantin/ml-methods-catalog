@@ -6,7 +6,6 @@ name: Lags and rolling statistics
 description: >-
   Past values (lags), rolling means, std, min, max and exponentially weighted means, plus ratios between
   them, all shifted so they only use data available at prediction time.
-example: retail sales forecasting, lags 1–14 and rolling windows 3/6/12
 code: |
   for lag in range(1, 15):
       df[f'rto_lag_{lag}'] = g['rto'].shift(lag)
@@ -21,4 +20,3 @@ translations:
       Прошлые значения (лаги), скользящие средние, стандартные отклонения, минимумы, максимумы и экспоненциально
       взвешенные средние, а также отношения между ними; всё со сдвигом, чтобы использовались только данные,
       доступные на момент предсказания.
-    example: прогноз продаж ритейла, лаги 1–14 и скользящие окна 3/6/12
