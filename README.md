@@ -2,7 +2,7 @@
 
 A static, multilingual page listing ML competition methods, built from one YAML file per method.
 
-**Live page:** https://&lt;github-username&gt;.github.io/ml-methods-catalog/ — rebuilt automatically on every push to `main`
+**Live page:** https://krokha-konstantin.github.io/ml-methods-catalog/ — rebuilt automatically on every push to `main`
 (see `.github/workflows/pages.yml`). Editing a YAML file on GitHub and committing is enough; if the build finds an
 error, the Action fails and the live page stays as it was.
 
