@@ -1,0 +1,19 @@
+section: nlp
+order: 200
+grade: book
+name: Truncate a text pair from its longer side
+when: Two texts share one input window and together exceed it.
+do: Remove tokens from whichever text is currently longer until the pair fits (`truncation="longest_first"`).
+why: Neither text can push the other out of the window, as cutting only the tail of the concatenation would let it.
+see_also:
+- cross-encoder-pair-classification
+- head-of-text-input
+code: |
+  # trim the longer text first until the pair fits MAX_LEN
+  enc = tok(left_texts, right_texts, truncation="longest_first", max_length=MAX_LEN)
+translations:
+  ru:
+    name: Обрезка пары текстов с более длинной стороны
+    when: Два текста делят одно окно ввода и вместе в него не помещаются.
+    do: Удаляйте токены из того текста, который сейчас длиннее, пока пара не поместится (`truncation="longest_first"`).
+    why: Ни один текст не вытеснит другой из окна, как это случилось бы при обрезке только хвоста склейки.

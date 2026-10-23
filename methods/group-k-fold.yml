@@ -2,6 +2,7 @@ section: universal
 subsection: validation
 order: 20
 grade: book
+general: true
 name: Group K-fold
 when: >-
   Rows come in groups that share information (all readings of one session, consecutive video frames).

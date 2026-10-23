@@ -1,0 +1,21 @@
+section: universal
+subsection: hyperparameters
+order: 60
+grade: book
+general: true
+name: Size the model and epochs to the time budget
+when: Experiments must finish within a fixed compute or wall-clock budget.
+do: Start with the smallest model and few epochs, measure the run time, then spend what is left on a larger model or more epochs only if the gain justifies the cost.
+why: A fast baseline allows many experiments; a model several times slower often gains only a little.
+see_also:
+- hyperparameter-search
+- head-of-text-input
+code: |
+  # record cost next to score for every configuration
+  results.append({"model": MODEL, "epochs": EPOCHS, "minutes": elapsed / 60, "score": score})
+translations:
+  ru:
+    name: Подбирать размер модели и число эпох под бюджет времени
+    when: Эксперименты должны уложиться в фиксированный бюджет вычислений или времени.
+    do: Начните с самой маленькой модели и малого числа эпох, измерьте время, а остаток тратьте на модель побольше или больше эпох, только если выигрыш оправдывает цену.
+    why: Быстрый базовый вариант позволяет сделать много экспериментов; модель в разы медленнее часто даёт лишь небольшой прирост.

@@ -1,0 +1,20 @@
+section: universal
+subsection: validation
+order: 120
+grade: good
+name: Drop training classes that never occur in the test set
+when: The training labels contain classes that the test labels are known not to contain.
+do: Remove those rows (or those classes) before training and from the validation metric.
+why: The model would otherwise learn to predict labels that can only be wrong on the test set.
+see_also:
+- class-specific-keep-rates
+- label-shift-correction
+code: |
+  # keep only the classes that appear in the test labels
+  train = train[~train["label"].isin(["doubles", "unavailable"])]
+translations:
+  ru:
+    name: Убрать классы, которых нет в тесте
+    when: В обучающих метках есть классы, которых заведомо нет в тестовых.
+    do: Удалите такие строки (или классы) до обучения и из валидационной метрики.
+    why: Иначе модель научится предсказывать метки, которые на тесте могут быть только ошибкой.

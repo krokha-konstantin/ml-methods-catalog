@@ -2,6 +2,7 @@ section: tabular
 subsection: features
 order: 70
 grade: book
+general: true
 name: Domain-knowledge features
 do: >-
   Compute the quantities practitioners of the domain already use: physical laws, standard indices, derived

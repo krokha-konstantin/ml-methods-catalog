@@ -1,0 +1,20 @@
+section: universal
+subsection: hyperparameters
+order: 50
+grade: book
+general: true
+name: bfloat16 mixed precision
+when: Training on a GPU that supports bfloat16 (Ampere or newer).
+do: Run the forward pass under bfloat16 autocast while the weights and optimiser state stay in fp32.
+why: Matrix multiplications are faster and use less memory; bfloat16 has the exponent range of fp32, so unlike fp16 no loss scaling is needed.
+code: |
+  # bf16 autocast, fp32 weights, no GradScaler
+  with torch.autocast("cuda", dtype=torch.bfloat16):
+      loss = model(**batch).loss
+  loss.backward()
+translations:
+  ru:
+    name: Смешанная точность bfloat16
+    when: Обучение идёт на GPU с поддержкой bfloat16 (Ampere и новее).
+    do: Выполняйте прямой проход под autocast в bfloat16, а веса и состояние оптимизатора держите в fp32.
+    why: Умножения матриц быстрее и занимают меньше памяти; у bfloat16 тот же диапазон порядка, что у fp32, поэтому, в отличие от fp16, масштабирование потерь не нужно.

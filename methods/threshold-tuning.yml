@@ -2,6 +2,7 @@ section: universal
 subsection: thresholds
 order: 10
 grade: book
+general: true
 name: Tune the decision threshold on OOF predictions
 when: The metric depends on a hard decision (F1 and similar), especially with class imbalance.
 do: >-

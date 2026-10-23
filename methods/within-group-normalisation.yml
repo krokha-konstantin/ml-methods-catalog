@@ -2,6 +2,7 @@ section: tabular
 subsection: features
 order: 60
 grade: book
+general: true
 name: Within-group normalisation
 when: Rows belong to groups with different baselines (materials, sessions, devices).
 do: >-

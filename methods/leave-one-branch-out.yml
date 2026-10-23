@@ -2,6 +2,7 @@ section: universal
 subsection: ensembling
 order: 60
 grade: book
+general: true
 name: Leave-one-model-out ablation
 do: >-
   Remove each model from the ensemble in turn, renormalise the remaining weights and re-score.

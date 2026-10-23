@@ -2,6 +2,7 @@ section: time-series
 subsection: features
 order: 40
 grade: book
+general: true
 name: External covariates
 do: >-
   Add external series that drive the target (macroeconomic indicators, weather) at the time resolution

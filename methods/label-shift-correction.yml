@@ -2,6 +2,7 @@ section: universal
 subsection: thresholds
 order: 40
 grade: good
+general: true
 name: Adjust the positive rate for label shift
 when: The test set's mix of groups differs from the training set's.
 do: >-

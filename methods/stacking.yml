@@ -2,6 +2,7 @@ section: universal
 subsection: ensembling
 order: 20
 grade: book
+general: true
 name: Stacking with a constrained meta-model
 do: Train a simple meta-model on the out-of-fold predictions of the base models.
 why: >-

@@ -1,6 +1,7 @@
 section: nlp
 order: 100
 grade: book
+general: true
 name: Pretrained domain encoders as an extra branch
 when: A pretrained encoder exists for the text's domain.
 do: >-

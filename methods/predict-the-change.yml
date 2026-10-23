@@ -2,6 +2,7 @@ section: time-series
 subsection: target
 order: 10
 grade: book
+general: true
 name: Predict the change, not the level
 when: Many series are forecast with one model and their levels differ.
 do: >-

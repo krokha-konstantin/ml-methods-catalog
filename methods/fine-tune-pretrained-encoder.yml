@@ -1,0 +1,26 @@
+section: nlp
+order: 170
+grade: book
+general: true
+name: Fine-tune a pretrained encoder
+when: A text task has a few thousand or more labelled examples.
+do: >-
+  Start from a pretrained transformer encoder that matches the language of the data (a multilingual one for
+  non-English text), attach a fresh task head and update all weights.
+why: Pretraining supplies the language knowledge, so a small labelled set is enough, and the result usually beats classical models on hand-made features.
+see_also:
+- cross-encoder-pair-classification
+- domain-encoders
+- warmup-linear-decay-schedule
+code: |
+  # full fine-tuning of a multilingual encoder with a new head
+  MODEL = "intfloat/multilingual-e5-small"   # swap for "-base" if the time budget allows
+  model = AutoModelForSequenceClassification.from_pretrained(MODEL, num_labels=num_classes)
+translations:
+  ru:
+    name: Дообучение предобученного энкодера
+    when: Для текстовой задачи есть несколько тысяч размеченных примеров и больше.
+    do: >-
+      Возьмите предобученный трансформер-энкодер, подходящий по языку данных (для неанглийского текста —
+      мультиязычный), добавьте новую голову под задачу и обновляйте все веса.
+    why: Предобучение даёт знание языка, поэтому хватает небольшой разметки, и результат обычно лучше классических моделей на ручных признаках.

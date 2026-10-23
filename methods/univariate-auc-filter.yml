@@ -2,6 +2,7 @@ section: tabular
 subsection: models
 order: 30
 grade: book
+general: true
 name: Univariate AUC filter
 when: A large generated feature set needs a cheap first cut.
 do: Drop features whose single-feature ROC-AUC, taken as max(AUC, 1 − AUC), is close to 0.5.

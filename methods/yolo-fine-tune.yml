@@ -2,6 +2,7 @@ section: vision
 subsection: detection-segmentation
 order: 10
 grade: book
+general: true
 name: Fine-tune a pretrained detector
 do: >-
   Start from a pretrained detector (such as YOLO) and fine-tune it with mosaic and flip augmentation,

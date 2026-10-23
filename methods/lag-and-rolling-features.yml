@@ -2,6 +2,7 @@ section: time-series
 subsection: features
 order: 10
 grade: book
+general: true
 name: Lags and rolling statistics
 do: >-
   Add past values (lags), rolling means, std, min, max and exponentially weighted means, plus ratios between

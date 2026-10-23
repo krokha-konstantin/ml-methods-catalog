@@ -2,6 +2,7 @@ section: vision
 subsection: detection-segmentation
 order: 60
 grade: book
+general: true
 name: Focal loss for rare positives
 when: Positives are a tiny fraction of the output map.
 do: >-

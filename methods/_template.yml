@@ -4,6 +4,7 @@
 section: universal            # an `id` from sections.yml
 subsection: validation        # required if the section has subsections, omitted otherwise
 order: 110                    # position inside the subsection (lower = earlier); steps of 10 leave room
+general: false               # true = a trick that carries over to typical tasks (fine-tuning a transformer), false = specific to a data quirk
 grade: good                   # book | good | brilliant — rate the idea, not whether it worked
 
 # English is required. Follow WRITING.md: the name is the general technique in standard ML terms;

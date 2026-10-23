@@ -1,6 +1,7 @@
 section: nlp
 order: 130
 grade: good
+general: true
 name: Distil a large LLM into a small one, with constrained decoding
 when: >-
   A large LLM solves the task but is too slow or too expensive to run, and outputs must follow a schema.

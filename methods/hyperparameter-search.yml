@@ -2,6 +2,7 @@ section: universal
 subsection: hyperparameters
 order: 10
 grade: book
+general: true
 name: Hyperparameter search against the CV score
 do: >-
   Search hyperparameters with Bayesian optimisation (e.g. TPE) or a grid, scoring every candidate with

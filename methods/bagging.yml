@@ -2,6 +2,7 @@ section: universal
 subsection: ensembling
 order: 10
 grade: book
+general: true
 name: Bagging
 do: >-
   Average the predictions of models that differ only by random seed, CV fold, bootstrap sample or hyperparameters.

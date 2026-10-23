@@ -1,6 +1,7 @@
 section: tracking
 order: 10
 grade: book
+general: true
 name: Particle filter
 when: >-
   A hidden state (position and rate) has to be tracked through noisy observations, and its dynamics or

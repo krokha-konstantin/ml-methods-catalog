@@ -2,6 +2,7 @@ section: universal
 subsection: validation
 order: 10
 grade: book
+general: true
 name: K-fold cross-validation with out-of-fold (OOF) predictions
 do: >-
   Split the training data into K folds; train K models, each predicting the one fold it did not see, and

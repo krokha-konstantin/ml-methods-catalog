@@ -1,0 +1,19 @@
+section: nlp
+order: 180
+grade: good
+name: Swap-order augmentation for symmetric pairs
+when: The label of a pair does not depend on the order of its two items (similarity, duplicates, relevance).
+do: Swap the two items in a random half of the training samples.
+why: The model cannot learn an order-dependent shortcut, and it sees twice as many distinct inputs.
+see_also:
+- cross-encoder-pair-classification
+code: |
+  # random left/right swap of a symmetric pair
+  if random.random() < 0.5:
+      left, right = right, left
+translations:
+  ru:
+    name: Аугментация перестановкой для симметричных пар
+    when: Метка пары не зависит от порядка двух элементов (сходство, дубликаты, релевантность).
+    do: В случайной половине обучающих примеров поменяйте элементы пары местами.
+    why: Модель не выучит зависящий от порядка шорткат и увидит вдвое больше различных входов.

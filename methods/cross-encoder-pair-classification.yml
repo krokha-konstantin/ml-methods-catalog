@@ -1,0 +1,30 @@
+section: nlp
+order: 160
+grade: book
+general: true
+name: Cross-encoder for pair classification
+when: The relation between two texts (similarity, entailment, relevance) has to be predicted, and the number of pairs is small enough to score each one with a full transformer pass.
+do: >-
+  Feed both texts into one transformer as a single sequence (`[CLS] a [SEP] b [SEP]`) and put a classification
+  head on the pooled output.
+why: Attention runs between the two texts, so the model compares them token by token; a bi-encoder, which embeds each text separately, cannot see that interaction.
+see_also:
+- bi-encoder-ranking
+- fine-tune-pretrained-encoder
+- pair-overlap-tokens
+code: |
+  # cross-encoder: both texts in one sequence, 4-way head
+  tok = AutoTokenizer.from_pretrained(MODEL)
+  model = AutoModelForSequenceClassification.from_pretrained(MODEL, num_labels=4)
+  batch = tok(left_texts, right_texts, truncation="longest_first", max_length=224,
+              padding=True, return_tensors="pt")
+  logits = model(**batch).logits
+  pred = logits.argmax(-1)
+translations:
+  ru:
+    name: Кросс-энкодер для классификации пар
+    when: Нужно предсказать связь между двумя текстами (сходство, следование, релевантность), а пар достаточно мало, чтобы прогнать каждую через трансформер целиком.
+    do: >-
+      Подайте оба текста в один трансформер как одну последовательность (`[CLS] a [SEP] b [SEP]`) и поставьте
+      сверху классификационную голову.
+    why: Внимание работает между двумя текстами, поэтому модель сравнивает их по токенам; би-энкодер, кодирующий тексты по отдельности, это взаимодействие не видит.

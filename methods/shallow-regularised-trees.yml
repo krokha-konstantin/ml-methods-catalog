@@ -2,6 +2,7 @@ section: tabular
 subsection: models
 order: 20
 grade: book
+general: true
 name: Shallow, slow, heavily regularised trees
 when: The test comes from new groups (sessions, users).
 do: Use shallow trees, a small learning rate, large minimum leaf sizes and subsampling.

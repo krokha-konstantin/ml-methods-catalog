@@ -2,6 +2,7 @@ section: tabular
 subsection: models
 order: 10
 grade: book
+general: true
 name: Gradient boosting with early stopping
 do: >-
   Train gradient-boosted trees with many rounds and stop when the validation metric stops improving.

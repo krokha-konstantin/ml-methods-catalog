@@ -2,6 +2,7 @@ section: universal
 subsection: validation
 order: 70
 grade: good
+general: true
 name: For ranking tasks, split by query
 when: The task ranks candidates for each query.
 do: Put all candidates of one query in the same fold.

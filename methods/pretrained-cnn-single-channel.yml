@@ -2,6 +2,7 @@ section: vision
 subsection: matching
 order: 40
 grade: book
+general: true
 name: ImageNet weights for single-channel inputs
 when: An RGB-pretrained CNN has to take a one-channel input (a spectrogram, a radar map).
 do: >-

@@ -2,6 +2,7 @@ section: time-series
 subsection: models
 order: 20
 grade: book
+general: true
 name: Isolation Forest as an unsupervised component
 when: Labels are few or possibly incomplete.
 do: >-

@@ -480,3 +480,21 @@
   def:
     en: A state of a Markov chain that, once reached, is never left.
     ru: Состояние цепи Маркова, из которого, попав в него, уже не выходят.
+
+- term: {en: Cross-encoder, ru: Кросс-энкодер}
+  match: {en: ['cross-encoder\w*'], ru: ['кросс-энкодер\w*', 'cross-encoder\w*']}
+  def:
+    en: A model that reads two texts as one sequence, so that every token of one text can attend to every token of the other.
+    ru: Модель, читающая два текста как одну последовательность, так что каждый токен одного текста может смотреть на каждый токен другого.
+
+- term: {en: Bi-encoder, ru: Би-энкодер}
+  match: {en: ['bi-encoder\w*'], ru: ['би-энкодер\w*', 'bi-encoder\w*']}
+  def:
+    en: A model that embeds each text separately into a vector, so texts are compared only through those vectors.
+    ru: Модель, кодирующая каждый текст отдельно в вектор, так что тексты сравниваются только по этим векторам.
+
+- term: {en: bfloat16 (bf16), ru: bfloat16 (bf16)}
+  match: {en: ['bfloat16', 'bf16']}
+  def:
+    en: A 16-bit floating-point format with the same exponent range as 32-bit floats but fewer mantissa bits, so it is fast and rarely overflows.
+    ru: 16-битный формат с плавающей точкой с тем же диапазоном порядка, что у 32-битного, но с меньшей мантиссой, поэтому он быстрый и почти не переполняется.

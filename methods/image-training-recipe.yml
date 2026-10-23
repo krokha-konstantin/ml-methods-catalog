@@ -2,6 +2,7 @@ section: vision
 subsection: super-resolution
 order: 30
 grade: book
+general: true
 name: Standard image-to-image training recipe
 do: >-
   Train with random crops, the 8 rotations/flips (D4) as augmentation, cosine learning-rate decay, mixed

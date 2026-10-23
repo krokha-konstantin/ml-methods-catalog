@@ -2,6 +2,7 @@ section: vision
 subsection: super-resolution
 order: 20
 grade: good
+general: true
 name: Use a differentiable copy of the metric as the loss
 when: The metric is a weighted sum of differentiable terms.
 do: >-

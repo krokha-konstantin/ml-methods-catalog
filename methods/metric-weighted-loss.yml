@@ -2,6 +2,7 @@ section: universal
 subsection: thresholds
 order: 50
 grade: book
+general: true
 name: Weight the loss like the metric
 when: The metric rewards some classes or pixels far more than others.
 do: Give them matching weights in the loss (cost-sensitive learning).

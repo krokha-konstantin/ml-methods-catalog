@@ -2,6 +2,7 @@ section: vision
 subsection: super-resolution
 order: 40
 grade: book
+general: true
 name: Select checkpoints by the real metric
 do: >-
   Choose the checkpoint by the competition metric on a holdout, not by training loss or a proxy such as

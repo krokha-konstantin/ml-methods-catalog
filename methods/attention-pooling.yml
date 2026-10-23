@@ -1,6 +1,7 @@
 section: signals
 order: 40
 grade: book
+general: true
 name: Attention pooling over a recurrent network
 when: A recurrent network has to summarise a whole sequence.
 do: >-

@@ -1,6 +1,7 @@
 section: nlp
 order: 10
 grade: book
+general: true
 name: Character n-gram TF-IDF + linear SVM
 when: Texts are short, or the language has rich morphology and spelling variants.
 do: Vectorise character n-grams within word boundaries with TF-IDF and train a linear SVM.

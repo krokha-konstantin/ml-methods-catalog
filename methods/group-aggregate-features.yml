@@ -2,6 +2,7 @@ section: time-series
 subsection: features
 order: 20
 grade: book
+general: true
 name: Group aggregates and shares
 when: Series belong to higher-level groups (region, city).
 do: Add lagged averages over the group and each series' share of its group's total.

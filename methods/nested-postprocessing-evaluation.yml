@@ -2,6 +2,7 @@ section: universal
 subsection: validation
 order: 50
 grade: good
+general: true
 name: Nested evaluation of tuned post-processing
 when: A threshold or cut-off is tuned on OOF predictions.
 do: >-

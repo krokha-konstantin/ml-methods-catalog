@@ -2,6 +2,7 @@ section: universal
 subsection: ensembling
 order: 50
 grade: good
+general: true
 name: Random search of blend weights on the simplex
 do: >-
   Sample candidate blend weights from a Dirichlet distribution (non-negative, summing to 1) and score

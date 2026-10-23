@@ -2,6 +2,7 @@ section: time-series
 subsection: models
 order: 40
 grade: book
+general: true
 name: Huber loss
 when: A few outlier periods (closures, one-off events) are in the training data.
 do: 'Use the Huber loss: quadratic for small errors, linear for large ones.'

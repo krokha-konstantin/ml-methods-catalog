@@ -2,6 +2,7 @@ section: universal
 subsection: hyperparameters
 order: 20
 grade: book
+general: true
 name: Coarse-to-fine grid search
 when: >-
   A low-dimensional, non-smooth objective (blend weights, thresholds) needs a near-exact optimum.

@@ -2,6 +2,7 @@ section: planning
 subsection: rl
 order: 10
 grade: book
+general: true
 name: PPO with normalisation
 do: >-
   Train with Proximal Policy Optimization, running normalisation of observations and rewards, and a linearly

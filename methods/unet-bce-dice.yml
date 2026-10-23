@@ -2,6 +2,7 @@ section: vision
 subsection: detection-segmentation
 order: 20
 grade: book
+general: true
 name: U-Net with BCE + Dice loss
 do: >-
   Train the segmentation network (e.g. a U-Net) on the sum of binary cross-entropy and Dice loss.

@@ -2,6 +2,7 @@ section: tabular
 subsection: features
 order: 10
 grade: book
+general: true
 name: Log-transform a skewed target
 when: The regression target is skewed, with a few very large values.
 do: Train on log(1 + y) and invert the predictions.

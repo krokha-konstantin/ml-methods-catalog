@@ -2,6 +2,7 @@ section: universal
 subsection: validation
 order: 60
 grade: good
+general: true
 name: Check the public test for leakage before trusting local scores
 when: Local scores on the public test look near-perfect.
 do: >-

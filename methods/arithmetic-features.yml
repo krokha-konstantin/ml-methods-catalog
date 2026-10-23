@@ -2,6 +2,7 @@ section: tabular
 subsection: features
 order: 30
 grade: book
+general: true
 name: Ratios, differences and cyclic encodings
 do: >-
   Add ratios, differences and products of related columns, and encode cyclic values (month, hour) as sine

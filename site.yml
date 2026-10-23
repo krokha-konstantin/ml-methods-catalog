@@ -52,6 +52,11 @@ ui:
   code: {en: Code, ru: Код}
   sketch: {en: Sketch, ru: Набросок}
   sketch_note: {en: minimal illustration, ru: минимальная иллюстрация}
+  general: {en: GENERAL, ru: ОБЩИЙ}
+  general_note: {en: "Generalises to a typical task, e.g. fine-tuning a transformer", ru: "Переносится на типовую задачу, например дообучение трансформера"}
+  kind_all: {en: All tricks, ru: Все приёмы}
+  kind_general: {en: General only, ru: Только общие}
+  kind_specific: {en: Specific only, ru: Только специфичные}
   untranslated: {en: not translated yet, ru: ещё не переведено}
   language: {en: Language, ru: Язык}
   when: {en: When, ru: Когда}

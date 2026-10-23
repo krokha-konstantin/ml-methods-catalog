@@ -1,6 +1,7 @@
 section: weak-supervision
 order: 40
 grade: book
+general: true
 name: Co-teaching for noisy labels
 when: Training labels are noisy.
 do: >-

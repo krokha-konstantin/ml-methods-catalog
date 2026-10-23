@@ -2,6 +2,7 @@ section: tabular
 subsection: features
 order: 50
 grade: book
+general: true
 name: Categorical crosses
 do: Concatenate two categorical columns into a new category.
 why: A model can then learn effects that exist only for specific combinations.

@@ -2,6 +2,7 @@ section: tabular
 subsection: features
 order: 40
 grade: book
+general: true
 name: Missingness indicators
 when: Columns have missing values.
 do: Add a flag per such column, plus the number of missing values per row.

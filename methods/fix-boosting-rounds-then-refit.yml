@@ -2,6 +2,7 @@ section: universal
 subsection: validation
 order: 100
 grade: book
+general: true
 name: Fix the number of boosting rounds, then refit on all data
 when: >-
   You want the final boosting model trained on all data, but early stopping needs held-out data.
@@ -10,7 +11,6 @@ do: >-
 why: The final model uses every row without guessing when to stop.
 see_also:
 - gbdt-early-stopping
-- validation-into-training
 code: |
   # find the best iteration on held-out sessions, then refit on everything with that count
   es_val_sessions = rng.choice(sessions, size=6, replace=False)

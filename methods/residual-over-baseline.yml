@@ -2,6 +2,7 @@ section: vision
 subsection: super-resolution
 order: 10
 grade: book
+general: true
 name: Learn the residual over a simple baseline
 when: A cheap baseline already gets close (bicubic upscaling).
 do: Let the network predict only the correction to the baseline and add the two.

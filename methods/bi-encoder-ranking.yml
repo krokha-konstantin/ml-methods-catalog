@@ -1,6 +1,7 @@
 section: nlp
 order: 120
 grade: book
+general: true
 name: Fine-tuned bi-encoder for ranking
 when: Many candidates have to be ranked for each query.
 do: >-

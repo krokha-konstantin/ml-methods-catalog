@@ -2,6 +2,7 @@ section: universal
 subsection: ensembling
 order: 40
 grade: book
+general: true
 name: Rank averaging
 when: >-
   Models output scores on different scales (probabilities, anomaly scores, hand-made formulas).

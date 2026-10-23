@@ -2,6 +2,7 @@ section: universal
 subsection: validation
 order: 80
 grade: book
+general: true
 name: Time-series backtesting at several cut-offs
 when: The data is ordered in time and the test lies in the future.
 do: >-

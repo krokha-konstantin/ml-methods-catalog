@@ -64,6 +64,13 @@ A task-specific framing often makes a standard idea look novel. Once the specifi
 remaining sentence describes something a course teaches, it is `book` (e.g. physics-derived features → domain-knowledge
 features → `book`; exposure normalisation → `book`).
 
+### The `general` flag
+
+Set `general: true` when the trick carries over to a typical task: fine-tuning a transformer (warm-up and decay,
+gradient clipping, dynamic padding) is general; removing training classes that never occur in the test set is
+specific. It is independent of the grade. Leave it out for specific tricks; the page shows a GENERAL tag next to
+the name.
+
 ## 5. Duplicates
 
 Before adding an entry, search the catalog for the same idea under another name (`python build.py --check` does not

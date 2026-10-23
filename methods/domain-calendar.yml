@@ -2,6 +2,7 @@ section: time-series
 subsection: features
 order: 30
 grade: book
+general: true
 name: Domain-specific calendar features
 do: >-
   Count, for each period, the days that matter for this domain and region (local holidays, including moveable

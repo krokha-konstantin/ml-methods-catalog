@@ -82,6 +82,8 @@ ul.legend { padding-left: 22px; }
 dl.glossary { max-width: 860px; }
 dl.glossary dt { font-weight: 600; margin-top: 10px; }
 dl.glossary dd { margin: 2px 0 0 18px; }
+.general { font-size: 10.5px; font-weight: 700; color: var(--muted); border: 1px solid var(--muted);
+  border-radius: 999px; padding: 0 6px; margin-left: 6px; vertical-align: 1px; letter-spacing: .03em; }
 .fallback { font-size: 10.5px; font-weight: 700; color: var(--muted); border: 1px dashed var(--muted);
   border-radius: 4px; padding: 0 4px; margin-left: 4px; cursor: help; }
 code { background: var(--code); padding: 1px 5px; border-radius: 4px; font-size: 13px;
@@ -124,6 +126,7 @@ mark { background: #ffe58a; color: #000; border-radius: 2px; }
   <div class="controls">
     <select id="lang" aria-label="Language">{{LANG_OPTIONS}}</select>
     <input type="search" id="q" data-ui-placeholder="search">
+    <select id="kind" aria-label="Kind"><option value="all" data-ui="kind_all"></option><option value="general" data-ui="kind_general"></option><option value="specific" data-ui="kind_specific"></option></select>
     <label><input type="checkbox" data-g="book" checked> <span class="badge book" data-ui-grade="book"></span></label>
     <label><input type="checkbox" data-g="good" checked> <span class="badge good" data-ui-grade="good"></span></label>
     <label><input type="checkbox" data-g="brilliant" checked> <span class="badge brilliant" data-ui-grade="brilliant"></span></label>
@@ -166,10 +169,12 @@ mark { background: #ffe58a; color: #000; border-radius: 2px; }
   var boxes = Array.prototype.slice.call(document.querySelectorAll("input[data-g]"));
   var expand = document.getElementById("expand");
   var q = document.getElementById("q");
+  var kind = document.getElementById("kind");
   try {
     var s = JSON.parse(store.get("mc-filter") || "{}");
     boxes.forEach(function (b) { if (b.dataset.g in s) b.checked = s[b.dataset.g]; });
     expand.checked = !!s.expand;
+    if (s.kind) kind.value = s.kind;
   } catch (e) {}
 
   function setLang(l) {
@@ -220,7 +225,7 @@ mark { background: #ffe58a; color: #000; border-radius: 2px; }
   }
 
   function apply() {
-    var on = {}, state = { expand: expand.checked };
+    var on = {}, state = { expand: expand.checked, kind: kind.value };
     boxes.forEach(function (b) { on[b.dataset.g] = b.checked; state[b.dataset.g] = b.checked; });
     store.set("mc-filter", JSON.stringify(state));
     var term = q.value.trim().toLowerCase(), shown = 0;
@@ -228,7 +233,7 @@ mark { background: #ffe58a; color: #000; border-radius: 2px; }
     items.forEach(function (el) {
       clearMarks(el);
       var match = !term || el.textContent.toLowerCase().indexOf(term) !== -1;
-      var ok = (on[el.dataset.grade] || el.dataset.force) && match;
+      var ok = ((on[el.dataset.grade] && (kind.value === "all" || el.dataset.kind === kind.value)) || el.dataset.force) && match;
       // collapsed by default; a click overrides; "expand everything" and search matches open everything
       var open = expand.checked || (term && match) || el.dataset.user === "open";
       el.classList.toggle("hidden", !ok);
@@ -270,6 +275,10 @@ mark { background: #ffe58a; color: #000; border-radius: 2px; }
   }; });
   expand.onchange = applyExpand;
   q.oninput = apply;
+  kind.onchange = function () {
+    document.querySelectorAll(".method[data-force]").forEach(function (el) { delete el.dataset.force; });
+    apply();
+  };
   langSel.onchange = function () { setLang(langSel.value); };
   document.querySelectorAll("details.snippet").forEach(function (d) { d.open = expand.checked; });
   setLang(lang);

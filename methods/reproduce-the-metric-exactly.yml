@@ -2,6 +2,7 @@ section: universal
 subsection: validation
 order: 110
 grade: book
+general: true
 name: Reproduce the competition metric exactly
 do: >-
   Re-implement the official metric locally, including its edge cases (how predictions are matched to targets,

@@ -1,0 +1,32 @@
+section: nlp
+order: 210
+grade: good
+sketch: true
+name: Feed a title plus the head of the text
+when: Documents are long, and a short summary field (title, abstract) names the topic.
+do: >-
+  Use the summary field plus a fixed-size prefix of the body as the model input. To choose the prefix length,
+  compare summary only, summary + short prefix and summary + long prefix at equal compute on held-out data.
+why: >-
+  The summary is dense and the rest of the body is often filler; short inputs allow a larger model or more
+  epochs in the same time. Whether the body helps depends on the labels (topic versus fine detail), which
+  only an experiment settles.
+see_also:
+- strip-boilerplate
+- longest-first-truncation
+- budget-sized-model
+code: |
+  # title + first 350 characters of the body
+  text = title + ". " + body[:350]
+translations:
+  ru:
+    name: Подавать заголовок и начало текста
+    when: Документы длинные, а короткое поле-резюме (заголовок, аннотация) называет тему.
+    do: >-
+      Используйте на входе поле-резюме и префикс тела фиксированного размера. Чтобы выбрать длину префикса,
+      сравните «только резюме», «резюме + короткий префикс» и «резюме + длинный префикс» при равных
+      вычислениях на отложенных данных.
+    why: >-
+      Резюме плотное, а остальное тело часто вода; короткие входы позволяют взять модель побольше или больше
+      эпох за то же время. Помогает ли тело, зависит от меток (тема или тонкие детали), и решает это только
+      эксперимент.

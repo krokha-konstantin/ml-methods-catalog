@@ -1,6 +1,7 @@
 section: nlp
 order: 110
 grade: book
+general: true
 name: Align word labels to subword tokens
 when: >-
   Token classification is done with a transformer whose tokenizer splits words into subwords.

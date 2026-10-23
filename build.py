@@ -27,7 +27,7 @@ OUT = ROOT / "methods_catalog.html"
 PRIVATE = "--private" in sys.argv
 GRADES = ("book", "good", "brilliant")
 SLOTS = ("when", "do", "why")
-METHOD_KEYS = {"section", "subsection", "order", "grade", "name", *SLOTS, "see_also", "sketch", "code", "translations"}
+METHOD_KEYS = {"section", "subsection", "order", "grade", "name", *SLOTS, "see_also", "sketch", "general", "code", "translations"}
 TRANSLATABLE = {"name", *SLOTS, "code"}
 
 
@@ -180,6 +180,8 @@ def render_method(m, lang, site, pid, names, matchers, glossary):
     anchor = pid("m-" + m["id"])
     head = [f'<span class="badge {m["grade"]}">{html.escape(label)}</span>',
             f'<span class="mname">{names[m["id"]]}</span>']
+    if m.get("general"):
+        head.append(f'<span class="general" title="{html.escape(t(ui["general_note"], lang))}">{html.escape(t(ui["general"], lang))}</span>')
     if f["fallback"]:
         head.append(f'<span class="fallback" title="{html.escape(t(ui["untranslated"], lang))}">EN</span>')
     head.append(f'<a class="perma" href="#{anchor}" title="{html.escape(t(ui["permalink"], lang))}">#</a>')
@@ -200,7 +202,7 @@ def render_method(m, lang, site, pid, names, matchers, glossary):
         note = f' <span class="note">· {html.escape(t(ui["sketch_note"], lang))}</span>' if sketch else ""
         body.append(f'<details class="snippet"><summary>{html.escape(summary)}{note}</summary>'
                     f'<pre><code class="language-python">{html.escape(f["code"].rstrip())}</code></pre></details>')
-    return (f'<div class="method" data-grade="{m["grade"]}" id="{anchor}">'
+    return (f'<div class="method" data-grade="{m["grade"]}" data-kind="{"general" if m.get("general") else "specific"}" id="{anchor}">'
             f'<div class="mhead" role="button" tabindex="0" aria-expanded="true">{"".join(head)}</div>'
             f'<div class="mbody">{"".join(body)}</div></div>')
 

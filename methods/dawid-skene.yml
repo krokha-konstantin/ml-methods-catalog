@@ -1,6 +1,7 @@
 section: weak-supervision
 order: 10
 grade: book
+general: true
 name: Dawid–Skene label aggregation
 when: Several noisy annotators label the data and there is no ground truth.
 do: >-

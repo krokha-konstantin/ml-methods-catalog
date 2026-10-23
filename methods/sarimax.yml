@@ -2,6 +2,7 @@ section: time-series
 subsection: models
 order: 30
 grade: book
+general: true
 name: Per-series SARIMAX
 when: Series are long and regular.
 do: Fit a seasonal ARIMA with exogenous regressors (SARIMAX) per series.

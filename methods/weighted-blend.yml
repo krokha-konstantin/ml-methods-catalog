@@ -2,6 +2,7 @@ section: universal
 subsection: ensembling
 order: 30
 grade: book
+general: true
 name: Weighted blend of independent pipelines
 when: >-
   Two separately built pipelines are to be blended, and the weight can't be validated reliably.

@@ -1,0 +1,22 @@
+section: universal
+subsection: hyperparameters
+order: 40
+grade: book
+general: true
+name: Gradient clipping
+when: Training occasionally produces a loss spike or exploding gradients (deep or recurrent networks, transformers).
+do: Rescale the gradient so that its global norm does not exceed a fixed value (1.0 is a common default) before each optimiser step.
+why: It is a cheap safeguard, since one bad batch cannot throw the weights far away.
+see_also:
+- warmup-linear-decay-schedule
+code: |
+  # clip the global gradient norm before the optimiser step
+  loss.backward()
+  torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+  opt.step()
+translations:
+  ru:
+    name: Обрезка градиента
+    when: При обучении изредка бывают всплески потерь или взрыв градиентов (глубокие и рекуррентные сети, трансформеры).
+    do: Перед каждым шагом оптимизатора масштабируйте градиент так, чтобы его общая норма не превышала фиксированное значение (обычно 1.0).
+    why: Это дешёвая страховка, ведь один плохой батч не отбросит веса далеко.

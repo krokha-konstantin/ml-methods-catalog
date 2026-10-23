@@ -2,6 +2,7 @@ section: tabular
 subsection: features
 order: 20
 grade: book
+general: true
 name: Out-of-fold target encoding
 when: >-
   A categorical column (or an entity such as a user) has many levels and the target varies between them.

@@ -1,6 +1,7 @@
 section: nlp
 order: 150
 grade: book
+general: true
 name: Self-consistency across sampled answers
 when: An LLM's answer has to be judged and several answers can be sampled.
 do: >-

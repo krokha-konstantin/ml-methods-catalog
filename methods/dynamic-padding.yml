@@ -1,0 +1,32 @@
+section: nlp
+order: 190
+grade: book
+general: true
+name: Dynamic padding per batch
+when: Sequences in a dataset vary in length.
+do: >-
+  Tokenise inside the data loader's collate function and pad each batch only to its own longest sequence,
+  instead of padding everything to a fixed maximum.
+why: Short batches cost less compute, and the data-handling code stays generic, so another model or dataset needs only a new `Dataset`.
+code: |
+  # dataset returns raw texts; collate tokenises and pads per batch
+  class PairDataset(Dataset):
+      def __getitem__(self, i):
+          return self.left[i], self.right[i], self.labels[i]
+
+  def collate(batch):
+      left, right, labels = zip(*batch)
+      enc = tok(list(left), list(right), truncation="longest_first", max_length=MAX_LEN,
+                padding=True, return_tensors="pt")
+      enc["labels"] = torch.tensor(labels)
+      return enc
+
+  loader = DataLoader(PairDataset(...), batch_size=32, shuffle=True, collate_fn=collate)
+translations:
+  ru:
+    name: Динамический паддинг по батчу
+    when: Последовательности в датасете разной длины.
+    do: >-
+      Токенизируйте внутри collate-функции загрузчика и дополняйте каждый батч только до его самой длинной
+      последовательности, а не до фиксированного максимума.
+    why: Короткие батчи дешевле по вычислениям, а код работы с данными остаётся универсальным, так что для другой модели или датасета нужен лишь новый `Dataset`.
