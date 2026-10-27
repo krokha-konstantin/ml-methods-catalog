@@ -1,0 +1,35 @@
+section: tabular
+subsection: models
+order: 50
+grade: book
+general: true
+name: T-learner for uplift
+when: >-
+  The target is the effect of a treatment (an offer, a message, a dose) on each row's outcome, and training rows
+  record whether the treatment was given.
+do: >-
+  Fit two separate models, one on the treated rows and one on the control rows, and take the difference of their
+  predictions for each row as the uplift.
+why: >-
+  Each group gets its own response surface, so a strong or heterogeneous effect is not shrunk away; but the errors of
+  two models add up, and a small group gives a noisy model, which makes the difference noisy too.
+see_also:
+- s-learner
+code: |
+  # one model per group; uplift = treated-model prediction minus control-model prediction
+  m_treated = lgb.LGBMClassifier(**params).fit(X[t == 1], y[t == 1])
+  m_control = lgb.LGBMClassifier(**params).fit(X[t == 0], y[t == 0])
+  uplift = m_treated.predict_proba(X_test)[:, 1] - m_control.predict_proba(X_test)[:, 1]
+sketch: true
+translations:
+  ru:
+    name: T-learner для uplift
+    when: >-
+      Целевая величина — эффект воздействия (предложения, рассылки, дозы) на исход каждой строки, и в обучающих
+      строках записано, было ли воздействие.
+    do: >-
+      Обучите две отдельные модели, одну на строках с воздействием и одну на контрольных, и возьмите разность их
+      предсказаний для каждой строки как uplift.
+    why: >-
+      У каждой группы своя поверхность отклика, поэтому сильный или неоднородный эффект не сглаживается; но ошибки
+      двух моделей складываются, а маленькая группа даёт шумную модель и шумную разность.

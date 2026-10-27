@@ -1,0 +1,37 @@
+section: tabular
+subsection: models
+order: 40
+grade: book
+general: true
+name: S-learner for uplift
+when: >-
+  The target is the effect of a treatment (an offer, a message, a dose) on each row's outcome, and training rows
+  record whether the treatment was given.
+do: >-
+  Fit one model on all rows with the treatment flag as an extra feature, then predict each row twice, with the flag
+  set to 1 and to 0, and take the difference as the uplift.
+why: >-
+  One model uses all the data, which suits a small treatment group or a weak effect; but a regularised model may
+  barely split on the flag and shrink the estimated effect towards zero, so check that the flag is used.
+see_also:
+- t-learner
+code: |
+  # single model with the treatment flag as a feature; uplift = prediction with flag 1 minus flag 0
+  model = lgb.LGBMClassifier(**params)
+  model.fit(X.assign(treatment=t), y)
+  uplift = (model.predict_proba(X_test.assign(treatment=1))[:, 1]
+            - model.predict_proba(X_test.assign(treatment=0))[:, 1])
+sketch: true
+translations:
+  ru:
+    name: S-learner для uplift
+    when: >-
+      Целевая величина — эффект воздействия (предложения, рассылки, дозы) на исход каждой строки, и в обучающих
+      строках записано, было ли воздействие.
+    do: >-
+      Обучите одну модель на всех строках с флагом воздействия как дополнительным признаком, затем предскажите
+      каждую строку дважды, с флагом 1 и 0, и возьмите разность как uplift.
+    why: >-
+      Одна модель использует все данные, что удобно при маленькой группе воздействия или слабом эффекте; но
+      регуляризованная модель может почти не разбивать по флагу и занижать эффект к нулю, поэтому проверьте,
+      что флаг используется.

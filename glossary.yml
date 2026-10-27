@@ -498,3 +498,9 @@
   def:
     en: A 16-bit floating-point format with the same exponent range as 32-bit floats but fewer mantissa bits, so it is fast and rarely overflows.
     ru: 16-битный формат с плавающей точкой с тем же диапазоном порядка, что у 32-битного, но с меньшей мантиссой, поэтому он быстрый и почти не переполняется.
+
+- term: {en: Uplift, ru: Uplift}
+  match: {en: ['uplift']}
+  def:
+    en: The change in a row's outcome caused by a treatment, estimated as the predicted outcome with the treatment minus without it.
+    ru: Изменение исхода строки, вызванное воздействием; оценивается как предсказанный исход с воздействием минус без него.
