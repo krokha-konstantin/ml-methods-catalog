@@ -9,7 +9,6 @@ do: >-
   ones computed from their rules, paydays, long weekends).
 why: A generic holiday list misses the days that actually move the target.
 see_also:
-- domain-knowledge-features
 - external-covariates
 code: |
   # a moveable holiday computed from its rule, then the number of affected days per month

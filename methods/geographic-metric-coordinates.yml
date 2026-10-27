@@ -9,8 +9,6 @@ do: >-
   Project the coordinates onto local metric axes (`x = Δlon·cos(lat0)`, `y = Δlat`, scaled to km) around a
   reference latitude, or compute great-circle (haversine) distances between points when the area is large.
 why: A degree of longitude shrinks with latitude while a degree of latitude does not, so raw degrees distort distances and make the two axes incomparable.
-see_also:
-- domain-knowledge-features
 code: |
   # local projection to km, and exact great-circle distance
   R = 6371.0
