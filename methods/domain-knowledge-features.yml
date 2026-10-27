@@ -10,7 +10,6 @@ do: >-
 why: >-
   A known formula costs one line to add, while a model would need far more data to rediscover it.
 see_also:
-- arithmetic-features
 - domain-calendar
 code: |
   # examples: material flow rate, a colour index, the sun's elevation

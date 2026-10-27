@@ -1,0 +1,32 @@
+section: tabular
+subsection: features
+order: 100
+grade: book
+general: true
+name: Convert geographic coordinates to metric distances
+when: Latitude and longitude are used as inputs to distances, neighbours, clusters or tree splits.
+do: >-
+  Project the coordinates onto local metric axes (`x = Δlon·cos(lat0)`, `y = Δlat`, scaled to km) around a
+  reference latitude, or compute great-circle (haversine) distances between points when the area is large.
+why: A degree of longitude shrinks with latitude while a degree of latitude does not, so raw degrees distort distances and make the two axes incomparable.
+see_also:
+- domain-knowledge-features
+code: |
+  # local projection to km, and exact great-circle distance
+  R = 6371.0
+  lat0 = np.deg2rad(df["lat"].mean())
+  df["x_km"] = R * np.deg2rad(df["lon"] - df["lon"].mean()) * np.cos(lat0)
+  df["y_km"] = R * np.deg2rad(df["lat"] - df["lat"].mean())
+
+  def haversine(lat1, lon1, lat2, lon2):
+      lat1, lon1, lat2, lon2 = map(np.deg2rad, (lat1, lon1, lat2, lon2))
+      a = np.sin((lat2 - lat1) / 2) ** 2 + np.cos(lat1) * np.cos(lat2) * np.sin((lon2 - lon1) / 2) ** 2
+      return 2 * R * np.arcsin(np.sqrt(a))
+translations:
+  ru:
+    name: Перевод географических координат в метрические расстояния
+    when: Широта и долгота используются для расстояний, соседей, кластеров или разбиений в деревьях.
+    do: >-
+      Спроецируйте координаты на локальные метрические оси (`x = Δlon·cos(lat0)`, `y = Δlat`, в км) вокруг
+      опорной широты или считайте расстояния по большому кругу (гаверсинус) между точками, если область большая.
+    why: Градус долготы сжимается с широтой, а градус широты нет, поэтому сырые градусы искажают расстояния и делают оси несопоставимыми.
